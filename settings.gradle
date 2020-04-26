@@ -1,0 +1,2 @@
+rootProject.name='AllInOne'
+include ':app',":Library"
