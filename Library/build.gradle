@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 28
     defaultConfig {
-        minSdkVersion 21    //最小能支持的系统版本号
+        minSdkVersion 14    //最小能支持的系统版本号
         targetSdkVersion 28  //最佳支持的系统版本号
         versionCode 1
         versionName "1.0"

@@ -1,11 +1,14 @@
 package com.xfhy.allinone.jni;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.xfhy.allinone.R;
+
+import java.util.ArrayList;
 
 public class CallMethodActivity extends AppCompatActivity {
 
@@ -38,6 +41,8 @@ public class CallMethodActivity extends AppCompatActivity {
      */
     private native void callJavaInstanceMethod(MyJNIClass myClass);
 
+    private native ArrayList testMaxQuote();
+
     public void callNormalMethod(View view) {
         callJavaInstanceMethod(new MyJNIClass());
     }
@@ -49,4 +54,11 @@ public class CallMethodActivity extends AppCompatActivity {
     public void createAndCallNormalMethod(View view) {
         createAndCallJavaInstanceMethod();
     }
+
+    public void testMaxQuoteInNativeLocal(View view) {
+        ArrayList arrayList = testMaxQuote();
+        Log.e("xfhy", arrayList.get(45).toString());
+    }
+
+
 }

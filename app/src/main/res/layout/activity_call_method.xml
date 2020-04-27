@@ -28,9 +28,16 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="createAndCallNormalMethod"
             android:layout_margin="@dimen/dimen_5"
+            android:onClick="createAndCallNormalMethod"
             android:text="native层创建实例并调用方法" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_5"
+            android:onClick="testMaxQuoteInNativeLocal"
+            android:text="测试Android虚拟机引用表最大限度数量" />
 
 
     </LinearLayout>
