@@ -1,0 +1,130 @@
+import groovy.util.slurpersupport.GPathResult
+import groovy.util.slurpersupport.Node
+
+project.afterEvaluate {
+    //1. project.task是获取所有的task,然后再通过findByName找到mergeDebugResources这个task
+    def mergeDebugResourcesTask = project.tasks.findByName("mergeDebugResources")
+    if (mergeDebugResourcesTask != null) {
+        //创建一个task
+        def resParseDebugTask = project.tasks.create("ResParseDebugTask", ResParseTask.class)
+        resParseDebugTask.isDebug = true
+        //2. 将创建的task放mergeDebugResources的后面   finalizedBy: 为当前的task添加一个或若干个当前task结束后立马执行的task，且添加的task的执行顺序为无序。
+        mergeDebugResourcesTask.finalizedBy(resParseDebugTask);
+    }
+
+}
+
+class ResParseTask extends DefaultTask {
+    //把所有View名称存放到这个文件中
+    File viewNameListFile
+    boolean isDebug
+    //所有的View名称,这里去重了
+    HashSet<String> viewSet = new HashSet<>()
+    // 自己根据输出几个添加
+    List<String> ignoreViewNameList = Arrays.asList("include", "fragment", "merge", "view","DateTimeView")
+
+    //TaskAction用于标记 当前这个task被执行时,哪里需要被执行到
+    @TaskAction
+    void doTask() {
+        //创建目录和文件
+        File distDir = new File(project.buildDir, "tmp_custom_views")
+        if (!distDir.exists()) {
+            distDir.mkdirs()
+        }
+        viewNameListFile = new File(distDir, "custom_view_final.txt")
+        if (viewNameListFile.exists()) {
+            viewNameListFile.delete()
+        }
+        viewNameListFile.createNewFile()
+        viewSet.clear()
+        viewSet.addAll(ignoreViewNameList)
+
+        try {
+            //找到merge之后的xml文件
+            File resMergeFile = new File(project.buildDir, "/intermediates/incremental/merge" + (isDebug ? "Debug" : "Release") + "Resources/merger.xml")
+
+            println("resMergeFile：${resMergeFile.getAbsolutePath()} === ${resMergeFile.exists()}")
+
+            if (!resMergeFile.exists()) {
+                return
+            }
+
+            //解析xml
+            XmlSlurper slurper = new XmlSlurper()
+            GPathResult result = slurper.parse(resMergeFile)
+            if (result.children() != null) {
+                result.childNodes().forEachRemaining({ o ->
+                    if (o instanceof Node) {
+                        parseNode(o)
+                    }
+                })
+            }
+
+        } catch (Throwable e) {
+            e.printStackTrace()
+        }
+
+    }
+
+    void parseNode(Node node) {
+        if (node == null) {
+            return
+        }
+        if (node.name() == "file" && node.attributes.get("type") == "layout") {
+            String layoutPath = node.attributes.get("path")
+            println("path = ${layoutPath}")
+            try {
+                XmlSlurper slurper = new XmlSlurper()
+                GPathResult result = slurper.parse(layoutPath)
+
+                //这个layout文件中 最外层的控件
+                String viewName = result.name();
+                if (viewSet.add(viewName)) {
+                    println(viewName)
+                    viewNameListFile.append("${viewName}\n")
+                }
+                //解析里层的控件
+                if (result.children() != null) {
+                    result.childNodes().forEachRemaining({ o ->
+                        if (o instanceof Node) {
+                            parseLayoutNode(o)
+                        }
+                    })
+                }
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            //递归查找 找到某一层type=layout 就不继续找了
+            node.childNodes().forEachRemaining({ o ->
+                if (o instanceof Node) {
+                    parseNode(o)
+                }
+            })
+        }
+
+    }
+
+    void parseLayoutNode(Node node) {
+        if (node == null) {
+            return
+        }
+        String viewName = node.name()
+        if (viewSet.add(viewName)) {
+            println(viewName)
+            viewNameListFile.append("${viewName}\n")
+        }
+        if (node.childNodes().size() <= 0) {
+            return
+        }
+        //递归解析里层的控件
+        node.childNodes().forEachRemaining({ o ->
+            if (o instanceof Node) {
+                parseLayoutNode(o)
+            }
+        })
+    }
+
+}
+

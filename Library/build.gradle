@@ -67,7 +67,7 @@ dependencies {
     api "org.jetbrains.anko:anko:0.10.5"
 
     //多dex配置
-    api "androidx.multidex:multidex:2.0.1"
+    //api "androidx.multidex:multidex:2.0.1"
 
     //RxKotlin
     api "io.reactivex.rxjava2:rxkotlin:2.2.0"

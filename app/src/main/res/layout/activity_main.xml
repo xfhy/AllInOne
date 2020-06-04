@@ -18,6 +18,13 @@
             android:layout_margin="@dimen/common_margin"
             android:text="JNI" />
 
+        <Button
+            android:id="@+id/btnGoViewOpt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="goViewOpt"
+            android:text="去掉View生成过程中的反射" />
+
     </LinearLayout>
 
 </ScrollView>
