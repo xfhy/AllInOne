@@ -254,3 +254,17 @@ Java_com_xfhy_allinone_jni_CallMethodActivity_testMaxQuote(JNIEnv *env, jobject 
 
     return arrayList;
 }
+
+void willCrash() {
+    JNIEnv *env = NULL;
+    int version = env->GetVersion();
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_xfhy_allinone_jni_CallMethodActivity_nativeCrashTest(JNIEnv *env, jobject thiz) {
+    LOGI("崩溃前");
+    willCrash();
+    LOGI("崩溃后");
+    printf("oooo");
+}

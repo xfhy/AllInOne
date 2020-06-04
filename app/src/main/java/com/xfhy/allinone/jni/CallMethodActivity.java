@@ -61,4 +61,10 @@ public class CallMethodActivity extends AppCompatActivity {
     }
 
 
+    public void nativeCrash(View view) {
+        nativeCrashTest();
+    }
+
+    private native void nativeCrashTest();
+
 }
