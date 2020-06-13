@@ -24,7 +24,13 @@ public class CallMethodActivity extends AppCompatActivity {
         //callJavaInstanceMethod(new MyClass());
         //createAndCallJavaInstanceMethod();
         callJavaStaticMethod();
+        sayHello();
     }
+
+    /**
+     * 这个方法是动态注册的
+     */
+    private native void sayHello();
 
     /**
      * 在native层调用某个类的static方法

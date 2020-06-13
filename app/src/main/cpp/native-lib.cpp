@@ -268,3 +268,36 @@ Java_com_xfhy_allinone_jni_CallMethodActivity_nativeCrashTest(JNIEnv *env, jobje
     LOGI("崩溃后");
     printf("oooo");
 }
+
+//---------------------动态注册方法  start---------------
+//免得每次写包名,这样方便配置
+static const char *const PACKAGE_NAME = "com/xfhy/allinone/jni/CallMethodActivity";
+
+void JNICALL nativeSayHello(JNIEnv *env, jobject) {
+    LOGI("Hello world");
+}
+
+static JNINativeMethod methods[] = {
+        {"sayHello", "()V", (void *) nativeSayHello},
+};
+
+jint registerNativeMethods(JNIEnv *env, const char *class_name, JNINativeMethod *methods,
+                           int num_methods) {
+    jclass clazz = env->FindClass(class_name);
+    if (nullptr != clazz) {
+        return env->RegisterNatives(clazz, methods, num_methods);
+    }
+    return JNI_ERR;
+}
+
+jint JNI_OnLoad(JavaVM *vm,void *){
+    JNIEnv *env;
+    if(JNI_OK!=vm->GetEnv(reinterpret_cast<void **>(&env),JNI_VERSION_1_6)) {
+        return JNI_ERR;
+    }
+    if (JNI_OK != registerNativeMethods(env, PACKAGE_NAME, methods, 1)) {
+        return JNI_ERR;
+    }
+    return JNI_VERSION_1_6;
+}
+//---------------------动态注册方法    end---------------
