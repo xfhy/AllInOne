@@ -9,21 +9,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/common_padding"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/btnGoJni"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common_margin"
             android:text="JNI" />
 
         <Button
-            android:id="@+id/btnGoViewOpt"
+            android:id="@+id/btnGoSmali"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="goViewOpt"
-            android:text="去掉View生成过程中的反射" />
+            android:layout_marginTop="@dimen/common_margin_middle"
+            android:text="Smali" />
 
     </LinearLayout>
 

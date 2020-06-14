@@ -1,12 +1,9 @@
 package com.xfhy.allinone
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.xfhy.allinone.jni.JNIMainActivity
-import com.xfhy.allinone.viewopt.ViewOptActivity
+import com.xfhy.allinone.smali.SmaliActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 
@@ -19,9 +16,8 @@ class MainActivity : AppCompatActivity() {
         btnGoJni.setOnClickListener {
             startActivity<JNIMainActivity>()
         }
-    }
-
-    fun goViewOpt(view: View) {
-        startActivity<ViewOptActivity>()
+        btnGoSmali.setOnClickListener {
+            startActivity<SmaliActivity>()
+        }
     }
 }
