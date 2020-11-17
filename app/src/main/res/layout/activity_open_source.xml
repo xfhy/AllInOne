@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".opensource.OpenSourceActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,24 +13,10 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnGoJni"
+            android:id="@+id/btnGoOkhttp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="JNI" />
-
-        <Button
-            android:id="@+id/btnGoSmali"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_margin_middle"
-            android:text="Smali" />
-
-        <Button
-            android:id="@+id/btnGoOpenSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_margin_middle"
-            android:text="开源库" />
+            android:text="OkHttp" />
 
     </LinearLayout>
 
