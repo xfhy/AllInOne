@@ -24,34 +24,6 @@ open class BaseApplication : Application() {
         super.onCreate()
 
         context = this
-
-        registerActivityLifecycleCallbacks(ActivityLifecycle)
-    }
-
-    object ActivityLifecycle : ActivityLifecycleCallbacks {
-        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            AppManager.instance.addActivity(activity)
-        }
-
-        override fun onActivityStarted(activity: Activity) {
-        }
-
-        override fun onActivityResumed(activity: Activity) {
-        }
-
-        override fun onActivityPaused(activity: Activity) {
-        }
-
-        override fun onActivityStopped(activity: Activity) {
-        }
-
-        override fun onActivityDestroyed(activity: Activity) {
-            AppManager.instance.finishActivity(activity)
-        }
-
-        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
-        }
-
     }
 
 }

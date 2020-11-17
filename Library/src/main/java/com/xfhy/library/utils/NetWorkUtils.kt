@@ -34,8 +34,10 @@ object NetWorkUtils {
             val networkInfo = connectivityManager.allNetworks
             for (a in networkInfo.indices) {
                 val networkCapabilities = connectivityManager.getNetworkCapabilities(networkInfo[a])
-                if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    return true
+                if (networkCapabilities != null) {
+                    if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ) {
+                        return true
+                    }
                 }
             }
             return false

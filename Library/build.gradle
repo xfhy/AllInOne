@@ -4,10 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
-        minSdkVersion 14    //最小能支持的系统版本号
-        targetSdkVersion 28  //最佳支持的系统版本号
+        minSdkVersion 21    //最小能支持的系统版本号
+        targetSdkVersion 30  //最佳支持的系统版本号
         versionCode 1
         versionName "1.0"
 
@@ -29,16 +29,18 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    api 'androidx.core:core-ktx:1.3.2'
 
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //AppCompat
-    api "androidx.appcompat:appcompat:1.1.0"
+    api "androidx.appcompat:appcompat:1.2.0"
     //Material Design
-    api "com.google.android.material:material:1.1.0"
+    api "com.google.android.material:material:1.2.1"
     //ConstraintLayout
-    api "androidx.constraintlayout:constraintlayout:1.1.3"
+    api "androidx.constraintlayout:constraintlayout:2.0.4"
     //CardView
     api "androidx.cardview:cardview:1.0.0"
     //RecyclerView

@@ -1,12 +1,15 @@
 package com.xfhy.library.ext
 
 import android.app.Activity
+import android.content.Intent
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.orhanobut.logger.Logger
 import com.xfhy.library.utils.SnackbarUtil
 import com.xfhy.library.widgets.DefaultTextWatcher
 
@@ -40,4 +43,16 @@ fun Activity.snackbar(
 
 fun Fragment.toast(str: String) {
     Toast.makeText(context, str, Toast.LENGTH_SHORT).show()
+}
+
+fun Activity.toast(text: String) {
+    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+}
+
+fun Any?.logString(tag: String = "xfhy_tag") {
+    Log.d(tag, this.toString())
+}
+
+fun log(tag: String = "xfhy_tag", msg: String?) {
+    Log.d(tag, msg ?: "null")
 }

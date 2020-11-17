@@ -36,7 +36,7 @@ object SPUtils {
      */
     fun <T> getValue(key: String, default: T): T = with(sp) {
         //巧用with函数
-        val res: Any = when (default) {
+        val res = when (default) {
             is Boolean -> getBoolean(key, default)      //类型自动推断
             is String -> getString(key, default)
             is Int -> getInt(key, default)
