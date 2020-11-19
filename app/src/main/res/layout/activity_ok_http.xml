@@ -15,14 +15,14 @@
             android:id="@+id/btnTestOkSync"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="同步" />
+            android:text="同步请求" />
 
         <Button
             android:id="@+id/btnTestOkAsync"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
-            android:text="异步" />
+            android:text="异步请求" />
 
     </LinearLayout>
 
