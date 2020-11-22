@@ -9,14 +9,63 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/common_padding"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/btnGoOkhttp"
+            style="@style/HorizontalBtnStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="OkHttp" />
+
+        <Button
+            android:id="@+id/btnGoRetrofit"
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Retrofit" />
+
+        <Button
+            android:id="@+id/btnGoGlide"
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Glide" />
+
+        <Button
+            android:id="@+id/btnGoGreenDao"
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GreenDao" />
+
+        <Button
+            android:id="@+id/btnGoRxJava"
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RxJava" />
+
+        <Button
+            android:id="@+id/btnLeakCanary"
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LeakCanary" />
+
+        <Button
+            android:id="@+id/btnGoButterknife"
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Butterknife" />
+
+        <Button
+            android:id="@+id/btnGoEventBus"
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EventBus" />
 
     </LinearLayout>
 

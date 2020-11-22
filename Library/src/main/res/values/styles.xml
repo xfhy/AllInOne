@@ -80,11 +80,9 @@
         <item name="android:textSize">@dimen/font_size_14</item>
         <item name="android:background">@drawable/btn_common_selector</item>
         <item name="android:padding">@dimen/common_padding_middle</item>
-        <item name="android:layout_margin">@dimen/common_margin</item>
         <item name="android:layout_marginStart">@dimen/common_margin</item>
         <item name="android:layout_marginEnd">@dimen/common_margin</item>
         <item name="android:layout_marginTop">@dimen/common_margin</item>
-        <item name="android:layout_marginBottom">@dimen/common_margin</item>
         <item name="android:gravity">center</item>
     </style>
 
