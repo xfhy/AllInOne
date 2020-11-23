@@ -13,6 +13,11 @@ import java.io.IOException
 /**
  * OkHttp核心: 通过拦截器组成的责任链,依次经过重试、桥接、缓存、连接和访问服务器等过程,来获取到一个响应并交给用户
  * 其中,缓存和连接两部分是重点.前者涉及到一些计算机网络的基础知识,后者则是OkHttp效率和框架的核心(连接池复用真的强).
+ *
+ * 推荐博客:
+ * https://github.com/xfhy/Android-Notes/blob/master/Blogs/Android/%E4%B8%89%E6%96%B9%E5%BA%93%E5%8E%9F%E7%90%86/OkHttp3_%E5%8E%9F%E7%90%86%E6%8E%A2%E7%A9%B6.md
+ * https://juejin.cn/post/6844904133103747086
+ *
  */
 class OkHttpActivity : AppCompatActivity() {
 
