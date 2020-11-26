@@ -1,11 +1,22 @@
 package com.xfhy.allinone.opensource.glide
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomViewTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
+import com.xfhy.allinone.App
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_glide.*
+import java.lang.Exception
+import kotlin.concurrent.thread
 
 /**
  * Glide解析
@@ -20,11 +31,63 @@ class GlideActivity : TitleBarActivity() {
         setContentView(R.layout.activity_glide)
 
         btnLoadImage.setOnClickListener {
-            val requestOptions = RequestOptions().placeholder(R.drawable.splash_bg)
-            Glide.with(this)
-                .load("http://guolin.tech/book.png")
-                .apply(requestOptions)
-                .into(image_view)
+//            simpleTest()
+//            targetTest()
+            downloadImage()
         }
+    }
+
+    /**
+     * 下载图片
+     */
+    private fun downloadImage() {
+        thread {
+            try {
+                val url = "http://www.guolin.tech/book.png"
+                val context = App.getAppContext()
+                val target = Glide.with(context).asFile().load(url).submit()
+                val file = target.get()
+                runOnUiThread {
+                    Toast.makeText(context, file?.path, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun targetTest() {
+        val customViewTarget =
+            object : CustomViewTarget<ImageView, Drawable>(image_view) {
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                }
+
+                override fun onResourceCleared(placeholder: Drawable?) {
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable>?
+                ) {
+                    image_view.setImageDrawable(resource)
+                }
+            }
+        Glide.with(this).load("http://guolin.tech/book.png").into(customViewTarget)
+    }
+
+    private fun simpleTest() {
+        val requestOptions = RequestOptions()
+            .placeholder(R.drawable.splash_bg)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .error(R.mipmap.ic_launcher)
+            .override(200, 200)
+            .skipMemoryCache(true)
+        Glide.with(this)
+//                .load("http://guolin.tech/book.png")
+            //不管是不是动态图,都加载成静态图
+            .asBitmap()
+            .load("http://guolin.tech/test.gif")
+            .apply(requestOptions)
+            .into(image_view)
     }
 }
