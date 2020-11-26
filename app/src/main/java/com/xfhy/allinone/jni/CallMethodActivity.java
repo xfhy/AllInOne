@@ -4,16 +4,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.xfhy.allinone.R;
+import com.xfhy.library.basekit.activity.TitleBarActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class CallMethodActivity extends AppCompatActivity {
+public class CallMethodActivity extends TitleBarActivity {
 
     static {
         System.loadLibrary("native-lib");
+    }
+
+    @NotNull
+    @Override
+    public CharSequence getThisTitle() {
+        return "JNI CallMethod";
     }
 
     @Override

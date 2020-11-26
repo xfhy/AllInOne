@@ -1,8 +1,8 @@
 package com.xfhy.allinone.opensource.okhttp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.xfhy.allinone.R
+import com.xfhy.library.basekit.activity.TitleBarActivity
 import com.xfhy.library.ext.log
 import com.xfhy.library.ext.logString
 import kotlinx.android.synthetic.main.activity_ok_http.*
@@ -19,13 +19,15 @@ import java.io.IOException
  * https://juejin.cn/post/6844904133103747086
  *
  */
-class OkHttpActivity : AppCompatActivity() {
+class OkHttpActivity : TitleBarActivity() {
 
     object OkHttpManager {
         val okHttpClient = OkHttpClient()
     }
 
     private val mainScope = MainScope()
+
+    override fun getThisTitle() = "OkHttp Test"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

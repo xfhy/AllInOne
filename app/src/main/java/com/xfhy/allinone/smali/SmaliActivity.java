@@ -1,26 +1,33 @@
 package com.xfhy.allinone.smali;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.xfhy.allinone.R;
+import com.xfhy.library.basekit.activity.TitleBarActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author : xfhy
  * Create time : 2020/6/14 3:18 PM
  * Description : smali 语法学习
  */
-public class SmaliActivity extends AppCompatActivity {
+public class SmaliActivity extends TitleBarActivity {
 
     private int num;
     private TextView tvName;
     public String text = "";
+
+    @NotNull
+    @Override
+    public CharSequence getThisTitle() {
+        return "Smali Test";
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

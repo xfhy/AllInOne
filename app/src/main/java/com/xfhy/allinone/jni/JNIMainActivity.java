@@ -7,11 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.xfhy.allinone.R;
+import com.xfhy.library.basekit.activity.TitleBarActivity;
 
-public class JNIMainActivity extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+public class JNIMainActivity extends TitleBarActivity {
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -19,6 +20,12 @@ public class JNIMainActivity extends AppCompatActivity {
     }
 
     private TextView mTv;
+
+    @NotNull
+    @Override
+    public CharSequence getThisTitle() {
+        return "JNI Test";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

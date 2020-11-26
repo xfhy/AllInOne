@@ -1,13 +1,10 @@
 package com.xfhy.allinone.opensource.retrofit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.xfhy.allinone.R
 import com.xfhy.allinone.opensource.retrofit.data.GetRequest
+import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_retrofit.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.jetbrains.anko.sdk25.coroutines.onClick
 
 /**
  * Retrofit: 优秀的网络封装框架,内含多种设计模式的灵活运用
@@ -17,7 +14,10 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  * https://github.com/xfhy/Android-Notes/blob/master/Blogs/Android/%E4%B8%89%E6%96%B9%E5%BA%93%E5%8E%9F%E7%90%86/Retrofit_%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90.md
  * https://www.jianshu.com/p/0c055ad46b6c
  */
-class RetrofitActivity : AppCompatActivity() {
+class RetrofitActivity : TitleBarActivity() {
+
+    override fun getThisTitle() = "Retrofit Test"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_retrofit)

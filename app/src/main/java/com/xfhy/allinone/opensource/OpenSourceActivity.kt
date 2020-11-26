@@ -1,17 +1,21 @@
 package com.xfhy.allinone.opensource
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.xfhy.allinone.R
+import com.xfhy.allinone.opensource.glide.GlideActivity
 import com.xfhy.allinone.opensource.okhttp.OkHttpActivity
 import com.xfhy.allinone.opensource.retrofit.RetrofitActivity
+import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_open_source.*
 import org.jetbrains.anko.startActivity
 
 /**
  * 常见开源库源码赏析
  */
-class OpenSourceActivity : AppCompatActivity() {
+class OpenSourceActivity : TitleBarActivity() {
+
+    override fun getThisTitle() = "常见开源库源码赏析"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_source)
@@ -28,7 +32,7 @@ class OpenSourceActivity : AppCompatActivity() {
             startActivity<RetrofitActivity>()
         }
         btnGoGlide.setOnClickListener {
-            startActivity<OkHttpActivity>()
+            startActivity<GlideActivity>()
         }
         btnGoGreenDao.setOnClickListener {
             startActivity<OkHttpActivity>()

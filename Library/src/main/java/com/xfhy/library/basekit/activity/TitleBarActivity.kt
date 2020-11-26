@@ -4,7 +4,9 @@ import android.view.View
 import android.widget.LinearLayout
 import com.xfhy.library.widgets.LoadingDialog
 import com.xfhy.library.widgets.TitleBar
+import kotlinx.android.synthetic.main.layout_common_custom_dialog.view.*
 import kotlinx.android.synthetic.main.layout_header_bar.view.*
+import kotlinx.android.synthetic.main.layout_header_bar.view.mRightTv
 import org.jetbrains.anko.dip
 
 /**
@@ -69,6 +71,13 @@ abstract class TitleBarActivity : BaseActivity(), TitleBar.TitleBarListener {
      */
     fun setRightTvVisible(isShow: Boolean) {
         mTitleBar.mRightTv.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * 设置左侧按钮是否可见
+     */
+    fun setLeftTvVisible(isShow: Boolean) {
+        mTitleBar.mBackIv.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
 }
