@@ -31,9 +31,9 @@ class GlideActivity : TitleBarActivity() {
         setContentView(R.layout.activity_glide)
 
         btnLoadImage.setOnClickListener {
-//            simpleTest()
+            simpleTest()
 //            targetTest()
-            downloadImage()
+//            downloadImage()
         }
     }
 

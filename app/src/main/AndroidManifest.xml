@@ -15,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+
+        <meta-data
+            android:name="com.xfhy.allinone.opensource.glide.MyGlideModule"
+            android:value="GlideModule" />
+
         <activity android:name=".opensource.glide.GlideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
