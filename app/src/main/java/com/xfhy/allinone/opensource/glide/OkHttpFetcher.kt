@@ -5,6 +5,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.data.DataFetcher
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.util.ContentLengthInputStream
+import com.xfhy.library.ext.log
 import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -52,7 +53,8 @@ class OkHttpFetcher(private val okHttpClient: OkHttpClient, private val url: Gli
         }
 
         //this is a test header
-        requestBuilder.addHeader("xfhy","test")
+        requestBuilder.addHeader("xfhy", "test")
+        log("xfhy_glide", "添加测试header")
 
         val request = requestBuilder.build()
         if (isCancelled) {

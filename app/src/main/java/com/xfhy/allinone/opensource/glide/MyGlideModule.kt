@@ -23,11 +23,14 @@ class MyGlideModule : GlideModule {
     }
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-        log("xfhy_glide","registerComponents 来了来了")
+        log("xfhy_glide", "registerComponents 来了来了")
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(ProgressInterceptor())
+            .build()
         registry.replace(
             GlideUrl::class.java,
             InputStream::class.java,
-            OkHttpGlideUrlLoader.Factory(OkHttpClient())
+            OkHttpGlideUrlLoader.Factory(okHttpClient)
         )
     }
 }

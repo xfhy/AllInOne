@@ -2,14 +2,13 @@ package com.xfhy.allinone.opensource.glide
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomViewTarget
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.xfhy.allinone.App
 import com.xfhy.allinone.R
@@ -78,16 +77,42 @@ class GlideActivity : TitleBarActivity() {
     private fun simpleTest() {
         val requestOptions = RequestOptions()
             .placeholder(R.drawable.splash_bg)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .error(R.mipmap.ic_launcher)
             .override(200, 200)
             .skipMemoryCache(true)
+        val url = "http://guolin.tech/book.png"
+
+        ProgressInterceptor.addProcessListener(url) { progress ->
+            glideProgressBar.progress = progress
+        }
+
         Glide.with(this)
-//                .load("http://guolin.tech/book.png")
+            .load(url)
             //不管是不是动态图,都加载成静态图
-            .asBitmap()
-            .load("http://guolin.tech/test.gif")
+            //.asBitmap()
+            //.load("http://guolin.tech/test.gif")
             .apply(requestOptions)
-            .into(image_view)
+            .into(object : CustomViewTarget<ImageView, Drawable>(image_view) {
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                }
+
+                override fun onResourceCleared(placeholder: Drawable?) {
+
+                }
+
+                override fun onStart() {
+                    super.onStart()
+                    glideProgressBar.visibility = View.VISIBLE
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    transition: Transition<in Drawable>?
+                ) {
+                    image_view.setImageDrawable(resource)
+                    ProgressInterceptor.removeListener(url)
+                }
+            })
     }
 }
