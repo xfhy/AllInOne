@@ -54,8 +54,7 @@ class ProgressInterceptor : Interceptor {
 
         override fun source(): BufferedSource {
             if (bufferedSource == null) {
-                bufferedSource =
-                    Okio.buffer(ProcessSource(responseBody.source(), responseBody, listener))
+                bufferedSource = ProcessSource(responseBody.source(), responseBody, listener).buffer()
             }
             return bufferedSource!!
         }
