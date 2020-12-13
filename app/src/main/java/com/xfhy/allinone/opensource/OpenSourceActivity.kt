@@ -3,6 +3,7 @@ package com.xfhy.allinone.opensource
 import android.os.Bundle
 import com.xfhy.allinone.R
 import com.xfhy.allinone.opensource.glide.GlideActivity
+import com.xfhy.allinone.opensource.leakcanary.LeakCanaryActivity
 import com.xfhy.allinone.opensource.okhttp.OkHttpActivity
 import com.xfhy.allinone.opensource.retrofit.RetrofitActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
@@ -41,7 +42,7 @@ class OpenSourceActivity : TitleBarActivity() {
             startActivity<OkHttpActivity>()
         }
         btnLeakCanary.setOnClickListener {
-            startActivity<OkHttpActivity>()
+            startActivity<LeakCanaryActivity>()
         }
         btnGoButterknife.setOnClickListener {
             startActivity<OkHttpActivity>()
