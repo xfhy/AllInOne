@@ -9,28 +9,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/common_padding"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/btnGoJni"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/HorizontalBtnStyle"
             android:text="JNI" />
 
         <Button
             android:id="@+id/btnGoSmali"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_margin_middle"
+            style="@style/HorizontalBtnStyle"
             android:text="Smali" />
 
         <Button
             android:id="@+id/btnGoOpenSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_margin_middle"
+            style="@style/HorizontalBtnStyle"
             android:text="开源库" />
+
+        <Button
+            android:id="@+id/btnGoAidl"
+            style="@style/HorizontalBtnStyle"
+            android:text="AIDL"/>
 
     </LinearLayout>
 

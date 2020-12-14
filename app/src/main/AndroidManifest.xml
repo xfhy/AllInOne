@@ -21,13 +21,7 @@
             android:value="GlideModule" />
 
         <activity android:name=".opensource.glide.GlideActivity" />
-        <activity android:name=".opensource.leakcanary.LeakCanaryActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".opensource.leakcanary.LeakCanaryActivity" />
         <activity android:name=".opensource.retrofit.RetrofitActivity" />
         <activity android:name=".opensource.okhttp.OkHttpActivity" />
         <activity android:name=".opensource.OpenSourceActivity" />
@@ -41,6 +35,23 @@
         </activity>
         <activity android:name=".jni.CallMethodActivity" />
         <activity android:name=".jni.JNIMainActivity" />
+
+        <service
+            android:name=".ipc.aidl.RemoteService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":other">
+            <intent-filter>
+                <action android:name="com.xfhy.aidl.Server.Action" />
+            </intent-filter>
+        </service>
+        <activity android:name=".ipc.aidl.AidlActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

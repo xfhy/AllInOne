@@ -1,6 +1,7 @@
 package com.xfhy.allinone
 
 import android.os.Bundle
+import com.xfhy.allinone.ipc.aidl.AidlActivity
 import com.xfhy.allinone.jni.JNIMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
 import com.xfhy.allinone.smali.SmaliActivity
@@ -26,6 +27,9 @@ class MainActivity : TitleBarActivity() {
         }
         btnGoOpenSource.setOnClickListener {
             startActivity<OpenSourceActivity>()
+        }
+        btnGoAidl.setOnClickListener {
+            startActivity<AidlActivity>()
         }
     }
 }
