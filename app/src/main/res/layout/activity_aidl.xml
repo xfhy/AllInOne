@@ -11,17 +11,32 @@
         <Button
             android:id="@+id/btnConnect"
             style="@style/HorizontalBtnStyle"
-            android:text="连接Service"/>
+            android:text="连接Service" />
 
         <Button
             android:id="@+id/btnGetPerson"
             style="@style/HorizontalBtnStyle"
-            android:text="getPerson"/>
+            android:text="getPerson" />
 
         <Button
             android:id="@+id/btnAddPerson"
             style="@style/HorizontalBtnStyle"
-            android:text="addPerson"/>
+            android:text="addPerson" />
+
+        <Button
+            android:id="@+id/btnAddPersonIn"
+            style="@style/HorizontalBtnStyle"
+            android:text="addPersonIn" />
+
+        <Button
+            android:id="@+id/btnAddPersonOut"
+            style="@style/HorizontalBtnStyle"
+            android:text="addPersonOut" />
+
+        <Button
+            android:id="@+id/btnAddPersonInout"
+            style="@style/HorizontalBtnStyle"
+            android:text="addPersonInout" />
 
     </LinearLayout>
 

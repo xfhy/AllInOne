@@ -54,6 +54,15 @@ class AidlActivity : TitleBarActivity() {
         btnAddPerson.setOnClickListener {
             addPerson()
         }
+        btnAddPersonIn.setOnClickListener {
+            addPersonIn()
+        }
+        btnAddPersonOut.setOnClickListener {
+            addPersonOut()
+        }
+        btnAddPersonInout.setOnClickListener {
+            addPersonInout()
+        }
     }
 
     private fun connectService() {
@@ -86,6 +95,45 @@ class AidlActivity : TitleBarActivity() {
         val personList = remoteServer?.personList
         log(TAG, "person 列表 $personList")
     }
+
+    private fun addPersonIn() {
+        var person = Person("寒冰")
+        log(TAG, "客户端 addPersonIn() 调用之前 person = $person}")
+        remoteServer?.addPersonIn(person)
+        log(TAG, "客户端 addPersonIn() 调用之后 person = $person}")
+    }
+
+    private fun addPersonOut() {
+        var person = Person("蛮王")
+        log(TAG, "客户端 addPersonOut() 调用之前 person = $person}")
+        remoteServer?.addPersonOut(person)
+        log(TAG, "客户端 addPersonOut() 调用之后 person = $person}")
+    }
+
+    private fun addPersonInout() {
+        var person = Person("艾克")
+        log(TAG, "客户端 addPersonInout() 调用之前 person = $person}")
+        remoteServer?.addPersonInout(person)
+        log(TAG, "客户端 addPersonInout() 调用之后 person = $person}")
+    }
+
+    /*
+    //in 方式  服务端那边修改了,但是服务端这边不知道
+    客户端 addPersonIn() 调用之前 person = Person(name=寒冰) hashcode = 142695478}
+    服务端 addPersonIn() person = Person(name=寒冰) hashcode = 38642374
+    客户端 addPersonIn() 调用之后 person = Person(name=寒冰) hashcode = 142695478}
+
+    //out方式 客户端能感知服务端的修改,且客户端不能向服务端传数据
+    //可以看到服务端是没有拿到客户端的数据的!
+    客户端 addPersonOut() 调用之前 person = Person(name=蛮王) hashcode = 15787831}
+    服务端 addPersonOut() person = Person(name=) hashcode = 231395975}
+    客户端 addPersonOut() 调用之后 person = Person(name=被addPersonOut修改) hashcode = 15787831}
+
+    //inout方式 客户端能感知服务端的修改
+    客户端 addPersonInout() 调用之前 person = Person(name=艾克) hashcode = 143615140}
+    服务端 addPersonInout() person = Person(name=艾克) hashcode = 116061620}
+    客户端 addPersonInout() 调用之后 person = Person(name=被addPersonInout修改) hashcode = 143615140}
+    * */
 
     override fun onDestroy() {
         super.onDestroy()

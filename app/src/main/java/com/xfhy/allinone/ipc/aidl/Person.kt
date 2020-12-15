@@ -8,12 +8,19 @@ import android.os.Parcelable
  * Create time : 2020/12/15 6:15 AM
  * Description : 用来IPC传输的对象
  */
-class Person(val name: String? = "") : Parcelable {
-    constructor(parcel: Parcel) : this(parcel.readString()) {
+class Person(var name: String? = "") : Parcelable {
+    constructor(parcel: Parcel) : this(parcel.readString())
+
+    override fun toString(): String {
+        return "Person(name=$name) hashcode = ${hashCode()}"
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
+    }
+
+    fun readFromParcel(parcel: Parcel) {
+        this.name = parcel.readString()
     }
 
     override fun describeContents(): Int {
@@ -28,10 +35,6 @@ class Person(val name: String? = "") : Parcelable {
         override fun newArray(size: Int): Array<Person?> {
             return arrayOfNulls(size)
         }
-    }
-
-    override fun toString(): String {
-        return "Person(name=$name)"
     }
 
 }

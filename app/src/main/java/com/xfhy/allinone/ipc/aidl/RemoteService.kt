@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import com.xfhy.library.ext.log
 
 /**
  * @author : xfhy
@@ -12,6 +13,10 @@ import android.os.IBinder
  */
 class RemoteService : Service() {
 
+    companion object {
+        const val TAG = "xfhy_aidl"
+    }
+
     private val mPersonList = mutableListOf<Person?>()
 
     private val mBinder: Binder = object : IPersonManager.Stub() {
@@ -19,6 +24,21 @@ class RemoteService : Service() {
 
         override fun addPerson(person: Person?): Boolean {
             return mPersonList.add(person)
+        }
+
+        override fun addPersonIn(person: Person?) {
+            log(TAG,"服务端 addPersonIn() person = $person")
+            person?.name = "被addPersonIn修改"
+        }
+
+        override fun addPersonOut(person: Person?) {
+            log(TAG,"服务端 addPersonOut() person = $person}")
+            person?.name = "被addPersonOut修改"
+        }
+
+        override fun addPersonInout(person: Person?) {
+            log(TAG,"服务端 addPersonInout() person = $person}")
+            person?.name = "被addPersonInout修改"
         }
     }
 

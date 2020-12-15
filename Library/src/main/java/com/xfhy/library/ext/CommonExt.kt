@@ -1,15 +1,13 @@
 package com.xfhy.library.ext
 
 import android.app.Activity
-import android.content.Intent
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.orhanobut.logger.Logger
+import com.google.android.material.snackbar.Snackbar
 import com.xfhy.library.utils.SnackbarUtil
 import com.xfhy.library.widgets.DefaultTextWatcher
 
@@ -55,4 +53,8 @@ fun Any?.logString(tag: String = "xfhy_tag") {
 
 fun log(tag: String = "xfhy_tag", msg: String?) {
     Log.d(tag, msg ?: "null")
+}
+
+fun log(msg: String?) {
+    Log.d("xfhy_tag", msg ?: "null")
 }
