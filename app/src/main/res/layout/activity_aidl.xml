@@ -43,6 +43,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="addPersonOneway" />
 
+        <Button
+            android:id="@+id/btnRegisterListener"
+            style="@style/HorizontalBtnStyle"
+            android:text="registerListener" />
+
     </LinearLayout>
 
 </ScrollView>

@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import android.os.RemoteCallbackList
 import com.xfhy.library.ext.log
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -19,13 +20,25 @@ class RemoteService : Service() {
     }
 
     private val mPersonList = CopyOnWriteArrayList<Person?>()
+    private val mListenerList = RemoteCallbackList<IPersonChangeListener?>()
 
     private val mBinder: Binder = object : IPersonManager.Stub() {
         override fun getPersonList(): MutableList<Person?> = mPersonList
 
         override fun addPerson(person: Person?): Boolean {
             log(TAG, "服务端 addPerson() 当前线程 : ${Thread.currentThread().name}")
-            return mPersonList.add(person)
+            log(TAG, "服务端 addPerson() person = $person")
+            val addResult = mPersonList.add(person)
+            onDataChange(person)
+            return addResult
+        }
+
+        private fun onDataChange(person: Person?) {
+            val callbackCount = mListenerList.beginBroadcast()
+            for (i in 0..callbackCount) {
+                mListenerList.getBroadcastItem(i)?.onPersonDataChanged(person)
+            }
+            mListenerList.finishBroadcast()
         }
 
         override fun addPersonIn(person: Person?) {
@@ -46,6 +59,14 @@ class RemoteService : Service() {
         override fun addPersonOneway(person: Person?) {
             mPersonList.add(person)
             Thread.sleep(2000)
+        }
+
+        override fun registerListener(listener: IPersonChangeListener?) {
+            mListenerList.register(listener)
+        }
+
+        override fun unregisterListener(listener: IPersonChangeListener?) {
+            mListenerList.unregister(listener)
         }
     }
 

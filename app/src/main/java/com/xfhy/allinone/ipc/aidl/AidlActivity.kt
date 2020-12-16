@@ -23,9 +23,11 @@ class AidlActivity : TitleBarActivity() {
     }
 
     private var remoteServer: IPersonManager? = null
+    private var service: IBinder? = null
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            this@AidlActivity.service = service
             log(TAG, "onServiceConnected")
             //在onServiceConnected调用IPersonManager.Stub.asInterface获取接口类型的实例
             //通过这个实例调用服务端的服务
@@ -66,6 +68,9 @@ class AidlActivity : TitleBarActivity() {
         btnAddPersonOneway.setOnClickListener {
             addPersonOneway()
         }
+        btnRegisterListener.setOnClickListener {
+            registerListener()
+        }
     }
 
     private fun connectService() {
@@ -90,6 +95,8 @@ class AidlActivity : TitleBarActivity() {
         } catch (e: DeadObjectException) {
             e.printStackTrace()
         } catch (e: SecurityException) {
+            e.printStackTrace()
+        } catch (e: IllegalStateException) {
             e.printStackTrace()
         }
     }
@@ -149,9 +156,27 @@ class AidlActivity : TitleBarActivity() {
         //oneway结束时间: 1608858291372
     }
 
+    //todo xfhy 只通知一次
+    private val mPersonChangeListener = object : IPersonChangeListener.Stub() {
+        override fun onPersonDataChanged(person: Person?) {
+            log(TAG, "客户端 onPersonDataChanged() person = $person}")
+        }
+    }
+
+    private fun registerListener() {
+        remoteServer?.registerListener(mPersonChangeListener)
+    }
+
+    private fun unregisterListener() {
+        remoteServer?.asBinder()?.isBinderAlive?.let {
+            remoteServer?.unregisterListener(mPersonChangeListener)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         //最后记得unbindService
+        unregisterListener()
         unbindService(serviceConnection)
     }
 
