@@ -96,7 +96,10 @@ class AidlActivity : TitleBarActivity() {
 
     private fun getPerson() {
         val personList = remoteServer?.personList
-        log(TAG, "person 列表 $personList")
+        personList?.let {
+            log(TAG, "personList ${it::class.java}")
+        }
+        //log(TAG, "person 列表 $personList")
     }
 
     private fun addPersonIn() {

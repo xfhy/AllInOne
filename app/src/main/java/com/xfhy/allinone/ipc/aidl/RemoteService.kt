@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import com.xfhy.library.ext.log
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * @author : xfhy
@@ -17,12 +18,13 @@ class RemoteService : Service() {
         const val TAG = "xfhy_aidl"
     }
 
-    private val mPersonList = mutableListOf<Person?>()
+    private val mPersonList = CopyOnWriteArrayList<Person?>()
 
     private val mBinder: Binder = object : IPersonManager.Stub() {
         override fun getPersonList(): MutableList<Person?> = mPersonList
 
         override fun addPerson(person: Person?): Boolean {
+            log(TAG, "服务端 addPerson() 当前线程 : ${Thread.currentThread().name}")
             return mPersonList.add(person)
         }
 
