@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import android.os.RemoteCallbackList
+import android.os.RemoteException
 import com.xfhy.library.ext.log
+import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
@@ -28,17 +30,7 @@ class RemoteService : Service() {
         override fun addPerson(person: Person?): Boolean {
             log(TAG, "服务端 addPerson() 当前线程 : ${Thread.currentThread().name}")
             log(TAG, "服务端 addPerson() person = $person")
-            val addResult = mPersonList.add(person)
-            onDataChange(person)
-            return addResult
-        }
-
-        private fun onDataChange(person: Person?) {
-            val callbackCount = mListenerList.beginBroadcast()
-            for (i in 0..callbackCount) {
-                mListenerList.getBroadcastItem(i)?.onPersonDataChanged(person)
-            }
-            mListenerList.finishBroadcast()
+            return mPersonList.add(person)
         }
 
         override fun addPersonIn(person: Person?) {
@@ -70,6 +62,17 @@ class RemoteService : Service() {
         }
     }
 
+    //死循环 每隔5秒添加一次person,通知观察者
+    private val serviceWorker = Runnable {
+        while (!Thread.currentThread().isInterrupted) {
+            Thread.sleep(5000)
+            val person = Person("name${Random().nextInt(10000)}")
+            mPersonList.add(person)
+            onDataChange(person)
+        }
+    }
+    private val mServiceListenerThread = Thread(serviceWorker)
+
     override fun onBind(intent: Intent?): IBinder? {
         return mBinder
     }
@@ -78,6 +81,26 @@ class RemoteService : Service() {
         super.onCreate()
         mPersonList.add(Person("Garen"))
         mPersonList.add(Person("Darius"))
+
+        mServiceListenerThread.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mServiceListenerThread.interrupt()
+    }
+
+    private fun onDataChange(person: Person?) {
+        val callbackCount = mListenerList.beginBroadcast()
+        for (i in 0 until callbackCount) {
+            try {
+                //这里try一下避免有异常时无法调用finishBroadcast()
+                mListenerList.getBroadcastItem(i)?.onPersonDataChanged(person)
+            } catch (e: RemoteException) {
+                e.printStackTrace()
+            }
+        }
+        mListenerList.finishBroadcast()
     }
 
 }
