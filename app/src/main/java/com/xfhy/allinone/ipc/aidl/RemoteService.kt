@@ -27,18 +27,23 @@ class RemoteService : Service() {
         }
 
         override fun addPersonIn(person: Person?) {
-            log(TAG,"服务端 addPersonIn() person = $person")
+            log(TAG, "服务端 addPersonIn() person = $person")
             person?.name = "被addPersonIn修改"
         }
 
         override fun addPersonOut(person: Person?) {
-            log(TAG,"服务端 addPersonOut() person = $person}")
+            log(TAG, "服务端 addPersonOut() person = $person}")
             person?.name = "被addPersonOut修改"
         }
 
         override fun addPersonInout(person: Person?) {
-            log(TAG,"服务端 addPersonInout() person = $person}")
+            log(TAG, "服务端 addPersonInout() person = $person}")
             person?.name = "被addPersonInout修改"
+        }
+
+        override fun addPersonOneway(person: Person?) {
+            mPersonList.add(person)
+            Thread.sleep(2000)
         }
     }
 

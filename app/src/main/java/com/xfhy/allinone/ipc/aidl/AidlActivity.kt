@@ -63,6 +63,9 @@ class AidlActivity : TitleBarActivity() {
         btnAddPersonInout.setOnClickListener {
             addPersonInout()
         }
+        btnAddPersonOneway.setOnClickListener {
+            addPersonOneway()
+        }
     }
 
     private fun connectService() {
@@ -134,6 +137,14 @@ class AidlActivity : TitleBarActivity() {
     服务端 addPersonInout() person = Person(name=艾克) hashcode = 116061620}
     客户端 addPersonInout() 调用之后 person = Person(name=被addPersonInout修改) hashcode = 143615140}
     * */
+
+    private fun addPersonOneway() {
+        log(TAG, "oneway开始时间: ${System.currentTimeMillis()}")
+        remoteServer?.addPersonOneway(Person("oneway"))
+        log(TAG, "oneway结束时间: ${System.currentTimeMillis()}")
+        //oneway开始时间: 1608858291371
+        //oneway结束时间: 1608858291372
+    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -10,4 +10,6 @@ interface IPersonManager {
     void addPersonOut(out Person person);
     void addPersonInout(inout Person person);
 
+    oneway void addPersonOneway(in Person person);
+
 }

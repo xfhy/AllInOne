@@ -38,6 +38,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="addPersonInout" />
 
+        <Button
+            android:id="@+id/btnAddPersonOneway"
+            style="@style/HorizontalBtnStyle"
+            android:text="addPersonOneway" />
+
     </LinearLayout>
 
 </ScrollView>
