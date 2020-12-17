@@ -2,6 +2,7 @@ package com.xfhy.allinone.ipc.aidl
 
 import android.app.Service
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Binder
 import android.os.IBinder
 import android.os.RemoteCallbackList
@@ -74,6 +75,12 @@ class RemoteService : Service() {
     private val mServiceListenerThread = Thread(serviceWorker)
 
     override fun onBind(intent: Intent?): IBinder? {
+        val check = checkCallingOrSelfPermission("com.xfhy.allinone.ipc.aidl.ACCESS_PERSON_SERVICE")
+        if (check == PackageManager.PERMISSION_DENIED) {
+            log(TAG,"没有权限")
+            return null
+        }
+        log(TAG,"有权限")
         return mBinder
     }
 
