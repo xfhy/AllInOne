@@ -28,7 +28,7 @@ class AidlActivity : TitleBarActivity() {
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             this@AidlActivity.mService = service
-            log(TAG, "onServiceConnected")
+            log(TAG, "onServiceConnected, thread = ${Thread.currentThread().name}")
 
             //给binder设置一个死亡代理
             service?.linkToDeath(mDeathRecipient, 0)
@@ -39,7 +39,8 @@ class AidlActivity : TitleBarActivity() {
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            log(TAG, "onServiceDisconnected")
+            //主线程
+            log(TAG, "onServiceDisconnected, thread = ${Thread.currentThread().name}")
         }
     }
 
@@ -49,9 +50,17 @@ class AidlActivity : TitleBarActivity() {
         }
     }
 
-    private val mDeathRecipient = IBinder.DeathRecipient {
-        //监听 binder died
-        log(TAG, "binder died")
+    private val mDeathRecipient = object : IBinder.DeathRecipient {
+        override fun binderDied() {
+            //子线程
+            //监听 binder died
+            log(TAG, "binder died, thread = ${Thread.currentThread().name}")
+            //移除死亡通知
+            mService?.unlinkToDeath(this, 0)
+            mService = null
+            //重新连接
+            connectService()
+        }
     }
 
     override fun getThisTitle(): CharSequence {
