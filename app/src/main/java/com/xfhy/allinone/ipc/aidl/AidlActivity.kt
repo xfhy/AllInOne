@@ -111,7 +111,7 @@ class AidlActivity : TitleBarActivity() {
         //RemoteException 异常：
         //DeadObjectException 异常：连接中断时会抛出异常；
         //SecurityException 异常：客户端和服务端中定义的 AIDL 发生冲突时会抛出异常；
-        try {
+        /*try {
             val addPersonResult = mRemoteServer?.addPerson(Person("盖伦"))
             log(TAG, "addPerson result = $addPersonResult")
         } catch (e: RemoteException) {
@@ -122,7 +122,7 @@ class AidlActivity : TitleBarActivity() {
             e.printStackTrace()
         } catch (e: IllegalStateException) {
             e.printStackTrace()
-        }
+        }*/
     }
 
     private fun getPerson() {
@@ -141,17 +141,17 @@ class AidlActivity : TitleBarActivity() {
     }
 
     private fun addPersonOut() {
-        var person = Person("蛮王")
+        /*var person = Person("蛮王")
         log(TAG, "客户端 addPersonOut() 调用之前 person = $person}")
         mRemoteServer?.addPersonOut(person)
-        log(TAG, "客户端 addPersonOut() 调用之后 person = $person}")
+        log(TAG, "客户端 addPersonOut() 调用之后 person = $person}")*/
     }
 
     private fun addPersonInout() {
-        var person = Person("艾克")
+        /*var person = Person("艾克")
         log(TAG, "客户端 addPersonInout() 调用之前 person = $person}")
         mRemoteServer?.addPersonInout(person)
-        log(TAG, "客户端 addPersonInout() 调用之后 person = $person}")
+        log(TAG, "客户端 addPersonInout() 调用之后 person = $person}")*/
     }
 
     /*
@@ -173,21 +173,21 @@ class AidlActivity : TitleBarActivity() {
     * */
 
     private fun addPersonOneway() {
-        log(TAG, "oneway开始时间: ${System.currentTimeMillis()}")
+        /*log(TAG, "oneway开始时间: ${System.currentTimeMillis()}")
         mRemoteServer?.addPersonOneway(Person("oneway"))
-        log(TAG, "oneway结束时间: ${System.currentTimeMillis()}")
+        log(TAG, "oneway结束时间: ${System.currentTimeMillis()}")*/
         //oneway开始时间: 1608858291371
         //oneway结束时间: 1608858291372
     }
 
     private fun registerListener() {
-        mRemoteServer?.registerListener(mPersonChangeListener)
+        //mRemoteServer?.registerListener(mPersonChangeListener)
     }
 
     private fun unregisterListener() {
-        mRemoteServer?.asBinder()?.isBinderAlive?.let {
+        /*mRemoteServer?.asBinder()?.isBinderAlive?.let {
             mRemoteServer?.unregisterListener(mPersonChangeListener)
-        }
+        }*/
     }
 
     override fun onDestroy() {
