@@ -28,23 +28,23 @@ class RemoteService : Service() {
     private val mBinder: Binder = object : IPersonManager.Stub() {
         override fun getPersonList(): MutableList<Person?> = mPersonList
 
-        /*override fun addPerson(person: Person?): Boolean {
+        override fun addPerson(person: Person?): Boolean {
             log(TAG, "服务端 addPerson() 当前线程 : ${Thread.currentThread().name}")
             log(TAG, "服务端 addPerson() person = $person")
             return mPersonList.add(person)
-        }*/
+        }
 
         override fun addPersonIn(person: Person?) {
             log(TAG, "服务端 addPersonIn() person = $person")
             person?.name = "被addPersonIn修改"
         }
 
-        /*override fun addPersonOut(person: Person?) {
+        override fun addPersonOut(person: Person?) {
             log(TAG, "服务端 addPersonOut() person = $person}")
             person?.name = "被addPersonOut修改"
-        }*/
+        }
 
-        /*override fun addPersonInout(person: Person?) {
+        override fun addPersonInout(person: Person?) {
             log(TAG, "服务端 addPersonInout() person = $person}")
             person?.name = "被addPersonInout修改"
         }
@@ -60,7 +60,7 @@ class RemoteService : Service() {
 
         override fun unregisterListener(listener: IPersonChangeListener?) {
             mListenerList.unregister(listener)
-        }*/
+        }
     }
 
     //死循环 每隔5秒添加一次person,通知观察者
