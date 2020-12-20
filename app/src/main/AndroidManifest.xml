@@ -9,7 +9,7 @@
         android:name="com.xfhy.allinone.ipc.aidl.ACCESS_PERSON_SERVICE"
         android:protectionLevel="normal" />
 
-    <uses-permission android:name="com.xfhy.allinone.ipc.aidl.ACCESS_PERSON_SERVICE"/>
+    <uses-permission android:name="com.xfhy.allinone.ipc.aidl.ACCESS_PERSON_SERVICE" />
 
     <application
         android:name=".App"
@@ -33,17 +33,20 @@
         <activity android:name=".opensource.OpenSourceActivity" />
         <activity android:name=".smali.SmaliActivity" />
         <activity android:name=".MainActivity">
-           <!-- <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity android:name=".jni.CallMethodActivity" />
         <activity android:name=".jni.JNIMainActivity" />
 
         <service
-            android:name=".ipc.aidl.RemoteService"
+            android:name=".ipc.aidl.AidlRemoteService"
             android:enabled="true"
             android:exported="true"
             android:process=":other">
@@ -51,6 +54,7 @@
                 <action android:name="com.xfhy.aidl.Server.Action" />
             </intent-filter>
         </service>
+
         <activity android:name=".ipc.aidl.AidlActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,6 +62,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ipc.messenger.MessengerActivity" />
+
+        <service
+            android:name=".ipc.messenger.MessengerService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":other" />
     </application>
 
 </manifest>

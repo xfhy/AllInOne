@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList
  * Create time : 2020/12/15 6:19 AM
  * Description : aidl 服务端Service
  */
-class RemoteService : Service() {
+class AidlRemoteService : Service() {
 
     companion object {
         const val TAG = "xfhy_aidl"

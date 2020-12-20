@@ -26,10 +26,17 @@
             style="@style/HorizontalBtnStyle"
             android:text="开源库" />
 
+        <!--todo xfhy 这里最后需要将IPC汇总到一个Activity里面-->
+
         <Button
             android:id="@+id/btnGoAidl"
             style="@style/HorizontalBtnStyle"
             android:text="AIDL"/>
+
+        <Button
+            android:id="@+id/btnGoMessenger"
+            style="@style/HorizontalBtnStyle"
+            android:text="Messenger" />
 
     </LinearLayout>
 
