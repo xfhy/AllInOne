@@ -7,6 +7,7 @@ import android.content.ServiceConnection
 import android.os.*
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
+import com.xfhy.library.ext.log
 import kotlinx.android.synthetic.main.activity_messenger.*
 import java.io.Serializable
 
@@ -22,6 +23,20 @@ class MessengerActivity : TitleBarActivity() {
 
     /** 是否已bindService */
     private var bound: Boolean = false
+
+    /** 客户端这边的Messenger */
+    private var mClientMessenger = Messenger(IncomingHandler())
+
+    class IncomingHandler : Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            when (msg.what) {
+                MSG_FROM_SERVICE -> {
+                    log(TAG, "Received from service: ${msg.data?.getString("reply")}")
+                }
+                else -> super.handleMessage(msg)
+            }
+        }
+    }
 
     private val mServiceConnection = object : ServiceConnection {
 
@@ -74,6 +89,7 @@ class MessengerActivity : TitleBarActivity() {
         }
         //创建,并且发送一个message给服务端   Message中what指定为MSG_SAY_HELLO
         val message = Message.obtain(null, MSG_SAY_HELLO, 0, 0)
+        message.replyTo = mClientMessenger
         message.data = Bundle().apply {
             putSerializable("person", SerializablePerson("张三"))
         }
