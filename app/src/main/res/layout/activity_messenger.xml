@@ -18,6 +18,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="SayHello" />
 
+        <Button
+            android:id="@+id/btnTransferSerializable"
+            style="@style/HorizontalBtnStyle"
+            android:text="TransferSerializable" />
+
     </LinearLayout>
 
 </ScrollView>

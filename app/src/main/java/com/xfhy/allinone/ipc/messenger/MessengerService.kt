@@ -39,6 +39,7 @@ class MessengerService : Service() {
                     Toast.makeText(applicationContext, "hello!", Toast.LENGTH_SHORT).show()
                     log(TAG, "hello!")
                 }
+                MSG_TRANSFER_SERIALIZABLE -> log(TAG, "传递过来的对象:  ${msg.data.get("person")}")
                 else -> super.handleMessage(msg)
             }
         }

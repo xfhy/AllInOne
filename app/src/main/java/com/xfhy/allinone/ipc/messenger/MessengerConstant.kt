@@ -7,4 +7,5 @@ package com.xfhy.allinone.ipc.messenger
  */
 
 const val MSG_SAY_HELLO = 1
+const val MSG_TRANSFER_SERIALIZABLE = 2
 

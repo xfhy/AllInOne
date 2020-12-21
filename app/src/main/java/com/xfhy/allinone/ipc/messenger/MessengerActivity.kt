@@ -8,6 +8,7 @@ import android.os.*
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_messenger.*
+import java.io.Serializable
 
 /**
  * Messenger test
@@ -49,18 +50,8 @@ class MessengerActivity : TitleBarActivity() {
         btnSayHello.setOnClickListener {
             sayHello()
         }
-    }
-
-    private fun sayHello() {
-        if (!bound) {
-            return
-        }
-        //创建,并且发送一个message给服务端   Message中what指定为MSG_SAY_HELLO
-        val message = Message.obtain(null, MSG_SAY_HELLO, 0, 0)
-        try {
-            mService?.send(message)
-        } catch (e: RemoteException) {
-            e.printStackTrace()
+        btnTransferSerializable.setOnClickListener {
+            transferSerializable()
         }
     }
 
@@ -71,6 +62,38 @@ class MessengerActivity : TitleBarActivity() {
         }.also { intent ->
             bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
         }
+    }
+
+    //客户端调服务端方法时,需要捕获以下几个异常:
+    //RemoteException 异常：
+    //DeadObjectException 异常：连接中断时会抛出异常；
+    //SecurityException 异常：客户端和服务端中定义的 AIDL 发生冲突时会抛出异常；
+    private fun sayHello() {
+        if (!bound) {
+            return
+        }
+        //创建,并且发送一个message给服务端   Message中what指定为MSG_SAY_HELLO
+        val message = Message.obtain(null, MSG_SAY_HELLO, 0, 0)
+        message.data = Bundle().apply {
+            putSerializable("person", SerializablePerson("张三"))
+        }
+        try {
+            mService?.send(message)
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        }
+    }
+
+    data class SerializablePerson(val name: String) : Serializable
+
+    private fun transferSerializable() {
+        //这里为了简化代码方便查看核心,就不写是否绑定、捕获异常之类的代码了
+        //创建,并且发送一个message给服务端   Message中what指定为MSG_TRANSFER_SERIALIZABLE
+        val message = Message.obtain(null, MSG_TRANSFER_SERIALIZABLE, 0, 0)
+        message.data = Bundle().apply {
+            putSerializable("person", SerializablePerson("张三"))
+        }
+        mService?.send(message)
     }
 
     override fun onStop() {
