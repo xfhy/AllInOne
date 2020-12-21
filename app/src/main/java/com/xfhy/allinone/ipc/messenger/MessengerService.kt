@@ -8,7 +8,7 @@ import android.widget.Toast
 import com.xfhy.library.ext.log
 
 //官方文档上的这种常量都是定义在这里的,效仿着也这么写.
-private const val MSG_SAY_HELLO = 1
+//private const val MSG_SAY_HELLO = 1
 private const val TAG = "xfhy_messenger"
 
 /**

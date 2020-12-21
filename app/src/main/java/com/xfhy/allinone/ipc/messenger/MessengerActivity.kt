@@ -1,12 +1,13 @@
 package com.xfhy.allinone.ipc.messenger
 
 import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Bundle
-import android.os.IBinder
-import android.os.Messenger
+import android.os.*
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
+import kotlinx.android.synthetic.main.activity_messenger.*
 
 /**
  * Messenger test
@@ -42,6 +43,42 @@ class MessengerActivity : TitleBarActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messenger)
 
+        btnConnect.setOnClickListener {
+            connectService()
+        }
+        btnSayHello.setOnClickListener {
+            sayHello()
+        }
+    }
+
+    private fun sayHello() {
+        if (!bound) {
+            return
+        }
+        //创建,并且发送一个message给服务端   Message中what指定为MSG_SAY_HELLO
+        val message = Message.obtain(null, MSG_SAY_HELLO, 0, 0)
+        try {
+            mService?.send(message)
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun connectService() {
+        Intent().apply {
+            action = "com.xfhy.messenger.Server.Action"
+            setPackage("com.xfhy.allinone")
+        }.also { intent ->
+            bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (bound) {
+            unbindService(mServiceConnection)
+            bound = false
+        }
     }
 
 }

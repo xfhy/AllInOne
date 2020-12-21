@@ -55,7 +55,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ipc.aidl.AidlActivity">
+        <activity android:name=".ipc.aidl.AidlActivity" />
+
+        <activity android:name=".ipc.messenger.MessengerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,13 +65,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ipc.messenger.MessengerActivity" />
-
         <service
             android:name=".ipc.messenger.MessengerService"
             android:enabled="true"
             android:exported="true"
-            android:process=":other" />
+            android:process=":other">
+            <intent-filter>
+                <action android:name="com.xfhy.messenger.Server.Action" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

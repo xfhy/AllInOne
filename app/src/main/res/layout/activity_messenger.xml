@@ -13,6 +13,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="bindService" />
 
+        <Button
+            android:id="@+id/btnSayHello"
+            style="@style/HorizontalBtnStyle"
+            android:text="SayHello" />
+
     </LinearLayout>
 
 </ScrollView>
