@@ -89,6 +89,7 @@ class MessengerActivity : TitleBarActivity() {
         }
         //创建,并且发送一个message给服务端   Message中what指定为MSG_SAY_HELLO
         val message = Message.obtain(null, MSG_SAY_HELLO, 0, 0)
+        //将客户方的Messenger放replyTo里
         message.replyTo = mClientMessenger
         message.data = Bundle().apply {
             putSerializable("person", SerializablePerson("张三"))
