@@ -2,6 +2,7 @@ package com.xfhy.allinone
 
 import android.os.Bundle
 import com.xfhy.allinone.ipc.aidl.AidlActivity
+import com.xfhy.allinone.ipc.binder.BinderActivity
 import com.xfhy.allinone.ipc.messenger.MessengerActivity
 import com.xfhy.allinone.jni.JNIMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
@@ -34,6 +35,9 @@ class MainActivity : TitleBarActivity() {
         }
         btnGoMessenger.setOnClickListener {
             startActivity<MessengerActivity>()
+        }
+        btnGoBinder.setOnClickListener {
+            startActivity<BinderActivity>()
         }
     }
 }

@@ -34,13 +34,11 @@
         <activity android:name=".smali.SmaliActivity" />
         <activity android:name=".MainActivity">
 
-            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
         </activity>
         <activity android:name=".jni.CallMethodActivity" />
         <activity android:name=".jni.JNIMainActivity" />
@@ -58,12 +56,9 @@
         <activity android:name=".ipc.aidl.AidlActivity" />
 
         <activity android:name=".ipc.messenger.MessengerActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+        <activity android:name=".ipc.binder.BinderActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

@@ -31,12 +31,17 @@
         <Button
             android:id="@+id/btnGoAidl"
             style="@style/HorizontalBtnStyle"
-            android:text="AIDL"/>
+            android:text="AIDL" />
 
         <Button
             android:id="@+id/btnGoMessenger"
             style="@style/HorizontalBtnStyle"
             android:text="Messenger" />
+
+        <Button
+            android:id="@+id/btnGoBinder"
+            style="@style/HorizontalBtnStyle"
+            android:text="Binder" />
 
     </LinearLayout>
 
