@@ -59,6 +59,7 @@
 
         </activity>
         <activity android:name=".ipc.binder.BinderActivity" />
+        <activity android:name=".ipc.ashmem.AshmemActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"
@@ -67,6 +68,15 @@
             android:process=":other">
             <intent-filter>
                 <action android:name="com.xfhy.messenger.Server.Action" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".ipc.ashmem.AshmemRemoteService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":other" >
+            <intent-filter>
+                <action android:name="com.xfhy.ashmem.Server.Action" />
             </intent-filter>
         </service>
     </application>
