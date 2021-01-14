@@ -43,6 +43,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="Binder" />
 
+        <Button
+            android:id="@+id/btnGoAshmem"
+            style="@style/HorizontalBtnStyle"
+            android:text="共享内存" />
+
     </LinearLayout>
 
 </ScrollView>

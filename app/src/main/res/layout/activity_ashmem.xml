@@ -13,8 +13,18 @@
             style="@style/HorizontalBtnStyle"
             android:text="绑定服务" />
 
+        <Button
+            android:id="@+id/btnShareText"
+            style="@style/HorizontalBtnStyle"
+            android:text="共享文本" />
+
+        <Button
+            android:id="@+id/btnShareBitmap"
+            style="@style/HorizontalBtnStyle"
+            android:text="共享Bitmap" />
+
         <ImageView
-            android:id="@+id/ivAshmemShareBitmap"
+            android:id="@+id/ivAshmemShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

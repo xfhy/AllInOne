@@ -1,6 +1,7 @@
 package com.xfhy.library.ext
 
 import android.app.Activity
+import android.graphics.Bitmap
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.xfhy.library.utils.SnackbarUtil
 import com.xfhy.library.widgets.DefaultTextWatcher
+import java.io.ByteArrayOutputStream
 
 /**
  * @author xfhy
@@ -57,4 +59,14 @@ fun log(tag: String = "xfhy_tag", msg: String?) {
 
 fun log(msg: String?) {
     Log.d("xfhy_tag", msg ?: "null")
+}
+
+fun Bitmap.toByteArray(): ByteArray {
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    compress(
+        Bitmap.CompressFormat.PNG,
+        100,
+        byteArrayOutputStream
+    )
+    return byteArrayOutputStream.toByteArray()
 }

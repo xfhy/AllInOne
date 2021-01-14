@@ -4,12 +4,17 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Parcel
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
+import com.xfhy.library.ext.log
 import kotlinx.android.synthetic.main.activity_ashmem.*
+import java.io.BufferedReader
+import java.io.FileInputStream
+import java.io.FileReader
 
 /**
  * 2021年01月14日07:21:39
@@ -29,16 +34,14 @@ import kotlinx.android.synthetic.main.activity_ashmem.*
 private const val TAG = "xfhy_ashmem"
 
 class AshmemActivity : TitleBarActivity() {
+
+    private var mService: IBinder? = null
+
     private val mServiceConnection = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val data = Parcel.obtain()
-            val reply = Parcel.obtain()
-            try {
+            mService = service
 
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -51,28 +54,76 @@ class AshmemActivity : TitleBarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_binder)
+        setContentView(R.layout.activity_ashmem)
 
         btnBindAshmemService.setOnClickListener {
             bindAshmemService()
         }
+        btnShareText.setOnClickListener {
+            getShareText()
+        }
+        btnShareBitmap.setOnClickListener {
+            getShareBitmap()
+        }
     }
 
     private fun bindAshmemService() {
-        /*
-        * Intent().apply {
-            action = "com.xfhy.messenger.Server.Action"
+        Intent().apply {
+            action = "com.xfhy.ashmem.Server.Action"
             setPackage("com.xfhy.allinone")
         }.also { intent ->
             bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
         }
-        * */
-        Intent().apply {
-            action = "com.xfhy.ashmem.Server.Action"
-            setPackage("com.xfhy.allinone")
-        }.also {
-            bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
+    }
+
+    private fun getShareText() {
+        log(TAG, "Client : onServiceConnected")
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        try {
+            //通过binder机制跨进程调用服务端的接口
+            log(TAG, "Client : call server method code = $SHARE_TEXT_CODE")
+            mService?.transact(SHARE_TEXT_CODE, data, reply, 0)
+            //获得RemoteService创建的匿名共享内存的fd
+            val fileDescriptor = reply.readFileDescriptor().fileDescriptor
+            //获取匿名共享内存中的数据,并打印log
+            val bufferedReader = BufferedReader(FileReader(fileDescriptor))
+            val readLine = bufferedReader.readLine()
+            log(TAG, "Client : readText = $readLine")
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+    }
+
+    private fun getShareBitmap() {
+        log(TAG, "Client : onServiceConnected")
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        try {
+            //通过binder机制跨进程调用服务端的接口
+            log(TAG, "Client : call server method code = $SHARE_BITMAP_CODE")
+            mService?.transact(SHARE_BITMAP_CODE, data, reply, 0)
+            //获得RemoteService创建的匿名共享内存的fd
+            val fileDescriptor = reply.readFileDescriptor().fileDescriptor
+
+            //获取匿名共享内存中的数据,并打印log
+            val fileInputStream = FileInputStream(fileDescriptor)
+            val readBytes = fileInputStream.readBytes()
+            if (readBytes.isNotEmpty()) {
+                val bitmap = BitmapFactory.decodeByteArray(readBytes, 0, readBytes.size)
+                bitmap?.let {
+                    //正常情况下,这里应该压缩一下,因为你不知道这个Bitmap有多大,太大了直接展示的话可能会崩溃
+                    ivAshmemShare.setImageBitmap(bitmap)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(mServiceConnection)
     }
 
 }
