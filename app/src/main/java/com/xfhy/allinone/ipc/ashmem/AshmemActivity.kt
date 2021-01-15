@@ -41,7 +41,6 @@ class AshmemActivity : TitleBarActivity() {
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             mService = service
-
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -106,7 +105,7 @@ class AshmemActivity : TitleBarActivity() {
             //获得RemoteService创建的匿名共享内存的fd
             val fileDescriptor = reply.readFileDescriptor().fileDescriptor
 
-            //获取匿名共享内存中的数据,并打印log
+            //获取匿名共享内存中的数据,并设置到ImageView上
             val fileInputStream = FileInputStream(fileDescriptor)
             val readBytes = fileInputStream.readBytes()
             if (readBytes.isNotEmpty()) {

@@ -33,16 +33,8 @@ class AshmemRemoteService : Service() {
                         val str = "xfhy"
                         log(TAG, "Server : share text=$str")
                         val contentBytes = str.toByteArray()
-                        //创建匿名共享内存
-                        val memoryFile = MemoryFile("memfile", contentBytes.size)
-                        //写入字符数据
-                        memoryFile.writeBytes(contentBytes, 0, 0, contentBytes.size)
-                        //通过反射获得文件句柄
-                        val method = MemoryFile::class.java.getDeclaredMethod("getFileDescriptor")
-                        val fileDescriptor = method.invoke(memoryFile) as? FileDescriptor
-                        val parcelFileDescriptor = ParcelFileDescriptor.dup(fileDescriptor)
-                        //将文件句柄写到binder调用的返回值中
-                        parcelFileDescriptor?.fileDescriptor?.let { reply?.writeFileDescriptor(it) }
+
+                        writeData(contentBytes, reply)
                         true
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -58,18 +50,8 @@ class AshmemRemoteService : Service() {
                         //将Bitmap转为byte数组
                         val contentBytes = createScaledBitmap.toByteArray()
 
-                        //创建匿名共享内存
-                        val memoryFile = MemoryFile("memfile", contentBytes.size)
-                        //写入byte数据
-                        memoryFile.writeBytes(contentBytes, 0, 0, contentBytes.size)
-                        //通过反射获得文件句柄
-                        val method = MemoryFile::class.java.getDeclaredMethod("getFileDescriptor")
-                        val fileDescriptor = method.invoke(memoryFile) as? FileDescriptor
-                        val parcelFileDescriptor = ParcelFileDescriptor.dup(fileDescriptor)
-                        //将文件句柄写到binder调用的返回值中
-                        parcelFileDescriptor?.fileDescriptor?.let {
-                            reply?.writeFileDescriptor(it)
-                        }
+                        //写数据到匿名共享内存中
+                        writeData(contentBytes, reply)
                         true
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -79,6 +61,22 @@ class AshmemRemoteService : Service() {
                 else -> super.onTransact(code, data, reply, flags)
             }
 
+        }
+
+        private fun writeData(contentBytes: ByteArray, reply: Parcel?) {
+            //创建匿名共享内存
+            val memoryFile = MemoryFile("memfile", contentBytes.size)
+            //写入byte数据
+            memoryFile.writeBytes(contentBytes, 0, 0, contentBytes.size)
+            //通过反射获得文件句柄
+            val method = MemoryFile::class.java.getDeclaredMethod("getFileDescriptor")
+            val fileDescriptor = method.invoke(memoryFile) as? FileDescriptor
+            //FileDescriptor不能直接跨进程传输,需要ParcelFileDescriptor.dup()一下转成ParcelFileDescriptor
+            val parcelFileDescriptor = ParcelFileDescriptor.dup(fileDescriptor)
+            //将文件句柄写到binder调用的返回值中
+            parcelFileDescriptor?.fileDescriptor?.let {
+                reply?.writeFileDescriptor(it)
+            }
         }
 
         private fun createBitmap(): Bitmap {
