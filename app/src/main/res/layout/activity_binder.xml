@@ -13,6 +13,25 @@
             style="@style/HorizontalBtnStyle"
             android:text="Binder传输大数据" />
 
+        <Button
+            android:id="@+id/btnBindBinderService"
+            style="@style/HorizontalBtnStyle"
+            android:text="绑定服务" />
+
+        <Button
+            android:id="@+id/btnTestSupport"
+            style="@style/HorizontalBtnStyle"
+            android:text="支持传递的异常" />
+
+        <Button
+            android:id="@+id/btnTestUnSupport"
+            style="@style/HorizontalBtnStyle"
+            android:text="不支持传递的异常" />
+
+        <Button
+            android:id="@+id/btnTestError"
+            style="@style/HorizontalBtnStyle"
+            android:text="Error" />
     </LinearLayout>
 
 </ScrollView>

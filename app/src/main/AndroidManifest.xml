@@ -74,9 +74,18 @@
             android:name=".ipc.ashmem.AshmemRemoteService"
             android:enabled="true"
             android:exported="true"
-            android:process=":other" >
+            android:process=":other">
             <intent-filter>
                 <action android:name="com.xfhy.ashmem.Server.Action" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".ipc.binder.BinderService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":other">
+            <intent-filter>
+                <action android:name="com.xfhy.binder.Server.Action" />
             </intent-filter>
         </service>
     </application>

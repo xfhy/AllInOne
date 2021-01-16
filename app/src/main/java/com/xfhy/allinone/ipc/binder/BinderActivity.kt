@@ -1,9 +1,14 @@
 package com.xfhy.allinone.ipc.binder
 
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.IBinder
+import android.os.Parcel
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_binder.*
@@ -14,6 +19,18 @@ import kotlinx.android.synthetic.main.activity_binder.*
 private const val TAG = "xfhy_binder"
 
 class BinderActivity : TitleBarActivity() {
+
+    private var mService: IBinder? = null
+
+    private val mServiceConnection = object : ServiceConnection {
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            mService = service
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+        }
+    }
 
     override fun getThisTitle(): CharSequence {
         return "Binder"
@@ -26,6 +43,60 @@ class BinderActivity : TitleBarActivity() {
 
         btnTransferBigData.setOnClickListener {
             transferBigData()
+        }
+        btnBindBinderService.setOnClickListener {
+            bindBinderService()
+        }
+        btnTestSupport.setOnClickListener {
+            testSupportException()
+        }
+        btnTestUnSupport.setOnClickListener {
+            testUnSupportException()
+        }
+        btnTestError.setOnClickListener {
+            testError()
+        }
+    }
+
+    private fun bindBinderService() {
+        Intent().apply {
+            action = "com.xfhy.binder.Server.Action"
+            setPackage("com.xfhy.allinone")
+        }.also { intent ->
+            bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+    private fun testSupportException() {
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        try {
+            mService?.transact(TEST_SUPPORT_EXCEPTION, data, reply, 0)
+            reply.readException()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun testUnSupportException() {
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        try {
+            mService?.transact(TEST_UNSUPPORT_EXCEPTION, data, reply, 0)
+            reply.readException()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun testError() {
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        try {
+            mService?.transact(TEST_ERROR, data, reply, 0)
+            reply.readException()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -82,6 +153,11 @@ class BinderActivity : TitleBarActivity() {
             putExtra("byte_data", createScaledBitmap)
             sendBroadcast(this)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(mServiceConnection)
     }
 
 }
