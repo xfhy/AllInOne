@@ -91,6 +91,9 @@ class AshmemActivity : TitleBarActivity() {
             log(TAG, "Client : readText = $readLine")
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            data.recycle()
+            reply.recycle()
         }
     }
 
@@ -117,6 +120,9 @@ class AshmemActivity : TitleBarActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            data.recycle()
+            reply.recycle()
         }
     }
 

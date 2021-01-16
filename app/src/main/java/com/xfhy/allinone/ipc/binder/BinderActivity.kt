@@ -75,6 +75,9 @@ class BinderActivity : TitleBarActivity() {
             reply.readException()
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            data.recycle()
+            reply.recycle()
         }
     }
 
@@ -86,6 +89,9 @@ class BinderActivity : TitleBarActivity() {
             reply.readException()
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            data.recycle()
+            reply.recycle()
         }
     }
 
@@ -97,6 +103,9 @@ class BinderActivity : TitleBarActivity() {
             reply.readException()
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            data.recycle()
+            reply.recycle()
         }
     }
 
