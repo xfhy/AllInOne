@@ -14,7 +14,7 @@ import com.xfhy.library.ext.log
  * Description : Binder 服务端Service
  */
 
-private const val TAG = "xfhy_ashmem"
+private const val TAG = "xfhy_binder"
 const val TEST_SUPPORT_EXCEPTION = 1
 const val TEST_UNSUPPORT_EXCEPTION = 2
 const val TEST_ERROR = 3
@@ -80,8 +80,9 @@ class BinderService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        log(TAG, "Server : onBind")
-        return TestBinder()
+        val testBinder = TestBinder()
+        log(TAG, "Server : onBind $testBinder")
+        return testBinder
     }
 
 }

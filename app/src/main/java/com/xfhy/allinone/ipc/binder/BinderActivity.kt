@@ -11,6 +11,7 @@ import android.os.IBinder
 import android.os.Parcel
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
+import com.xfhy.library.ext.log
 import kotlinx.android.synthetic.main.activity_binder.*
 
 /**
@@ -26,6 +27,7 @@ class BinderActivity : TitleBarActivity() {
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             mService = service
+            log(TAG,"Client : onServiceConnected  $service")
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
