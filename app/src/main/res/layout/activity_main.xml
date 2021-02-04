@@ -30,6 +30,10 @@
             android:id="@+id/btnGoIpc"
             style="@style/HorizontalBtnStyle"
             android:text="IPC" />
+        <Button
+            android:id="@+id/btnGoScroll"
+            style="@style/HorizontalBtnStyle"
+            android:text="滑动" />
 
     </LinearLayout>
 

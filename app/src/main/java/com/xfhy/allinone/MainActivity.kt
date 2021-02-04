@@ -2,12 +2,9 @@ package com.xfhy.allinone
 
 import android.os.Bundle
 import com.xfhy.allinone.ipc.IpcMainActivity
-import com.xfhy.allinone.ipc.aidl.AidlActivity
-import com.xfhy.allinone.ipc.ashmem.AshmemActivity
-import com.xfhy.allinone.ipc.binder.BinderActivity
-import com.xfhy.allinone.ipc.messenger.MessengerActivity
 import com.xfhy.allinone.jni.JNIMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
+import com.xfhy.allinone.scroll.ScrollMainActivity
 import com.xfhy.allinone.smali.SmaliActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,6 +31,9 @@ class MainActivity : TitleBarActivity() {
         }
         btnGoIpc.setOnClickListener {
             startActivity<IpcMainActivity>()
+        }
+        btnGoScroll.setOnClickListener {
+            startActivity<ScrollMainActivity>()
         }
     }
 }

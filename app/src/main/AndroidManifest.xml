@@ -61,6 +61,7 @@
         <activity android:name=".ipc.binder.BinderActivity" />
         <activity android:name=".ipc.ashmem.AshmemActivity" />
         <activity android:name=".ipc.IpcMainActivity" />
+        <activity android:name=".scroll.ScrollMainActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"
