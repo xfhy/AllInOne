@@ -36,6 +36,7 @@ private const val TAG = "xfhy_ashmem"
 class AshmemActivity : TitleBarActivity() {
 
     private var mService: IBinder? = null
+    private var mHasBind = false
 
     private val mServiceConnection = object : ServiceConnection {
 
@@ -71,7 +72,7 @@ class AshmemActivity : TitleBarActivity() {
             action = "com.xfhy.ashmem.Server.Action"
             setPackage("com.xfhy.allinone")
         }.also { intent ->
-            bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
+            mHasBind = bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
         }
     }
 
@@ -128,7 +129,9 @@ class AshmemActivity : TitleBarActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unbindService(mServiceConnection)
+        if (mHasBind) {
+            unbindService(mServiceConnection)
+        }
     }
 
 }

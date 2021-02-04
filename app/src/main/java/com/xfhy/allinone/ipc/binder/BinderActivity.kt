@@ -22,6 +22,7 @@ private const val TAG = "xfhy_binder"
 class BinderActivity : TitleBarActivity() {
 
     private var mService: IBinder? = null
+    private var mHasBind = false
 
     private val mServiceConnection = object : ServiceConnection {
 
@@ -65,7 +66,7 @@ class BinderActivity : TitleBarActivity() {
             action = "com.xfhy.binder.Server.Action"
             setPackage("com.xfhy.allinone")
         }.also { intent ->
-            bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
+            mHasBind = bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
         }
     }
 
@@ -168,7 +169,9 @@ class BinderActivity : TitleBarActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unbindService(mServiceConnection)
+        if (mHasBind) {
+            unbindService(mServiceConnection)
+        }
     }
 
 }

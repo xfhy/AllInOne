@@ -24,6 +24,7 @@ class AidlActivity : TitleBarActivity() {
 
     private var mRemoteServer: IPersonManager? = null
     private var mService: IBinder? = null
+    private var mHasBind = false
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -102,8 +103,8 @@ class AidlActivity : TitleBarActivity() {
         //action 和 package(app的包名)
         intent.action = "com.xfhy.aidl.Server.Action"
         intent.setPackage("com.xfhy.allinone")
-        val bindServiceResult = bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
-        log(TAG, "bindService $bindServiceResult")
+        mHasBind = bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        log(TAG, "bindService $mHasBind")
     }
 
     private fun addPerson() {
@@ -194,7 +195,9 @@ class AidlActivity : TitleBarActivity() {
         super.onDestroy()
         //最后记得unbindService
         unregisterListener()
-        unbindService(serviceConnection)
+        if (mHasBind) {
+            unbindService(serviceConnection)
+        }
     }
 
 }

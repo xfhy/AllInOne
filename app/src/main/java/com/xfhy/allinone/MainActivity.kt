@@ -1,6 +1,7 @@
 package com.xfhy.allinone
 
 import android.os.Bundle
+import com.xfhy.allinone.ipc.IpcMainActivity
 import com.xfhy.allinone.ipc.aidl.AidlActivity
 import com.xfhy.allinone.ipc.ashmem.AshmemActivity
 import com.xfhy.allinone.ipc.binder.BinderActivity
@@ -31,17 +32,8 @@ class MainActivity : TitleBarActivity() {
         btnGoOpenSource.setOnClickListener {
             startActivity<OpenSourceActivity>()
         }
-        btnGoAidl.setOnClickListener {
-            startActivity<AidlActivity>()
-        }
-        btnGoMessenger.setOnClickListener {
-            startActivity<MessengerActivity>()
-        }
-        btnGoBinder.setOnClickListener {
-            startActivity<BinderActivity>()
-        }
-        btnGoAshmem.setOnClickListener {
-            startActivity<AshmemActivity>()
+        btnGoIpc.setOnClickListener {
+            startActivity<IpcMainActivity>()
         }
     }
 }

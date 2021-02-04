@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,25 +10,24 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnGoJni"
+            android:id="@+id/btnGoAidl"
             style="@style/HorizontalBtnStyle"
-            android:text="JNI" />
+            android:text="AIDL" />
 
         <Button
-            android:id="@+id/btnGoSmali"
+            android:id="@+id/btnGoMessenger"
             style="@style/HorizontalBtnStyle"
-            android:text="Smali" />
+            android:text="Messenger" />
 
         <Button
-            android:id="@+id/btnGoOpenSource"
+            android:id="@+id/btnGoBinder"
             style="@style/HorizontalBtnStyle"
-            android:text="开源库" />
+            android:text="Binder" />
 
         <Button
-            android:id="@+id/btnGoIpc"
+            android:id="@+id/btnGoAshmem"
             style="@style/HorizontalBtnStyle"
-            android:text="IPC" />
-
+            android:text="共享内存" />
     </LinearLayout>
 
 </ScrollView>

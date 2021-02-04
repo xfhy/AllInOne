@@ -60,6 +60,7 @@
         </activity>
         <activity android:name=".ipc.binder.BinderActivity" />
         <activity android:name=".ipc.ashmem.AshmemActivity" />
+        <activity android:name=".ipc.IpcMainActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"
