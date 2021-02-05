@@ -62,6 +62,8 @@
         <activity android:name=".ipc.ashmem.AshmemActivity" />
         <activity android:name=".ipc.IpcMainActivity" />
         <activity android:name=".scroll.ScrollMainActivity" />
+        <activity android:name=".scroll.SimpleScrollActivity" />
+        <activity android:name=".scroll.rv.RvContainsVpActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"
