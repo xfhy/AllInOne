@@ -3,6 +3,7 @@ package com.xfhy.allinone.scroll.rv.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.xfhy.allinone.scroll.rv.VpNormalFragment
 
 /**
  * @author : xfhy
@@ -10,7 +11,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
  * Description : 内部ViewPager的adapter
  */
 class InnerVpPagerAdapter(
-    val fragmentList: MutableList<Fragment>,
+    val fragmentList: MutableList<VpNormalFragment>,
     supportFragmentManager: FragmentManager
 ) : FragmentStatePagerAdapter(
     supportFragmentManager,

@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xfhy.allinone.R
+import com.xfhy.allinone.scroll.rv.view.ChildRecyclerView
 import com.xfhy.library.adapter.BaseQuickAdapter
 import com.xfhy.library.adapter.BaseViewHolder
 import com.xfhy.library.basekit.fragment.BaseFragment
@@ -59,6 +60,10 @@ class VpNormalFragment : BaseFragment() {
         else -> {
             Color.parseColor("#BA55D3")
         }
+    }
+
+    fun getCurrentRecyclerView(): ChildRecyclerView? {
+        return mRootView as? ChildRecyclerView
     }
 
     data class InnerItemData(val text: String, val bgColor: Int)

@@ -1,11 +1,11 @@
 package com.xfhy.allinone.scroll.rv
 
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.xfhy.allinone.R
 import com.xfhy.allinone.scroll.rv.adapter.InnerVpPagerAdapter
+import com.xfhy.allinone.scroll.rv.view.ChildRecyclerView
 import com.xfhy.library.adapter.BaseViewHolder
 
 /**
@@ -19,8 +19,10 @@ class ViewPagerItem : BaseItem() {
         get() = VIEWPAGER_ITEM
 
     //-------------------测试数据----------------------------
-    private val fragmentList = mutableListOf<Fragment>()
+    private val fragmentList = mutableListOf<VpNormalFragment>()
     private var isSetupWithViewPager = false
+    private var mInnerVpPagerAdapter: InnerVpPagerAdapter? = null
+    private var mViewPager: ViewPager? = null
 
     init {
         fragmentList.clear()
@@ -35,15 +37,20 @@ class ViewPagerItem : BaseItem() {
         supportFragmentManager: FragmentManager
     ) {
         val tabLayout = holder.getView(R.id.vp_item_tab_layout) as TabLayout
-        val viewPager = holder.getView(R.id.vp_item_vp) as ViewPager
+        mViewPager = holder.getView(R.id.vp_item_vp) as ViewPager
 
         if (!isSetupWithViewPager) {
-            tabLayout.setupWithViewPager(viewPager)
+            tabLayout.setupWithViewPager(mViewPager)
             isSetupWithViewPager = true
         }
-        if (viewPager.adapter == null) {
-            viewPager.adapter = InnerVpPagerAdapter(fragmentList, supportFragmentManager)
+        if (mInnerVpPagerAdapter == null) {
+            mInnerVpPagerAdapter = InnerVpPagerAdapter(fragmentList, supportFragmentManager)
+            mViewPager?.adapter = mInnerVpPagerAdapter
         }
+    }
+
+    fun findChildRecyclerView(): ChildRecyclerView? {
+        return fragmentList[mViewPager?.currentItem ?: 0].getCurrentRecyclerView()
     }
 
 }
