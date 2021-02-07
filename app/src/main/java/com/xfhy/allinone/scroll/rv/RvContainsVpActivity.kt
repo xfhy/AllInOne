@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_rv_contains_vp.*
 
 /**
  * RecyclerView嵌套ViewPager
+ * github开源方案:  https://github.com/JasonGaoH/NestedRecyclerView
  */
 class RvContainsVpActivity : TitleBarActivity() {
 
