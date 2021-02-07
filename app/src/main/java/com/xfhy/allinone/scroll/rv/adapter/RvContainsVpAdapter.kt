@@ -18,8 +18,8 @@ class RvContainsVpAdapter(
     BaseMultiItemQuickAdapter<BaseItem, BaseViewHolder>(data) {
 
     init {
-        addItemType(NORMAL_ITEM, R.layout.rv_contains_vp_normal_item)
-        addItemType(VIEWPAGER_ITEM, R.layout.rv_contains_vp_item)
+        addItemType(NORMAL_ITEM, R.layout.item_rv_contains_vp_normal)
+        addItemType(VIEWPAGER_ITEM, R.layout.item_rv_contains_vp)
     }
 
     override fun convert(holder: BaseViewHolder, item: BaseItem?) {

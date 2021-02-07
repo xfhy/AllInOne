@@ -20,6 +20,7 @@ class ViewPagerItem : BaseItem() {
 
     //-------------------测试数据----------------------------
     private val fragmentList = mutableListOf<Fragment>()
+    private var isSetupWithViewPager = false
 
     init {
         fragmentList.clear()
@@ -36,7 +37,10 @@ class ViewPagerItem : BaseItem() {
         val tabLayout = holder.getView(R.id.vp_item_tab_layout) as TabLayout
         val viewPager = holder.getView(R.id.vp_item_vp) as ViewPager
 
-        tabLayout.setupWithViewPager(viewPager)
+        if (!isSetupWithViewPager) {
+            tabLayout.setupWithViewPager(viewPager)
+            isSetupWithViewPager = true
+        }
         if (viewPager.adapter == null) {
             viewPager.adapter = InnerVpPagerAdapter(fragmentList, supportFragmentManager)
         }

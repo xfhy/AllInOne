@@ -20,6 +20,10 @@ class RvContainsVpActivity : TitleBarActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rv_contains_vp)
 
+        //todo xfhy 需要自定义RecyclerView,
+        // item滑动到ViewPager并且ViewPager顶部的TabLayout封顶时,将事件交给ViewPager里面的Fragment里面的容器(RecyclerView)
+        // 将标题隐藏,
+
         rvContainsVp.layoutManager = LinearLayoutManager(mContext)
         rvContainsVp.adapter =
             RvContainsVpAdapter(
@@ -32,6 +36,8 @@ class RvContainsVpActivity : TitleBarActivity() {
                 DividerItemDecoration.VERTICAL
             )
         )
+        //判断ViewPager 里面的Fragment里面的RecyclerView是否已经触顶
+        // rvContainsVp.setInterceptTouchCallback { false }
     }
 
     private fun getData(): MutableList<BaseItem> {
