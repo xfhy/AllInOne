@@ -1,7 +1,8 @@
-package com.xfhy.allinone.scroll.rv
+package com.xfhy.allinone.scroll.rv.adapter
 
 import androidx.fragment.app.FragmentManager
 import com.xfhy.allinone.R
+import com.xfhy.allinone.scroll.rv.*
 import com.xfhy.library.adapter.BaseMultiItemQuickAdapter
 import com.xfhy.library.adapter.BaseViewHolder
 

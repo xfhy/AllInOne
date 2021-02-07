@@ -2,10 +2,10 @@ package com.xfhy.allinone.scroll.rv
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.xfhy.allinone.R
+import com.xfhy.allinone.scroll.rv.adapter.InnerVpPagerAdapter
 import com.xfhy.library.adapter.BaseViewHolder
 
 /**
@@ -18,30 +18,28 @@ class ViewPagerItem : BaseItem() {
     override val itemType: Int
         get() = VIEWPAGER_ITEM
 
-    val fragmentList = mutableListOf<Fragment>()
+    //-------------------测试数据----------------------------
+    private val fragmentList = mutableListOf<Fragment>()
+
+    init {
+        fragmentList.clear()
+        fragmentList.add(VpNormalFragment())
+        fragmentList.add(VpNormalFragment())
+        fragmentList.add(VpNormalFragment())
+        fragmentList.add(VpNormalFragment())
+    }
 
     fun bindItem(
         holder: BaseViewHolder,
         supportFragmentManager: FragmentManager
     ) {
-
-        fragmentList.add(VpNormalFragment())
-        fragmentList.add(VpNormalFragment())
-        fragmentList.add(VpNormalFragment())
-        fragmentList.add(VpNormalFragment())
-
         val tabLayout = holder.getView(R.id.vp_item_tab_layout) as TabLayout
         val viewPager = holder.getView(R.id.vp_item_vp) as ViewPager
 
         tabLayout.setupWithViewPager(viewPager)
-        viewPager.adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
-
-            override fun getItem(position: Int): Fragment = fragmentList[position]
-
-            override fun getCount(): Int = fragmentList.size
+        if (viewPager.adapter == null) {
+            viewPager.adapter = InnerVpPagerAdapter(fragmentList, supportFragmentManager)
         }
-
     }
-
 
 }

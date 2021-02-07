@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xfhy.allinone.R
+import com.xfhy.allinone.scroll.rv.adapter.RvContainsVpAdapter
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_rv_contains_vp.*
 
@@ -20,7 +21,11 @@ class RvContainsVpActivity : TitleBarActivity() {
         setContentView(R.layout.activity_rv_contains_vp)
 
         rvContainsVp.layoutManager = LinearLayoutManager(mContext)
-        rvContainsVp.adapter = RvContainsVpAdapter(getData(), supportFragmentManager)
+        rvContainsVp.adapter =
+            RvContainsVpAdapter(
+                getData(),
+                supportFragmentManager
+            )
         rvContainsVp.addItemDecoration(
             DividerItemDecoration(
                 this,
