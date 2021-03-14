@@ -1,6 +1,7 @@
 package com.xfhy.allinone
 
 import android.os.Bundle
+import com.xfhy.allinone.image.ImageHomeActivity
 import com.xfhy.allinone.ipc.IpcMainActivity
 import com.xfhy.allinone.jni.JNIMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
@@ -34,6 +35,9 @@ class MainActivity : TitleBarActivity() {
         }
         btnGoScroll.setOnClickListener {
             startActivity<ScrollMainActivity>()
+        }
+        btnGoImageHome.setOnClickListener {
+            startActivity<ImageHomeActivity>()
         }
     }
 }
