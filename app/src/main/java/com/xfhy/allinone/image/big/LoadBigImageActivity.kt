@@ -1,4 +1,4 @@
-package com.xfhy.allinone.image
+package com.xfhy.allinone.image.big
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -24,7 +24,8 @@ class LoadBigImageActivity : TitleBarActivity() {
         setContentView(R.layout.activity_load_big_image)
 
         btnLoadImage.setOnClickListener {
-            showBigImage()
+            //showBigImage()
+            liv_big_image.setImageAssetPath("tobias.jpg")
         }
     }
 

@@ -12,6 +12,12 @@
     <ImageView
         android:id="@+id/ivShowImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <com.xfhy.allinone.image.big.LargeImageView
+        android:id="@+id/liv_big_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

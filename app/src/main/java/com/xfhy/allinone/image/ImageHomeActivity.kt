@@ -2,6 +2,7 @@ package com.xfhy.allinone.image
 
 import android.os.Bundle
 import com.xfhy.allinone.R
+import com.xfhy.allinone.image.big.LoadBigImageActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_image_home.*
 import org.jetbrains.anko.startActivity
