@@ -22,8 +22,7 @@ class MoveGestureDetector(context: Context, val mListener: OnMoveGestureListener
     private val mExtenalPointer = PointF()
 
     override fun handleInProgressEvent(event: MotionEvent) {
-        val actionCode = event.action and MotionEvent.ACTION_MASK
-        when (actionCode) {
+        when (event.action and MotionEvent.ACTION_MASK) {
             MotionEvent.ACTION_CANCEL -> {
             }
             MotionEvent.ACTION_MOVE -> {
@@ -44,8 +43,7 @@ class MoveGestureDetector(context: Context, val mListener: OnMoveGestureListener
     }
 
     override fun handleStartProgressEvent(event: MotionEvent) {
-        val actionCode = event.action and MotionEvent.ACTION_MASK
-        when (actionCode) {
+        when (event.action and MotionEvent.ACTION_MASK) {
             MotionEvent.ACTION_DOWN -> {
                 //防止没有接收到CANCEL or UP ,保险起见
                 resetState()
@@ -75,9 +73,25 @@ class MoveGestureDetector(context: Context, val mListener: OnMoveGestureListener
             if (skipThisMoveEvent) 0f else (mCurrentPointer?.y ?: 0f) - (mPrePointer?.y ?: 0f)
     }
 
-    private fun caculateFocalPointer(prev: MotionEvent?): PointF? {
-        TODO("Not yet implemented")
+    /**
+     * 根据event计算多指中心点
+     */
+    private fun caculateFocalPointer(event: MotionEvent?): PointF? {
+        val pointerCount = event?.pointerCount ?: 1
+        var x = 0f
+        var y = 0f
+        for (i in 0..pointerCount) {
+            x += (event?.x ?: 0f)
+            y += (event?.y ?: 0f)
+        }
+        x /= pointerCount
+        y /= pointerCount
+        return PointF(x, y)
     }
+
+    fun getMoveX(): Float = mExtenalPointer.x
+
+    fun getMoveY() = mExtenalPointer.y
 
     interface OnMoveGestureListener {
         fun onMoveBegin(detector: MoveGestureDetector): Boolean
@@ -85,7 +99,7 @@ class MoveGestureDetector(context: Context, val mListener: OnMoveGestureListener
         fun onMoveEnd(detector: MoveGestureDetector)
     }
 
-    class SimpleMoveGestureDetector : OnMoveGestureListener {
+    open class SimpleMoveGestureDetector : OnMoveGestureListener {
         override fun onMoveBegin(detector: MoveGestureDetector) = true
 
         override fun onMove(detector: MoveGestureDetector) = false

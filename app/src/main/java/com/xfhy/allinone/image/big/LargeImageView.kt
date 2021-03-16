@@ -20,8 +20,6 @@ class LargeImageView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-
     private var mDecoder: BitmapRegionDecoder? = null
     private val mRect = Rect()
 
@@ -30,43 +28,78 @@ class LargeImageView @JvmOverloads constructor(
     private var mWidth = 0
     private var mHeight = 0
     private val mOptions = BitmapFactory.Options()
+    private var mDetector: MoveGestureDetector? = null
+
+    init {
+        mOptions.inPreferredConfig = Bitmap.Config.RGB_565
+        mDetector =
+            MoveGestureDetector(context, object : MoveGestureDetector.SimpleMoveGestureDetector() {
+
+                override fun onMove(detector: MoveGestureDetector): Boolean {
+                    val moveX = detector.getMoveX().toInt()
+                    val moveY = detector.getMoveY().toInt()
+
+                    if (mImageWidth > width) {
+                        mRect.offset(-moveX, 0)
+                        checkWidth()
+                        invalidate()
+                    }
+
+                    if (mImageHeight > height) {
+                        mRect.offset(0, -moveY)
+                        checkHeight()
+                        invalidate()
+                    }
+
+                    return true
+                }
+
+            })
+    }
+
+    private fun checkHeight() {
+        val rect = mRect
+        val imageWidth = mImageWidth
+        val imageHeight = mImageHeight
+
+        if (rect.bottom > imageHeight) {
+            rect.bottom = imageHeight
+            rect.top = imageHeight - height
+        }
+        if (rect.top < 0) {
+            rect.top = 0
+            rect.bottom = height
+        }
+    }
+
+    private fun checkWidth() {
+        val rect = mRect
+        val imageWidth = mImageWidth
+        val imageHeight = mImageHeight
+
+        if (rect.right > imageWidth) {
+            rect.right = imageWidth
+            rect.left = imageWidth - width
+        }
+        if (rect.left < 0) {
+            rect.left = 0
+            rect.right = width
+        }
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         mWidth = measuredWidth
         mHeight = measuredHeight
 
-        mRect.left = mImageWidth / 2 - mWidth / 2
-        mRect.top = mImageHeight / 2 - mHeight / 2
+        mRect.left = /*mImageWidth / 2 - mWidth / 2*/0
+        mRect.top = /*mImageHeight / 2 - mHeight / 2*/0
         mRect.right = mRect.left + mWidth
         mRect.bottom = mRect.top + mHeight
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-
-        var startX = 0f
-        var startY = 0f
-        when (event?.action) {
-            MotionEvent.ACTION_DOWN -> {
-                startX = event.x
-                startY = event.y
-            }
-            MotionEvent.ACTION_MOVE -> {
-                var endX = event.x
-                var endY = event.y
-                mRect.left = mRect.left+endX.toInt()-startX.toInt()
-                mRect.top = mRect.top+endY.toInt()-startY.toInt()
-                mRect.right = mRect.left + mWidth
-                mRect.bottom = mRect.top + mHeight
-                invalidate()
-            }
-            MotionEvent.ACTION_UP -> {
-
-            }
-            else -> {
-            }
-        }
-
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        mDetector?.onTouchEvent(event)
         return true
     }
 
@@ -74,12 +107,12 @@ class LargeImageView @JvmOverloads constructor(
         super.onDraw(canvas)
         val bitmap = mDecoder?.decodeRegion(mRect, mOptions)
         bitmap?.let {
-            canvas?.drawBitmap(bitmap, 0f, 0f, mPaint)
+            canvas?.drawBitmap(bitmap, 0f, 0f, null)
         }
     }
 
     fun setImageAssetPath(imageName: String) {
-        val inputSteam = context.assets.open(imageName)
+        var inputSteam = context.assets.open(imageName)
         /*
         *  val bitmapRegionDecoder = BitmapRegionDecoder.newInstance(assets.open("tobias.jpg"), false)
         val options = BitmapFactory.Options()
@@ -89,23 +122,28 @@ class LargeImageView @JvmOverloads constructor(
         * */
         //val bitmapRegionDecoder = BitmapRegionDecoder.newInstance(inputSteam, false)
 
-        mDecoder = BitmapRegionDecoder.newInstance(inputSteam,false)
+        mDecoder = BitmapRegionDecoder.newInstance(inputSteam, false)
+        //这里不关的话,下面Bitmap的宽高测量出来永远为-1
+        try {
+            inputSteam.close()
+        } catch (e: Exception) {
+        }
+
+        inputSteam = context.assets.open(imageName)
         val tempOptions = BitmapFactory.Options()
         tempOptions.inJustDecodeBounds = true
-        BitmapFactory.decodeStream(inputSteam,null,tempOptions)
+        BitmapFactory.decodeStream(inputSteam, null, tempOptions)
         mImageWidth = tempOptions.outWidth
         mImageHeight = tempOptions.outHeight
 
-        /*mOptions.inJustDecodeBounds = true
-        val bitmap = BitmapFactory.decodeStream(inputSteam, null, mOptions)
-        mImageWidth = bitmap?.width ?: 0
-        mImageHeight = bitmap?.height ?: 0
+        try {
+            inputSteam.close()
+        } catch (e: Exception) {
+        }
 
-        mDecoder = BitmapRegionDecoder.newInstance(inputSteam, false)
-        mOptions.inJustDecodeBounds = false
-        mOptions.inPreferredConfig = Bitmap.Config.RGB_565*/
-
+        //todo xfhy why?
         requestLayout()
+
         invalidate()
     }
 
