@@ -5,6 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.xfhy.library.ext.log
 
 /**
  * @author : xfhy
@@ -14,6 +15,8 @@ import android.view.View
  * 2. 重写onTouchEvent,在里面根据用户移动的手势,去更新显示区域的参数
  * 3. 每次更新区域参数后,调用invalidate,onDraw里面去regionDecoder.decodeRegion拿到Bitmap,去draw
  */
+const val TAG = "large_image"
+
 class LargeImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -89,6 +92,7 @@ class LargeImageView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        log(TAG, "onMeasure()")
         mWidth = measuredWidth
         mHeight = measuredHeight
 
@@ -103,8 +107,14 @@ class LargeImageView @JvmOverloads constructor(
         return true
     }
 
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        log(TAG, "onLayout()")
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        log(TAG, "onDraw()")
         val bitmap = mDecoder?.decodeRegion(mRect, mOptions)
         bitmap?.let {
             canvas?.drawBitmap(bitmap, 0f, 0f, null)
@@ -141,9 +151,10 @@ class LargeImageView @JvmOverloads constructor(
         } catch (e: Exception) {
         }
 
-        //todo xfhy why?
+        //requestLayout会导致View的onMeasure,onLayout,onDraw被调用
         requestLayout()
 
+        //invalidate只会导致onDraw被调用
         invalidate()
     }
 
