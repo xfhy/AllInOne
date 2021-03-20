@@ -34,11 +34,11 @@
         <activity android:name=".smali.SmaliActivity" />
         <activity android:name=".MainActivity">
 
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity android:name=".jni.CallMethodActivity" />
         <activity android:name=".jni.JNIMainActivity" />
@@ -65,13 +65,7 @@
         <activity android:name=".scroll.SimpleScrollActivity" />
         <activity android:name=".scroll.rv.RvContainsVpActivity" />
         <activity android:name=".image.ImageHomeActivity" />
-        <activity android:name=".image.big.LoadBigImageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".image.big.LoadBigImageActivity" />
         <activity android:name=".image.bitmap.BitmapActivity" />
 
         <service

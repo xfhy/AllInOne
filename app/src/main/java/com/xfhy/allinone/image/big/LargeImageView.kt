@@ -123,14 +123,6 @@ class LargeImageView @JvmOverloads constructor(
 
     fun setImageAssetPath(imageName: String) {
         var inputSteam = context.assets.open(imageName)
-        /*
-        *  val bitmapRegionDecoder = BitmapRegionDecoder.newInstance(assets.open("tobias.jpg"), false)
-        val options = BitmapFactory.Options()
-        options.inPreferredConfig = Bitmap.Config.RGB_565
-        val bitmap = bitmapRegionDecoder.decodeRegion(Rect(0, 0, 200, 200), options)
-        ivShowImage.setImageBitmap(bitmap)
-        * */
-        //val bitmapRegionDecoder = BitmapRegionDecoder.newInstance(inputSteam, false)
 
         mDecoder = BitmapRegionDecoder.newInstance(inputSteam, false)
         //这里不关的话,下面Bitmap的宽高测量出来永远为-1

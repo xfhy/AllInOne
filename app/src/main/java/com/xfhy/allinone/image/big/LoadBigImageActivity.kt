@@ -25,7 +25,7 @@ class LoadBigImageActivity : TitleBarActivity() {
 
         btnLoadImage.setOnClickListener {
             //showBigImage()
-            liv_big_image.setImageAssetPath("tobias.jpg")
+            liv_big_image.setImageAssetPath("world.webp")
         }
     }
 

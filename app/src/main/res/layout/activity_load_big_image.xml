@@ -13,11 +13,12 @@
         android:id="@+id/ivShowImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <com.xfhy.allinone.image.big.LargeImageView
         android:id="@+id/liv_big_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="@dimen/dimen_300"
+        android:layout_height="@dimen/dimen_300"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
