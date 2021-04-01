@@ -3,7 +3,6 @@ package com.xfhy.allinone
 import android.os.Bundle
 import com.xfhy.allinone.image.ImageHomeActivity
 import com.xfhy.allinone.ipc.IpcMainActivity
-import com.xfhy.allinone.jni.JNIMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
 import com.xfhy.allinone.scroll.ScrollMainActivity
 import com.xfhy.allinone.smali.SmaliActivity
@@ -21,9 +20,6 @@ class MainActivity : TitleBarActivity() {
 
         setLeftTvVisible(false)
 
-        btnGoJni.setOnClickListener {
-            startActivity<JNIMainActivity>()
-        }
         btnGoSmali.setOnClickListener {
             startActivity<SmaliActivity>()
         }

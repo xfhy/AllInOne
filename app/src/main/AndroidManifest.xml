@@ -40,8 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".jni.CallMethodActivity" />
-        <activity android:name=".jni.JNIMainActivity" />
 
         <service
             android:name=".ipc.aidl.AidlRemoteService"
@@ -67,6 +65,7 @@
         <activity android:name=".image.ImageHomeActivity" />
         <activity android:name=".image.big.LoadBigImageActivity" />
         <activity android:name=".image.bitmap.BitmapActivity" />
+        <activity android:name=".view.ViewActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

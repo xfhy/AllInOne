@@ -12,11 +12,6 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnGoJni"
-            style="@style/HorizontalBtnStyle"
-            android:text="JNI" />
-
-        <Button
             android:id="@+id/btnGoSmali"
             style="@style/HorizontalBtnStyle"
             android:text="Smali" />
