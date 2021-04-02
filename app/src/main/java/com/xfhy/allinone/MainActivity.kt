@@ -6,6 +6,7 @@ import com.xfhy.allinone.ipc.IpcMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
 import com.xfhy.allinone.scroll.ScrollMainActivity
 import com.xfhy.allinone.smali.SmaliActivity
+import com.xfhy.allinone.view.ViewHomeActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
@@ -34,6 +35,9 @@ class MainActivity : TitleBarActivity() {
         }
         btnGoImageHome.setOnClickListener {
             startActivity<ImageHomeActivity>()
+        }
+        btnGoViewHome.setOnClickListener {
+            startActivity<ViewHomeActivity>()
         }
     }
 }

@@ -65,7 +65,8 @@
         <activity android:name=".image.ImageHomeActivity" />
         <activity android:name=".image.big.LoadBigImageActivity" />
         <activity android:name=".image.bitmap.BitmapActivity" />
-        <activity android:name=".view.ViewActivity" />
+        <activity android:name=".view.ViewHomeActivity" />
+        <activity android:name=".view.fps.FpsActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

@@ -4,9 +4,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.xfhy.library.widgets.LoadingDialog
 import com.xfhy.library.widgets.TitleBar
-import kotlinx.android.synthetic.main.layout_common_custom_dialog.view.*
 import kotlinx.android.synthetic.main.layout_header_bar.view.*
-import kotlinx.android.synthetic.main.layout_header_bar.view.mRightTv
 import org.jetbrains.anko.dip
 
 /**
@@ -17,19 +15,47 @@ abstract class TitleBarActivity : BaseActivity(), TitleBar.TitleBarListener {
 
     private val mDialog by lazy { LoadingDialog.create(this) }
     private lateinit var mTitleBar: TitleBar
+    private var mIsUseLayoutId = false
 
     override fun setContentView(layoutResID: Int) {
+        mIsUseLayoutId = true
+        setContentView(createRootView(layoutResID, null))
+        title = getThisTitle()
+    }
+
+    private fun createRootView(layoutResID: Int?, view: View?): LinearLayout {
         mTitleBar = TitleBar(this)
         mTitleBar.visibility = View.VISIBLE
         mTitleBar.setHeaderListener(this)
         val rootLayout = LinearLayout(this)
         rootLayout.orientation = LinearLayout.VERTICAL
-        val paramView = View.inflate(this, layoutResID, null)
         rootLayout.addView(mTitleBar, LinearLayout.LayoutParams.MATCH_PARENT, dip(50))
-        rootLayout.addView(paramView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
-        setContentView(rootLayout)
 
-        title = getThisTitle()
+        if (layoutResID == null) {
+            rootLayout.addView(
+                view,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+        } else {
+            val paramView = View.inflate(this, layoutResID, null)
+            rootLayout.addView(
+                paramView,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+        }
+
+        return rootLayout
+    }
+
+    override fun setContentView(view: View?) {
+        if (mIsUseLayoutId) {
+            super.setContentView(view)
+        } else {
+            super.setContentView(createRootView(null, view))
+            title = getThisTitle()
+        }
     }
 
     /**

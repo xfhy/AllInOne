@@ -36,6 +36,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="图片" />
 
+        <Button
+            android:id="@+id/btnGoViewHome"
+            style="@style/HorizontalBtnStyle"
+            android:text="View" />
+
     </LinearLayout>
 
 </ScrollView>
