@@ -25,11 +25,11 @@ object FpsMonitor {
     private val mainHandler by lazy { Handler(Looper.getMainLooper()) }
 
     fun startMonitor(listener: (Int) -> Unit) {
+        mMonitorListeners.add(listener)
         if (isStartMonitor) {
             return
         }
         isStartMonitor = true
-        mMonitorListeners.add(listener)
         Choreographer.getInstance().postFrameCallback(monitorFrameCallback)
         //1秒后结算 count次数
         mainHandler.postDelayed(monitorFrameCallback, FPS_INTERVAL_TIME)
