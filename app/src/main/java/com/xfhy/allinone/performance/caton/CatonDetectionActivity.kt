@@ -36,9 +36,7 @@ class CatonDetectionActivity : TitleBarActivity() {
     }
 
     private fun manufacturingCaton() {
-        Thread.sleep(3003)
-        val inputSystem = assets.open("world.webp")
-        inputSystem.readBytes()
+        Thread.sleep(4000)
     }
 
     private fun startLooperMonitor() {
