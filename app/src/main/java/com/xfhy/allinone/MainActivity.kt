@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.xfhy.allinone.image.ImageHomeActivity
 import com.xfhy.allinone.ipc.IpcMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
+import com.xfhy.allinone.performance.PerformanceHomeActivity
 import com.xfhy.allinone.scroll.ScrollMainActivity
 import com.xfhy.allinone.smali.SmaliActivity
 import com.xfhy.allinone.view.ViewHomeActivity
@@ -38,6 +39,9 @@ class MainActivity : TitleBarActivity() {
         }
         btnGoViewHome.setOnClickListener {
             startActivity<ViewHomeActivity>()
+        }
+        btnGoPerformanceHome.setOnClickListener {
+            startActivity<PerformanceHomeActivity>()
         }
     }
 }

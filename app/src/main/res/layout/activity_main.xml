@@ -41,6 +41,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="View" />
 
+        <Button
+            android:id="@+id/btnGoPerformanceHome"
+            style="@style/HorizontalBtnStyle"
+            android:text="性能优化" />
+
     </LinearLayout>
 
 </ScrollView>

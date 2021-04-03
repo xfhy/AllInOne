@@ -67,6 +67,8 @@
         <activity android:name=".image.bitmap.BitmapActivity" />
         <activity android:name=".view.ViewHomeActivity" />
         <activity android:name=".view.fps.FpsActivity" />
+        <activity android:name=".performance.caton.CatonDetectionActivity" />
+        <activity android:name=".performance.PerformanceHomeActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"
