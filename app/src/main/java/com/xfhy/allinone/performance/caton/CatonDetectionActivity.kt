@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Looper
 import com.xfhy.allinone.databinding.ActivityCatonDetectionBinding
 import com.xfhy.library.basekit.activity.TitleBarActivity
+import com.xfhy.library.ext.log
 
 /**
  * @author : xfhy
@@ -28,10 +29,18 @@ class CatonDetectionActivity : TitleBarActivity() {
             startLooperMonitor()
         }
         catonDetectionBinding.btnDetectCatonChoreographer.setOnClickListener {
-
+            startChoreographerMonitor()
         }
         catonDetectionBinding.btnCaton.setOnClickListener {
             manufacturingCaton()
+        }
+    }
+
+    private fun startChoreographerMonitor() {
+        //UI绘图的操作没有跟上VSYNC信号,步调不一致,绘图的过程中操作太多,导致操作的时间超过16.6ms.卡顿时,可能存在VSYNC信号来了好几次,结果只绘制了一次的情况.
+        //如果超过3次,用户就有视觉上的感知.
+        ChoreographerMonitor.startMonitor {
+            log("丢帧 $it ")
         }
     }
 
@@ -42,6 +51,11 @@ class CatonDetectionActivity : TitleBarActivity() {
     private fun startLooperMonitor() {
         val looperPrinter = LooperPrinter()
         Looper.getMainLooper().setMessageLogging(looperPrinter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ChoreographerMonitor.stopMonitor()
     }
 
 }
