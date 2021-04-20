@@ -16,6 +16,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="卡顿检测" />
 
+        <Button
+            android:id="@+id/btn_memory_leak"
+            style="@style/HorizontalBtnStyle"
+            android:text="内存泄露" />
+
     </LinearLayout>
 
 </ScrollView>
