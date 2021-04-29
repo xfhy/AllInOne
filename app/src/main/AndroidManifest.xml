@@ -70,6 +70,8 @@
         <activity android:name=".performance.caton.CatonDetectionActivity" />
         <activity android:name=".performance.PerformanceHomeActivity" />
         <activity android:name=".performance.memory.MemoryLeakActivity" />
+        <activity android:name=".actual.ReleaseLogActivity" />
+        <activity android:name=".actual.ActualMainActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

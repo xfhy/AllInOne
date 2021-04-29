@@ -1,6 +1,7 @@
 package com.xfhy.allinone
 
 import android.os.Bundle
+import com.xfhy.allinone.actual.ActualMainActivity
 import com.xfhy.allinone.image.ImageHomeActivity
 import com.xfhy.allinone.ipc.IpcMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
@@ -42,6 +43,9 @@ class MainActivity : TitleBarActivity() {
         }
         btnGoPerformanceHome.setOnClickListener {
             startActivity<PerformanceHomeActivity>()
+        }
+        btnGoOtherPracticalIssues.setOnClickListener {
+            startActivity<ActualMainActivity>()
         }
     }
 }

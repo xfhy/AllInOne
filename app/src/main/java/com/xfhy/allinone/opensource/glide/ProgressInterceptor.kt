@@ -5,7 +5,10 @@ import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.Response
 import okhttp3.ResponseBody
-import okio.*
+import okio.Buffer
+import okio.BufferedSource
+import okio.ForwardingSource
+import okio.Source
 
 /**
  * @author : xfhy
@@ -54,7 +57,7 @@ class ProgressInterceptor : Interceptor {
 
         override fun source(): BufferedSource {
             if (bufferedSource == null) {
-                bufferedSource = ProcessSource(responseBody.source(), responseBody, listener).buffer()
+                bufferedSource = ProcessSource(responseBody.source(), responseBody, listener).delegate() as BufferedSource?
             }
             return bufferedSource!!
         }

@@ -45,6 +45,10 @@
             android:id="@+id/btnGoPerformanceHome"
             style="@style/HorizontalBtnStyle"
             android:text="性能优化" />
+        <Button
+            android:id="@+id/btnGoOtherPracticalIssues"
+            style="@style/HorizontalBtnStyle"
+            android:text="其他实战问题" />
 
     </LinearLayout>
 

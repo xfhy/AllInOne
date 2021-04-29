@@ -19,10 +19,33 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('../key/test.jks')
+            storePassword "lelelele"
+            keyAlias "lelelele"
+            keyPassword "lelelele"
+        }
+        debugRelease {
+            storeFile file('../key/test.jks')
+            storePassword "lelelele"
+            keyAlias "lelelele"
+            keyPassword "lelelele"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debugRelease
         }
     }
 

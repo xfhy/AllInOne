@@ -7,6 +7,7 @@ import android.os.Message
 import com.xfhy.allinone.databinding.ActivityMemoryLeakBinding
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import com.xfhy.library.ext.log
+import kotlin.concurrent.thread
 
 /**
  * @author : xfhy
@@ -42,6 +43,25 @@ class MemoryLeakActivity : TitleBarActivity() {
         memoryLeakBinding.btnFinish.setOnClickListener {
             finish()
         }
+
+        Handler(Looper.getMainLooper()).post {
+            while (true) {
+                try {
+                    Looper.loop()
+                } catch (e: Exception) {
+                    log("捕获异常 ${e.message}")
+                }
+            }
+        }
+
+        memoryLeakBinding.btnCrash.setOnClickListener {
+            //val a = 3/0
+            thread {
+                val a=3/0
+            }
+        }
+
+
 
     }
 
