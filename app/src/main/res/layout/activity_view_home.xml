@@ -15,6 +15,10 @@
             android:id="@+id/btnGoFps"
             style="@style/HorizontalBtnStyle"
             android:text="FPS" />
+        <Button
+            android:id="@+id/btnGoScreenAdapt"
+            style="@style/HorizontalBtnStyle"
+            android:text="屏幕适配" />
 
     </LinearLayout>
 

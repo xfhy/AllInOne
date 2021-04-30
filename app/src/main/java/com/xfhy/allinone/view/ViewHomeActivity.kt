@@ -2,6 +2,7 @@ package com.xfhy.allinone.view
 
 import android.os.Bundle
 import com.xfhy.allinone.databinding.ActivityViewHomeBinding
+import com.xfhy.allinone.view.adaptation.ScreenAdaptActivity
 import com.xfhy.allinone.view.fps.FpsActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import org.jetbrains.anko.startActivity
@@ -26,6 +27,9 @@ class ViewHomeActivity : TitleBarActivity() {
 
         viewMainBinding.btnGoFps.setOnClickListener {
             startActivity<FpsActivity>()
+        }
+        viewMainBinding.btnGoScreenAdapt.setOnClickListener {
+            startActivity<ScreenAdaptActivity>()
         }
     }
 

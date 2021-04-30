@@ -57,7 +57,7 @@ class ProgressInterceptor : Interceptor {
 
         override fun source(): BufferedSource {
             if (bufferedSource == null) {
-                bufferedSource = ProcessSource(responseBody.source(), responseBody, listener).delegate() as BufferedSource?
+                bufferedSource = ProcessSource(responseBody.source(), responseBody, listener).delegate as BufferedSource?
             }
             return bufferedSource!!
         }
