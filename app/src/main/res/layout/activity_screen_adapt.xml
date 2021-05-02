@@ -5,17 +5,20 @@
     android:orientation="horizontal">
 
     <TextView
-        android:layout_width="@dimen/dimen_180"
-        android:layout_height="@dimen/dimen_180"
+        android:layout_width="180pt"
+        android:layout_height="180pt"
         android:background="@color/colorPrimary"
         android:text="按钮1"
-        android:textSize="14sp" />
+        android:textSize="14pt" />
 
     <TextView
-        android:layout_width="@dimen/dimen_180"
-        android:layout_height="@dimen/dimen_180"
+        android:id="@+id/tv_toast"
+        android:layout_width="180pt"
+        android:layout_height="180pt"
         android:background="@color/colorAccent"
         android:text="按钮2"
-        android:textSize="14sp" />
+        android:textSize="14pt" />
+
+
 
 </LinearLayout>

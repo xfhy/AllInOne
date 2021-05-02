@@ -5,6 +5,8 @@ import android.os.Bundle
 import com.xfhy.allinone.App
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
+import com.xfhy.library.ext.toast
+import kotlinx.android.synthetic.main.activity_screen_adapt.*
 
 /**
  * @author : xfhy
@@ -24,5 +26,15 @@ class ScreenAdaptActivity : TitleBarActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_screen_adapt)
+
+        tv_toast.setOnClickListener {
+            toast("哈哈哈哈哈哈哈")
+        }
     }
+
+    /*override fun getResources(): Resources {
+        //假设 设计图宽度为360
+        return ScreenAdaptUtil.adaptWidth(super.getResources(), 360)
+    }*/
+
 }
