@@ -3,7 +3,10 @@ package com.xfhy.allinone.view.adaptation
 import android.app.Activity
 import android.app.Application
 import android.content.res.Resources
+import android.util.DisplayMetrics
 import com.xfhy.allinone.App
+import java.lang.reflect.Field
+import java.util.*
 
 /**
  * @author : xfhy
@@ -41,7 +44,7 @@ object ScreenAdaptUtil {
                 }
             })
         }*/
-                                                    //假设  设计图宽度为360
+        //假设  设计图宽度为360
         val targetDensity = appDisplayMetrics.widthPixels / 360f
         val targetScaleDensity = targetDensity * (Resources.getSystem().displayMetrics.scaledDensity / Resources.getSystem().displayMetrics.density)
         //dpi = density*160
@@ -70,7 +73,61 @@ object ScreenAdaptUtil {
     private fun applyDisplayMetrics(resources: Resources, newXdpi: Float) {
         resources.displayMetrics.xdpi = newXdpi
         App.getAppContext().resources.displayMetrics.xdpi = newXdpi
+        applyOtherDisplayMetrics(resources, newXdpi);
+    }
+
+    private var sMetricsFields: MutableList<Field?>? = null
+
+    private fun applyOtherDisplayMetrics(resources: Resources, newXdpi: Float) {
+        if (sMetricsFields == null) {
+            sMetricsFields = ArrayList()
+            var resCls: Class<*>? = resources.javaClass
+            var declaredFields = resCls?.declaredFields
+            while (declaredFields != null && declaredFields.isNotEmpty()) {
+                for (field in declaredFields) {
+                    if (field.type.isAssignableFrom(DisplayMetrics::class.java)) {
+                        field.isAccessible = true
+                        val tmpDm = getMetricsFromField(resources, field)
+                        if (tmpDm != null) {
+                            sMetricsFields?.add(field)
+                            tmpDm.xdpi = newXdpi
+                        }
+                    }
+                }
+                resCls = resCls?.superclass
+                declaredFields = if (resCls != null) {
+                    resCls.declaredFields
+                } else {
+                    break
+                }
+            }
+        } else {
+            applyMetricsFields(resources, newXdpi)
+        }
+    }
+
+    private fun applyMetricsFields(resources: Resources, newXdpi: Float) {
+        sMetricsFields?.let {
+            it.forEach { field ->
+                if (field != null) {
+                    try {
+                        val dm = field[resources] as DisplayMetrics
+                        dm.xdpi = newXdpi
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun getMetricsFromField(resources: Resources, field: Field): DisplayMetrics? {
+        return try {
+            field[resources] as DisplayMetrics
+        } catch (ignore: Exception) {
+            null
+        }
     }
     //----------------------柯基方案  end -----------------------
-
 }

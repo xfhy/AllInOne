@@ -1,8 +1,7 @@
 package com.xfhy.allinone.view.adaptation
 
-import android.app.Application
+import android.content.res.Resources
 import android.os.Bundle
-import com.xfhy.allinone.App
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import com.xfhy.library.ext.toast
@@ -22,7 +21,7 @@ class ScreenAdaptActivity : TitleBarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //适配一下
-        ScreenAdaptUtil.setCustomDensity(this, App.getAppContext() as Application)
+        //ScreenAdaptUtil.setCustomDensity(this, App.getAppContext() as Application)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_screen_adapt)
@@ -32,9 +31,9 @@ class ScreenAdaptActivity : TitleBarActivity() {
         }
     }
 
-    /*override fun getResources(): Resources {
+    override fun getResources(): Resources {
         //假设 设计图宽度为360
         return ScreenAdaptUtil.adaptWidth(super.getResources(), 360)
-    }*/
+    }
 
 }
