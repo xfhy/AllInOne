@@ -73,6 +73,7 @@
         <activity android:name=".actual.ReleaseLogActivity" />
         <activity android:name=".actual.ActualMainActivity" />
         <activity android:name=".view.adaptation.ScreenAdaptActivity" />
+        <activity android:name=".kotlin.coroutine.jetpack.JetpackCoroutineActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

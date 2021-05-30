@@ -47,7 +47,7 @@ dependencies {
     api "androidx.recyclerview:recyclerview:1.1.0"
 
     //Gson
-    api "com.google.code.gson:gson:2.8.5"
+    api "com.google.code.gson:gson:2.8.6"
 
     //OkHttp
     api "com.squareup.okhttp3:okhttp:3.14.9"
@@ -82,6 +82,14 @@ dependencies {
     // if u use AndroidX, use the following
     //AUC
     api 'com.blankj:utilcodex:1.30.6'
+
+    //将 Kotlin 协程与架构组件一起使用---
+    //ViewModelScope
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    //LifecycleScope
+    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+    //liveData
+    api 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
 
     //ARouter  路由
     //api "com.alibaba:arouter-api:1.3.1"
