@@ -1,6 +1,8 @@
 package com.xfhy.allinone.kotlin.coroutine.jetpack
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.xfhy.library.ext.log
 import kotlinx.coroutines.Dispatchers
@@ -53,9 +55,17 @@ class JetpackCoroutineViewModel : ViewModel() {
     //将耗时任务切到IO线程去执行
     private suspend fun getNetData() = withContext(Dispatchers.IO) {
         //模拟网络耗时
-        delay(1000)
+        delay(5000)
         //模拟返回结果
         "{}"
+    }
+
+    //------------------liveData------------------
+    val netData: LiveData<String> = liveData {
+        //观察的时候在生命周期内,则会马上执行
+        log("执行到liveData里面了")
+        val data = getNetData()
+        emit(data)
     }
 
 }
