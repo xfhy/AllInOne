@@ -68,4 +68,19 @@ class JetpackCoroutineViewModel : ViewModel() {
         emit(data)
     }
 
+    /*val netData2: LiveData<String> = liveData {
+        delay(3000)
+        val source = MutableLiveData<String>().apply {
+            value = "11111"
+        }
+        val disposableHandle = emitSource(source)
+
+        delay(3000)
+        disposableHandle.dispose()
+        val source2 = MutableLiveData<String>().apply {
+            value = "22222"
+        }
+        val disposableHandle2 = emitSource(source2)
+    }*/
+
 }
