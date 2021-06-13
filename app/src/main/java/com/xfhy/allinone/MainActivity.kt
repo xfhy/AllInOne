@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.xfhy.allinone.actual.ActualMainActivity
 import com.xfhy.allinone.image.ImageHomeActivity
 import com.xfhy.allinone.ipc.IpcMainActivity
-import com.xfhy.allinone.kotlin.coroutine.jetpack.JetpackCoroutineActivity
+import com.xfhy.allinone.kotlin.KotlinMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
 import com.xfhy.allinone.performance.PerformanceHomeActivity
 import com.xfhy.allinone.scroll.ScrollMainActivity
@@ -48,8 +48,8 @@ class MainActivity : TitleBarActivity() {
         btnGoOtherPracticalIssues.setOnClickListener {
             startActivity<ActualMainActivity>()
         }
-        btnGoKotlinCoroutine.setOnClickListener {
-            startActivity<JetpackCoroutineActivity>()
+        btnGoKotlinHome.setOnClickListener {
+            startActivity<KotlinMainActivity>()
         }
     }
 }

@@ -74,6 +74,8 @@
         <activity android:name=".actual.ActualMainActivity" />
         <activity android:name=".view.adaptation.ScreenAdaptActivity" />
         <activity android:name=".kotlin.coroutine.jetpack.JetpackCoroutineActivity" />
+        <activity android:name=".kotlin.coroutine.retrofit.RetrofitWithCoroutineActivity" />
+        <activity android:name=".kotlin.KotlinMainActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

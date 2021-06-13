@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_kotlin_jetpack_coroutine.*
 /**
  * @author : xfhy
  * Create time : 2021/5/30 6:41 上午
- * Description :
+ * Description : Kotlin 协程与架构组件一起使用
  */
 class JetpackCoroutineActivity : TitleBarActivity() {
 

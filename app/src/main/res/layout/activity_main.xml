@@ -52,9 +52,9 @@
             android:text="其他实战问题" />
 
         <Button
-            android:id="@+id/btnGoKotlinCoroutine"
+            android:id="@+id/btnGoKotlinHome"
             style="@style/HorizontalBtnStyle"
-            android:text="Kotlin协程" />
+            android:text="Kotlin" />
 
     </LinearLayout>
 
