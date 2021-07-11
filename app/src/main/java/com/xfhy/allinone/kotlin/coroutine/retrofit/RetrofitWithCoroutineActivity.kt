@@ -5,6 +5,7 @@ import androidx.lifecycle.lifecycleScope
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_kotlin_coroutine_with_retrofit.*
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -38,12 +39,19 @@ class RetrofitWithCoroutineActivity : TitleBarActivity() {
             .baseUrl("https://www.wanandroid.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+        val api = retrofit.create(WanAndroidService::class.java)
 
-        lifecycleScope.launch {
-            val githubService = retrofit.create(WanAndroidService::class.java)
-            val wxList = githubService.listRepos()
+        /*lifecycleScope.launch {
+            val wxList = wanAndroidService.listRepos()
             //后台线程请求完之后,再切回来
             tvText.text = wxList?.data?.get(0)?.name ?: "没有获取到"
+        }*/
+
+        lifecycleScope.launch {
+            val one = async { api.listRepos() }
+            val two = async { api.listRepos() }
+            val same = one.await()?.errorCode == two.await()?.errorCode
+            tvText.text = "$same same?"
         }
     }
 
