@@ -35,8 +35,8 @@ class ProgressInterceptor : Interceptor {
         val request = chain.request()
         val response = chain.proceed(request)
         log("xfhy_glide", "ProgressInterceptor  intercept")
-        val url = request.url().toString()
-        val body = response.body()
+        val url = request.url.toString()
+        val body = response.body
         return response.newBuilder().body(body?.let {
             ProgressResponseBody(
                 LISTENER_MAP[url] as? (Int) -> Unit ?: {},

@@ -63,9 +63,9 @@ class OkHttpFetcher(private val okHttpClient: OkHttpClient, private val url: Gli
         }
         call = okHttpClient.newCall(request)
         val response = call?.execute()
-        val responseBody = response?.body()
+        val responseBody = response?.body
         if (response?.isSuccessful != true || responseBody == null) {
-            callback.onLoadFailed(IOException("Request failed with code: ${response?.code()}"))
+            callback.onLoadFailed(IOException("Request failed with code: ${response?.code}"))
         }
         stream = ContentLengthInputStream.obtain(
             responseBody?.byteStream() ?: FileInputStream(""),

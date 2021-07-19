@@ -51,7 +51,7 @@ class OkHttpActivity : TitleBarActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body()
+                val responseBody = response.body
                 responseBody?.string().logString()
             }
         })
@@ -64,7 +64,7 @@ class OkHttpActivity : TitleBarActivity() {
                 val builder = Request.Builder()
                 val request = builder.url("https://www.baidu.com/").build()
                 val response = OkHttpManager.okHttpClient.newCall(request).execute()
-                val responseBody = response.body()
+                val responseBody = response.body
                 responseBody?.string().logString()
             }
             async.await()

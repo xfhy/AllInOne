@@ -2,16 +2,11 @@ package com.xfhy.library.data.net
 
 import android.content.Context
 import android.text.TextUtils
-
-import com.xfhy.library.utils.DevicesUtils
 import com.xfhy.library.utils.NetWorkUtils
-
-import java.io.IOException
-
 import okhttp3.CacheControl
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
+import java.io.IOException
 
 /**
  * @author xfhy
@@ -37,7 +32,7 @@ class RewriteCacheControlInterceptor(private val mContext: Context) : Intercepto
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
-        val cacheControl = request.cacheControl().toString()
+        val cacheControl = request.cacheControl.toString()
         if (!NetWorkUtils.isNetWorkAvailable(mContext)) {
             request = request.newBuilder()
                     .cacheControl(if (TextUtils.isEmpty(cacheControl))

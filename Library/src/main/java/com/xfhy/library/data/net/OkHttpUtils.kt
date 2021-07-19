@@ -1,17 +1,14 @@
 package com.xfhy.library.data.net
 
 import android.content.Context
-import android.text.TextUtils
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.xfhy.library.utils.SPUtils
 import okhttp3.*
-
-import java.util.concurrent.TimeUnit
-
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -92,26 +89,24 @@ object OkHttpUtils {
                 .cookieJar(object : CookieJar {
                     private var cookieStore = java.util.HashMap<String, MutableList<Cookie>>()
                     private val gson = Gson()
-                    override fun saveFromResponse(url: HttpUrl?, cookies: MutableList<Cookie>?) {
-                        url ?: return
-                        cookies ?: return
 
+                    override fun loadForRequest(url: HttpUrl): List<Cookie> {
+                        val cookieList = SPUtils.getValue(url.host, "")
+                        cookieStore = gson.fromJson(cookieList, object : TypeToken<java.util.HashMap<String, MutableList<Cookie>>>() {}
+                            .type) ?: java.util.HashMap()
+                        //cookieStore = gson.fromJson(cookieList, cookieStore.javaClass)
+                        return cookieStore[url.host] ?: mutableListOf()
+                    }
+
+                    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
                         //登录成功则不存cookie
                         if(!SPUtils.getValue("is_login",false)){
                             //HashMap 存值  将url的host存起来  domain是域名   host是主机
-                            cookieStore[url.host()] = cookies
+                            cookieStore[url.host] = cookies.toMutableList()
 
                             //将cookie序列化到SP中  避免下次进入APP时cookie没有了之前的cookie
-                            SPUtils.putValue(url.host(), gson.toJson(cookieStore))
+                            SPUtils.putValue(url.host, gson.toJson(cookieStore))
                         }
-                    }
-
-                    override fun loadForRequest(url: HttpUrl?): MutableList<Cookie> {
-                        val cookieList = SPUtils.getValue(url?.host() ?: "", "")
-                        cookieStore = gson.fromJson(cookieList, object : TypeToken<java.util.HashMap<String, MutableList<Cookie>>>() {}
-                                .type) ?: java.util.HashMap()
-                        //cookieStore = gson.fromJson(cookieList, cookieStore.javaClass)
-                        return cookieStore[url?.host()] ?: mutableListOf()
                     }
                 })
                 .build()
