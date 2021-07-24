@@ -2,7 +2,7 @@ package com.xfhy.library.rx
 
 import com.google.gson.JsonSyntaxException
 import com.xfhy.library.basekit.view.IBaseView
-import io.reactivex.subscribers.ResourceSubscriber
+import io.reactivex.rxjava3.subscribers.ResourceSubscriber
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 

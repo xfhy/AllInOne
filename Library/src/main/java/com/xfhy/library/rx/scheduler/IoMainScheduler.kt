@@ -1,7 +1,8 @@
 package com.xfhy.library.rx.scheduler
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
+
 
 /**
  * Created by xfhy on 2017/11/17.

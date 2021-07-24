@@ -76,6 +76,7 @@
         <activity android:name=".kotlin.coroutine.jetpack.JetpackCoroutineActivity" />
         <activity android:name=".kotlin.coroutine.retrofit.RetrofitWithCoroutineActivity" />
         <activity android:name=".kotlin.KotlinMainActivity" />
+        <activity android:name=".opensource.rxjava.RxJavaActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

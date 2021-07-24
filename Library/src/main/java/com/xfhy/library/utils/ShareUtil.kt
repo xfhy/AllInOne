@@ -2,7 +2,7 @@ package com.xfhy.library.utils
 
 import android.content.Context
 import android.content.Intent
-import io.reactivex.annotations.NonNull
+import androidx.annotation.NonNull
 
 /**
  * @author xfhy

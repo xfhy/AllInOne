@@ -1,8 +1,8 @@
 package com.xfhy.library.data.net
 
 import com.xfhy.library.common.BaseApplication
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
@@ -26,7 +26,7 @@ class RetrofitFactory private constructor() {
         val retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .client(OkHttpUtils.okHttpClient)
                 .build()
         return retrofit.create(service)

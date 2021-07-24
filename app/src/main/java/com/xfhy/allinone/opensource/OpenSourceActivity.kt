@@ -6,6 +6,7 @@ import com.xfhy.allinone.opensource.glide.GlideActivity
 import com.xfhy.allinone.opensource.leakcanary.LeakCanaryActivity
 import com.xfhy.allinone.opensource.okhttp.OkHttpActivity
 import com.xfhy.allinone.opensource.retrofit.RetrofitActivity
+import com.xfhy.allinone.opensource.rxjava.RxJavaActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_open_source.*
 import org.jetbrains.anko.startActivity
@@ -36,19 +37,16 @@ class OpenSourceActivity : TitleBarActivity() {
             startActivity<GlideActivity>()
         }
         btnGoGreenDao.setOnClickListener {
-            startActivity<OkHttpActivity>()
         }
         btnGoRxJava.setOnClickListener {
-            startActivity<OkHttpActivity>()
+            startActivity<RxJavaActivity>()
         }
         btnLeakCanary.setOnClickListener {
             startActivity<LeakCanaryActivity>()
         }
         btnGoButterknife.setOnClickListener {
-            startActivity<OkHttpActivity>()
         }
         btnGoEventBus.setOnClickListener {
-            startActivity<OkHttpActivity>()
         }
     }
 }
