@@ -1,5 +1,6 @@
 package com.xfhy.allinone.opensource.retrofit.data
 
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -12,5 +13,8 @@ interface IGetRequest {
 
     @GET("ajax.php?a=fy&f=auto&t=auto&w=hello%20world")
     fun getCall(): Call<Translation>
+
+    @GET("ajax.php?a=fy&f=auto&t=auto&w=hello%20world")
+    fun getSingleCall(): Single<Translation>
 
 }

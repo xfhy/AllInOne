@@ -3,13 +3,14 @@ package com.xfhy.allinone.kotlin.coroutine.retrofit
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.xfhy.allinone.R
+import com.xfhy.allinone.data.WANANDROID_BASE_URL
+import com.xfhy.allinone.data.WanAndroidService
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_kotlin_coroutine_with_retrofit.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
 
 
 /**
@@ -36,7 +37,7 @@ class RetrofitWithCoroutineActivity : TitleBarActivity() {
 
     private fun reqNet() {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.wanandroid.com")
+            .baseUrl(WANANDROID_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(WanAndroidService::class.java)
@@ -61,22 +62,3 @@ class RetrofitWithCoroutineActivity : TitleBarActivity() {
 
 }
 
-class WxList {
-    var errorMsg = ""
-    var errorCode = -1
-    var data = mutableListOf<Wx>()
-
-    class Wx {
-        var id: Int = 0
-        var name: String = ""
-    }
-}
-
-interface WanAndroidService {
-
-    /**
-     * 加上suspend之后,Retrofit会将该请求放到后台线程去请求
-     */
-    @GET("wxarticle/chapters/json")
-    suspend fun listRepos(): WxList?
-}
