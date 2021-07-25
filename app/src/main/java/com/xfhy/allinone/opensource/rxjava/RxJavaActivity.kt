@@ -7,14 +7,20 @@ import com.xfhy.allinone.data.WANANDROID_BASE_URL
 import com.xfhy.allinone.data.WanAndroidService
 import com.xfhy.allinone.data.WxList
 import com.xfhy.library.basekit.activity.TitleBarActivity
+import com.xfhy.library.ext.log
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.functions.Function
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_rxjava.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * RxJava
@@ -57,6 +63,94 @@ class RxJavaActivity : TitleBarActivity() {
 
             override fun onError(e: Throwable?) {
                 tvContent.text = "网络出错"
+            }
+        })
+
+    }
+
+    private fun singleIo() {
+        val singleInt:Single<Int> = Single.just(1)
+        val singleIo = singleInt.subscribeOn(Schedulers.io())
+        singleIo.subscribe(object:SingleObserver<Int> {
+            override fun onSubscribe(d: Disposable?) {
+                log("onSubscribe")
+            }
+
+            override fun onSuccess(t: Int?) {
+                log("onSuccess")
+            }
+
+            override fun onError(e: Throwable?) {
+                log("onError")
+            }
+        })
+    }
+
+    fun single() {
+        val just: Single<Int> = Single.just(1)
+        just.subscribe(object : SingleObserver<Int> {
+            override fun onSubscribe(d: Disposable?) {
+            }
+
+            override fun onSuccess(t: Int) {
+            }
+
+            override fun onError(e: Throwable?) {
+            }
+        })
+    }
+
+    fun singleMap() {
+        val singleInt = Single.just(1)
+        val singleString = singleInt.map(object : Function<Int, String> {
+            override fun apply(t: Int): String {
+                return t.toString()
+            }
+        })
+        singleString.subscribe(object : SingleObserver<String> {
+            override fun onSubscribe(d: Disposable?) {
+            }
+
+            override fun onSuccess(t: String) {
+            }
+
+            override fun onError(e: Throwable?) {
+            }
+        })
+    }
+
+    fun singleDelay() {
+        val singleInt: Single<Int> = Single.just(1)
+        val singleDelay: Single<Int> = singleInt.delay(1, TimeUnit.SECONDS)
+        val observer = object : SingleObserver<Int> {
+            override fun onSubscribe(d: Disposable?) {
+                log("onSubscribe")
+            }
+
+            override fun onSuccess(t: Int?) {
+                log("onSuccess")
+            }
+
+            override fun onError(e: Throwable?) {
+                log("onError")
+            }
+        }
+        singleDelay.subscribe(observer)
+    }
+
+    fun interval() {
+        val longObservable: Observable<Long> = Observable.interval(0, 1, TimeUnit.SECONDS)
+        longObservable.subscribe(object : Observer<Long> {
+            override fun onSubscribe(d: Disposable?) {
+            }
+
+            override fun onNext(t: Long?) {
+            }
+
+            override fun onError(e: Throwable?) {
+            }
+
+            override fun onComplete() {
             }
         })
     }
