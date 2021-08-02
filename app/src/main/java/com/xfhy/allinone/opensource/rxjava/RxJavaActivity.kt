@@ -66,12 +66,51 @@ class RxJavaActivity : TitleBarActivity() {
             }
         })
 
+        //observableMap()
+        singleIo()
+
+    }
+
+    private fun observableDelay() {
+        Observable.just(1).delay(1, TimeUnit.SECONDS).subscribe(object :Observer<Int> {
+            override fun onSubscribe(d: Disposable?) {
+            }
+
+            override fun onNext(t: Int?) {
+            }
+
+            override fun onError(e: Throwable?) {
+            }
+
+            override fun onComplete() {
+            }
+        })
+    }
+
+    private fun observableMap() {
+        Observable.just(1).map(object : Function<Int, String> {
+            override fun apply(t: Int): String {
+                return t.toString()
+            }
+        }).subscribe(object : Observer<String> {
+            override fun onNext(t: String?) {
+            }
+
+            override fun onComplete() {
+            }
+
+            override fun onSubscribe(d: Disposable?) {
+            }
+
+            override fun onError(e: Throwable?) {
+            }
+        })
     }
 
     private fun singleIo() {
-        val singleInt:Single<Int> = Single.just(1)
+        val singleInt: Single<Int> = Single.just(1)
         val singleIo = singleInt.subscribeOn(Schedulers.io())
-        singleIo.subscribe(object:SingleObserver<Int> {
+        singleIo.subscribe(object : SingleObserver<Int> {
             override fun onSubscribe(d: Disposable?) {
                 log("onSubscribe")
             }
