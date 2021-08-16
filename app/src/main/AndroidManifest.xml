@@ -77,6 +77,7 @@
         <activity android:name=".kotlin.coroutine.retrofit.RetrofitWithCoroutineActivity" />
         <activity android:name=".kotlin.KotlinMainActivity" />
         <activity android:name=".opensource.rxjava.RxJavaActivity" />
+        <activity android:name=".actual.plugin.PluginAppActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

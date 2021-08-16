@@ -1,7 +1,9 @@
 package com.xfhy.allinone.actual
 
 import android.os.Bundle
+import android.view.View
 import com.xfhy.allinone.R
+import com.xfhy.allinone.actual.plugin.PluginAppActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_actual_main.*
 import org.jetbrains.anko.startActivity
@@ -22,5 +24,9 @@ class ActualMainActivity : TitleBarActivity() {
         btnGoReleaseLog.setOnClickListener {
             startActivity<ReleaseLogActivity>()
         }
+    }
+
+    fun pluginApkBtn(view: View) {
+        startActivity<PluginAppActivity>()
     }
 }

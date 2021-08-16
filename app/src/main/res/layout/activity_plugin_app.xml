@@ -11,13 +11,19 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnGoReleaseLog"
             style="@style/HorizontalBtnStyle"
-            android:text="线上开启日志打印" />
+            android:onClick="loadPluginApk"
+            android:text="加载插件包" />
+
         <Button
             style="@style/HorizontalBtnStyle"
-            android:text="插件化"
-            android:onClick="pluginApkBtn"/>
+            android:onClick="loadPluginApkNormalMethod"
+            android:text="调用插件包里面的普通类方法" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="startPluginApkActivity"
+            android:text="启动插件包里面的Activity" />
 
     </LinearLayout>
 
