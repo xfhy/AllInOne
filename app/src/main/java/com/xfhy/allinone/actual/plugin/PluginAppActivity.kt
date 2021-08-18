@@ -47,7 +47,18 @@ class PluginAppActivity : TitleBarActivity() {
 
     fun startPluginApkActivity(view: View) {
         //---------------方案1 hook IActivityManager----------------
-        //直接启动插件里面的Activity是不行的,通不过AMS的检查
+        //待打开的Activity是TargetActivity,占坑的Activity是StubActivity
+        //直接启动插件里面的Activity是不行的,通不过AMS的检查,所以需要在宿主app里面弄一个占坑的Activity,然后再hook系统流程,把StubActivity拿给AMS去检查,然后在ActivityThread这边,在创建Activity时再替换成TargetActivity进行创建.
+        //startActivity流程:
+        // ContextImpl.startActivity->Instrumentation.execStartActivity->
+        //  8.0以下 ActivityManagerNative.getDefault()->startActivity
+        //  8.0以上ActivityManager.getService()->startActivity
+        //  10.0以上 ActivityTaskManager.getService()->startActivity
+
+        //10.0以下都hook IActivityManager,10.0及以上hook IActivityTaskManager,一旦是有人调用startActivity方法,那么判断一下是否在调用插件内的Activity,如果是,那么先把Intent替换成StubActivity,然后继续走
+        //此时已经到AMS那边去了,AMS检查啥的完成之后,再通知ApplicationThread这边去创建该Activity,ApplicationThread->ActivityThread->H->handleMessage
+        //通过hook H的mCallback,从而知道是create Activity的时机. (9.0以前message是多个,分开的case,9.0之后是一个EXECUTE_TRANSACTION,Activity生命周期都走这一个case.)
+
         //插件化Activity生命周期管理  https://blog.csdn.net/u011016373/article/details/82867198
 
     }
