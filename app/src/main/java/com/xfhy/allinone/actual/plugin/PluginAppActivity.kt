@@ -46,6 +46,9 @@ class PluginAppActivity : TitleBarActivity() {
     }
 
     fun startPluginApkActivity(view: View) {
+        //---------------方案1 hook IActivityManager----------------
+        //直接启动插件里面的Activity是不行的,通不过AMS的检查
+        //插件化Activity生命周期管理  https://blog.csdn.net/u011016373/article/details/82867198
 
     }
 }
