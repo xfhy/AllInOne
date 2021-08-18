@@ -11,7 +11,7 @@ import java.io.FileOutputStream
 /**
  * @author : xfhy
  * Create time : 2021/8/16 21:51
- * Description : 实战问题
+ * Description : 插件化
  */
 class PluginAppActivity : TitleBarActivity() {
 
@@ -60,6 +60,8 @@ class PluginAppActivity : TitleBarActivity() {
         //通过hook H的mCallback,从而知道是create Activity的时机. (9.0以前message是多个,分开的case,9.0之后是一个EXECUTE_TRANSACTION,Activity生命周期都走这一个case.)
 
         //插件化Activity生命周期管理  https://blog.csdn.net/u011016373/article/details/82867198
+
+
 
     }
 }
