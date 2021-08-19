@@ -1,6 +1,7 @@
 package com.xfhy.allinone.actual.plugin
 
 import android.os.Build
+import android.os.Handler
 import com.xfhy.library.ext.log
 import com.xfhy.library.utils.FieldUtil
 import java.lang.reflect.Proxy
@@ -36,6 +37,15 @@ object HookHelper {
             Proxy.newProxyInstance(Thread.currentThread().contextClassLoader, arrayOf(IActivityManagerClazz), IActivityManagerProxy(IActivityManager))
         mInstanceField.set(defaultSingleton, proxy)
         log("设置动态代理IActivityManager成功")
+    }
+
+    fun hookHandler() {
+        //hook ActivityThread里面的H的mCallback,拦截Activity launch事件,将intent参数替换成之前保存在TARGET_INTENT里面的intent
+        val ActivityThreadClazz = Class.forName("android.app.ActivityThread")
+        val sCurrentActivityThread = FieldUtil.getFieldValue(ActivityThreadClazz, null, "sCurrentActivityThread")
+        val mH = FieldUtil.getFieldValue(ActivityThreadClazz, sCurrentActivityThread, "mH") as Handler
+        val HandlerClazz = Class.forName("android.os.Handler")
+        FieldUtil.setField(HandlerClazz, mH, "mCallback", HCallback(mH))
     }
 
 }

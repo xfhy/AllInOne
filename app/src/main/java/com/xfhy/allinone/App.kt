@@ -19,6 +19,7 @@ public class App : BaseApplication() {
         super.attachBaseContext(base)
         try {
             HookHelper.hookAMS()
+            HookHelper.hookHandler()
         } catch (e: Exception) {
             e.printStackTrace()
         }

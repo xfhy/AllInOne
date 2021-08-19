@@ -30,6 +30,13 @@ class PluginAppActivity : TitleBarActivity() {
         val file = File("${cacheDir}/plugin_app.apk")
         val outputStream = FileOutputStream(file)
         inputStream.copyTo(outputStream)
+        //todo xfhy 有点问题  有兼容性问题   28 ok
+        //21 error Caused by: java.lang.NullPointerException: parentLoader == null && !nullAllowed
+        //        at java.lang.ClassLoader.<init>(ClassLoader.java:210)
+        //        at java.lang.ClassLoader.<init>(ClassLoader.java:202)
+        //        at dalvik.system.BaseDexClassLoader.<init>(BaseDexClassLoader.java:47)
+        //        at dalvik.system.DexClassLoader.<init>(DexClassLoader.java:57)
+        //        at com.xfhy.allinone.actual.plugin.PluginAppActivity.loadPluginApk(PluginAppActivity.kt:33)
         dexClassLoader = DexClassLoader(file.path, cacheDir.path, null, null)
     }
 

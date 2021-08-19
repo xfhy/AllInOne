@@ -24,14 +24,16 @@ class IActivityManagerProxy(private val mActivityManager: Any) : InvocationHandl
             }
             //取出参数中的Intent中的包名  判断请求的Activity是否是插件包里面的
             intent?.component?.className?.contains("com.xfhy.pluginapkdemo")?.let {
-                //如果是,那么临时将目标Activity改为占坑Activity StubActivity
-                val subIntent = Intent()
-                val packageName = "com.xfhy.allinone.actual.plugin"
-                subIntent.setClassName(packageName, "$packageName.StubActivity")
-                //记录下来,待会儿方便 打开这个Activity
-                subIntent.putExtra(HookHelper.TARGET_INTENT, intent)
-                //Intent改好之后,还回去
-                args?.set(index, subIntent)
+                if (it) {
+                    //如果是,那么临时将目标Activity改为占坑Activity StubActivity
+                    val subIntent = Intent()
+                    val packageName = "com.xfhy.allinone.actual.plugin"
+                    subIntent.setClassName(packageName, "$packageName.StubActivity")
+                    //记录下来,待会儿方便 打开这个Activity
+                    subIntent.putExtra(HookHelper.TARGET_INTENT, intent)
+                    //Intent改好之后,还回去
+                    args?.set(index, subIntent)
+                }
             }
         }
         if (args != null) {
