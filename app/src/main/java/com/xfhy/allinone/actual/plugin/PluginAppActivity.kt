@@ -1,5 +1,6 @@
 package com.xfhy.allinone.actual.plugin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.xfhy.allinone.R
@@ -58,10 +59,14 @@ class PluginAppActivity : TitleBarActivity() {
         //10.0以下都hook IActivityManager,10.0及以上hook IActivityTaskManager,一旦是有人调用startActivity方法,那么判断一下是否在调用插件内的Activity,如果是,那么先把Intent替换成StubActivity,然后继续走
         //此时已经到AMS那边去了,AMS检查啥的完成之后,再通知ApplicationThread这边去创建该Activity,ApplicationThread->ActivityThread->H->handleMessage
         //通过hook H的mCallback,从而知道是create Activity的时机. (9.0以前message是多个,分开的case,9.0之后是一个EXECUTE_TRANSACTION,Activity生命周期都走这一个case.)
+        //H收到这个消息时,将SubActivity还原成TargetActivity  即可实现偷天换日,瞒天过海
 
         //插件化Activity生命周期管理  https://blog.csdn.net/u011016373/article/details/82867198
 
-
-
+        // Caused by: android.content.ActivityNotFoundException: Unable to find explicit activity class {com.xfhy.allinone/com.xfhy.pluginapkdemo.MainActivity};
+        // have you declared this activity in your AndroidManifest.xml?
+        val intent = Intent()
+        intent.setClassName(this, "com.xfhy.pluginapkdemo.MainActivity")
+        startActivity(intent)
     }
 }

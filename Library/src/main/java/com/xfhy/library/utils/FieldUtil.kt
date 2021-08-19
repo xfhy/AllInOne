@@ -9,7 +9,7 @@ import java.lang.reflect.Field
  */
 object FieldUtil {
 
-    fun getFieldValue(clazz: Class<*>, target: Any, fieldName: String): Any? {
+    fun getFieldValue(clazz: Class<*>, target: Any?, fieldName: String): Any? {
         val declaredField = clazz.getDeclaredField(fieldName)
         declaredField.isAccessible = true
         return declaredField.get(target)
