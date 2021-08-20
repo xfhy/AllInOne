@@ -3,9 +3,11 @@ package com.xfhy.allinone.actual.plugin
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import dalvik.system.DexClassLoader
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 
@@ -26,18 +28,13 @@ class PluginAppActivity : TitleBarActivity() {
     }
 
     fun loadPluginApk(view: View) {
-        val inputStream = assets.open("plugin_app.apk")
-        val file = File("${cacheDir}/plugin_app.apk")
-        val outputStream = FileOutputStream(file)
-        inputStream.copyTo(outputStream)
-        //todo xfhy 有点问题  有兼容性问题   28 ok
-        //21 error Caused by: java.lang.NullPointerException: parentLoader == null && !nullAllowed
-        //        at java.lang.ClassLoader.<init>(ClassLoader.java:210)
-        //        at java.lang.ClassLoader.<init>(ClassLoader.java:202)
-        //        at dalvik.system.BaseDexClassLoader.<init>(BaseDexClassLoader.java:47)
-        //        at dalvik.system.DexClassLoader.<init>(DexClassLoader.java:57)
-        //        at com.xfhy.allinone.actual.plugin.PluginAppActivity.loadPluginApk(PluginAppActivity.kt:33)
-        dexClassLoader = DexClassLoader(file.path, cacheDir.path, null, null)
+        lifecycleScope.launch {
+            val inputStream = assets.open("plugin_app.apk")
+            val file = File("${cacheDir}/plugin_app.apk")
+            val outputStream = FileOutputStream(file)
+            inputStream.copyTo(outputStream)
+            dexClassLoader = DexClassLoader(file.path, cacheDir.path, null, classLoader)
+        }
     }
 
     fun loadPluginApkNormalMethod(view: View) {
@@ -73,7 +70,9 @@ class PluginAppActivity : TitleBarActivity() {
         // Caused by: android.content.ActivityNotFoundException: Unable to find explicit activity class {com.xfhy.allinone/com.xfhy.pluginapkdemo.MainActivity};
         // have you declared this activity in your AndroidManifest.xml?
         val intent = Intent()
-        intent.setClassName(this, "com.xfhy.pluginapkdemo.MainActivity")
+        intent.setClassName("com.xfhy.pluginapkdemo", "com.xfhy.pluginapkdemo.MainActivity")
         startActivity(intent)
+
+        // TODO: 2021/8/20 要调用插件包里面的Activity,还需要把class 放进DexPathList里面去  不然ActivityThread launch Activity的时候,那个classLoader找不到我插件包里面的Activity
     }
 }

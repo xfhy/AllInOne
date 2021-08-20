@@ -27,8 +27,7 @@ class IActivityManagerProxy(private val mActivityManager: Any) : InvocationHandl
                 if (it) {
                     //如果是,那么临时将目标Activity改为占坑Activity StubActivity
                     val subIntent = Intent()
-                    val packageName = "com.xfhy.allinone.actual.plugin"
-                    subIntent.setClassName(packageName, "$packageName.StubActivity")
+                    subIntent.setClassName("com.xfhy.allinone", "com.xfhy.allinone.actual.plugin.StubActivity")
                     //记录下来,待会儿方便 打开这个Activity
                     subIntent.putExtra(HookHelper.TARGET_INTENT, intent)
                     //Intent改好之后,还回去
