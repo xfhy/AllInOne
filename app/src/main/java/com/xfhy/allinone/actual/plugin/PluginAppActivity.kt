@@ -77,5 +77,10 @@ class PluginAppActivity : TitleBarActivity() {
         //插件包的Activity的log是xfhy_plugin
 
         //要调用插件包里面的Activity,还需要把class 放进DexPathList里面去  不然ActivityThread launch Activity的时候,那个classLoader找不到我插件包里面的Activity
+
+        //---------------方案2 hook Instrumentation----------------
+        //ContextImpl.startActivity->Instrumentation.execStartActivity->AMS的时候用占坑Activity
+        //hook Instrumentation, 在ActivityThread的performLaunchActivity里面用Instrumentation的newActivity时,替换成自己的TargetActivity
+
     }
 }
