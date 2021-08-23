@@ -6,7 +6,6 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
-import dalvik.system.DexClassLoader
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -18,8 +17,6 @@ import java.io.FileOutputStream
  */
 class PluginAppActivity : TitleBarActivity() {
 
-    private lateinit var dexClassLoader: DexClassLoader
-
     override fun getThisTitle() = "插件化"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,17 +26,21 @@ class PluginAppActivity : TitleBarActivity() {
 
     fun loadPluginApk(view: View) {
         lifecycleScope.launch {
+            //构建一个DexClassLoader 用来加载插件包里面的class
             val inputStream = assets.open("plugin_app.apk")
             val file = File("${cacheDir}/plugin_app.apk")
             val outputStream = FileOutputStream(file)
             inputStream.copyTo(outputStream)
-            dexClassLoader = DexClassLoader(file.path, cacheDir.path, null, classLoader)
+            //dexClassLoader = DexClassLoader(file.path, cacheDir.path, null, classLoader)
+
+            //将插件包里面的class放入BaseDexClassLoader的DexPathList中
+            InsertDexUtils.injectDexAtFirst(file.path, cacheDir.path)
         }
     }
 
     fun loadPluginApkNormalMethod(view: View) {
         //找插件里面的类,然后获取构造方法,构建对象
-        val loadClazz = dexClassLoader.loadClass("com.xfhy.pluginapkdemo.PluginPeople")
+        val loadClazz = Class.forName("com.xfhy.pluginapkdemo.PluginPeople")
         val constructor = loadClazz.declaredConstructors[0]
         constructor.isAccessible = true
         val pluginPeople = constructor.newInstance()
@@ -73,6 +74,6 @@ class PluginAppActivity : TitleBarActivity() {
         intent.setClassName("com.xfhy.pluginapkdemo", "com.xfhy.pluginapkdemo.MainActivity")
         startActivity(intent)
 
-        // TODO: 2021/8/20 要调用插件包里面的Activity,还需要把class 放进DexPathList里面去  不然ActivityThread launch Activity的时候,那个classLoader找不到我插件包里面的Activity
+        //要调用插件包里面的Activity,还需要把class 放进DexPathList里面去  不然ActivityThread launch Activity的时候,那个classLoader找不到我插件包里面的Activity
     }
 }
