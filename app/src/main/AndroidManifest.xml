@@ -79,6 +79,7 @@
         <activity android:name=".opensource.rxjava.RxJavaActivity" />
         <activity android:name=".actual.plugin.PluginAppActivity" />
         <activity android:name=".actual.plugin.StubActivity" />
+        <activity android:name=".actual.hotfix.HotFixActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

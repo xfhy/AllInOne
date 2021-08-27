@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,19 +9,20 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnGoReleaseLog"
             style="@style/HorizontalBtnStyle"
-            android:text="线上开启日志打印" />
+            android:onClick="callTestMethod"
+            android:text="调用HotFixTest方法" />
 
         <Button
             style="@style/HorizontalBtnStyle"
-            android:onClick="pluginApkBtn"
-            android:text="插件化" />
+            android:onClick="loadPatch"
+            android:text="加载补丁" />
 
         <Button
             style="@style/HorizontalBtnStyle"
-            android:onClick="goHotFix"
-            android:text="热更新" />
+            android:onClick="restartApp"
+            android:text="重启" />
+
     </LinearLayout>
 
 </ScrollView>

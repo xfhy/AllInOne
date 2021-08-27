@@ -1,6 +1,7 @@
 package com.xfhy.allinone
 
 import android.content.Context
+import com.xfhy.allinone.actual.hotfix.HotFixUtil
 import com.xfhy.allinone.actual.plugin.HookHelper
 import com.xfhy.library.common.BaseApplication
 
@@ -23,6 +24,11 @@ public class App : BaseApplication() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        HotFixUtil.loadPatch()
     }
 
 }
