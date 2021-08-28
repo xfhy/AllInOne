@@ -24,6 +24,7 @@ object HotFixUtil {
         val oldDexElements = FieldUtil.getFieldValue(DexPathListClazz, oldPathList, "dexElements")
 
         //2. 补丁包  构建一个DexClassLoader 用来加载补丁包里面的class
+        //我这里是模拟从网上下载的过程,我直接将补丁放assets目录下了
         val inputStream = appContext.assets.open("hotfix.dex")
         val file = File("${appContext.cacheDir}/hotfix.dex")
         val outputStream = FileOutputStream(file)
