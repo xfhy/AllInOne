@@ -80,6 +80,7 @@
         <activity android:name=".actual.plugin.PluginAppActivity" />
         <activity android:name=".actual.plugin.StubActivity" />
         <activity android:name=".actual.hotfix.HotFixActivity" />
+        <activity android:name=".actual.apt.AptActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

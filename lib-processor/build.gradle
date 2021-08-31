@@ -1,0 +1,11 @@
+plugins {
+    id 'kotlin'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':lib-annotation')
+
+    //生成Java代码比较方便
+    implementation 'com.squareup:javapoet:1.13.0'
+}

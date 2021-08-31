@@ -1,2 +1,5 @@
 rootProject.name='AllInOne'
 include ':app',":Library"
+include ':lib'
+include ':lib-annotation'
+include ':lib-processor'

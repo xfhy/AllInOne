@@ -3,6 +3,7 @@ package com.xfhy.allinone.actual
 import android.os.Bundle
 import android.view.View
 import com.xfhy.allinone.R
+import com.xfhy.allinone.actual.apt.AptActivity
 import com.xfhy.allinone.actual.hotfix.HotFixActivity
 import com.xfhy.allinone.actual.plugin.PluginAppActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
@@ -33,5 +34,9 @@ class ActualMainActivity : TitleBarActivity() {
 
     fun goHotFix(view: View) {
         startActivity<HotFixActivity>()
+    }
+
+    fun goApt(view: View) {
+        startActivity<AptActivity>()
     }
 }

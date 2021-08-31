@@ -24,6 +24,11 @@
             style="@style/HorizontalBtnStyle"
             android:onClick="goHotFix"
             android:text="热更新" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="goApt"
+            android:text="APT" />
     </LinearLayout>
 
 </ScrollView>
