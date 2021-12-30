@@ -6,7 +6,10 @@ import com.xfhy.library.basekit.activity.TitleBarActivity
 import com.xfhy.library.ext.log
 import com.xfhy.library.ext.logString
 import kotlinx.android.synthetic.main.activity_ok_http.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import okhttp3.*
 import java.io.IOException
 
@@ -59,15 +62,12 @@ class OkHttpActivity : TitleBarActivity() {
     }
 
     private fun testSync() {
-        mainScope.launch {
-            val async = async(Dispatchers.IO) {
-                val builder = Request.Builder()
-                val request = builder.url("https://www.baidu.com/").build()
-                val response = OkHttpManager.okHttpClient.newCall(request).execute()
-                val responseBody = response.body
-                responseBody?.string().logString()
-            }
-            async.await()
+        mainScope.launch(Dispatchers.IO) {
+            val builder = Request.Builder()
+            val request = builder.url("https://www.baidu.com/").build()
+            val response = OkHttpManager.okHttpClient.newCall(request).execute()
+            val responseBody = response.body
+            responseBody?.string().logString()
         }
     }
 
