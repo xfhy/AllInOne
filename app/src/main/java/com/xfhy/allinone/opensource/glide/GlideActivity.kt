@@ -14,7 +14,6 @@ import com.xfhy.allinone.App
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_glide.*
-import java.lang.Exception
 import kotlin.concurrent.thread
 
 /**
