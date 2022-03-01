@@ -2,6 +2,7 @@ package com.xfhy.allinone
 
 import android.os.Bundle
 import com.xfhy.allinone.actual.ActualMainActivity
+import com.xfhy.allinone.db.DbActivity
 import com.xfhy.allinone.image.ImageHomeActivity
 import com.xfhy.allinone.ipc.IpcMainActivity
 import com.xfhy.allinone.kotlin.KotlinMainActivity
@@ -24,6 +25,9 @@ class MainActivity : TitleBarActivity() {
 
         setLeftTvVisible(false)
 
+        btnDb.setOnClickListener {
+            startActivity<DbActivity>()
+        }
         btnGoSmali.setOnClickListener {
             startActivity<SmaliActivity>()
         }

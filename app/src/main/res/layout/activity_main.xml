@@ -12,6 +12,11 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btnDb"
+            style="@style/HorizontalBtnStyle"
+            android:text="数据库" />
+
+        <Button
             android:id="@+id/btnGoSmali"
             style="@style/HorizontalBtnStyle"
             android:text="Smali" />
