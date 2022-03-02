@@ -1,6 +1,7 @@
 package com.xfhy.allinone.db
 
 import android.content.ContentValues
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.View
@@ -72,7 +73,16 @@ class DbActivity : TitleBarActivity() {
     }
 
     fun queryData(view: View) {
-        val cursor = sqLiteDatabase?.query("Book", null, null, null, null, null, null, null)
+//        val cursor = sqLiteDatabase?.query("Book", null, null, null, null, null, null, null)
+//        showData(cursor)
+//        cursor?.close()
+
+        val rawQueryCursor = sqLiteDatabase?.rawQuery("select * from Book where name = '三体1'", null)
+        showData(rawQueryCursor)
+        rawQueryCursor?.close()
+    }
+
+    private fun showData(cursor: Cursor?) {
         cursor?.let {
             if (cursor.moveToFirst()) {
                 do {
@@ -84,12 +94,27 @@ class DbActivity : TitleBarActivity() {
                 } while (cursor.moveToNext())
             }
         }
-        cursor?.close()
+    }
+
+
+    fun transaction(view: View) {
+        sqLiteDatabase?.beginTransaction()
+        try {
+            sqLiteDatabase?.delete("Book", null, null)
+            if (true) {
+                throw NullPointerException()
+            }
+            sqLiteDatabase?.execSQL("insert into Book(name,author,pages,price) values('三体3-死神永生','刘慈欣','312','25.6')")
+            sqLiteDatabase?.setTransactionSuccessful()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            sqLiteDatabase?.endTransaction()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         sqLiteDatabase?.close()
     }
-
 }

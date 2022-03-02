@@ -38,6 +38,13 @@
             android:onClick="queryData"
             android:text="查询数据" />
 
+        <Button
+            android:id="@+id/btnTransaction"
+            style="@style/HorizontalBtnStyle"
+            android:onClick="transaction"
+            android:text="事务" />
+
+
     </LinearLayout>
 
 </ScrollView>
