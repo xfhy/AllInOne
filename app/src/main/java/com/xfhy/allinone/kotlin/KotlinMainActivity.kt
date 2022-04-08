@@ -2,6 +2,7 @@ package com.xfhy.allinone.kotlin
 
 import android.os.Bundle
 import com.xfhy.allinone.R
+import com.xfhy.allinone.kotlin.coroutine.concept.KotlinCoroutineActivity
 import com.xfhy.allinone.kotlin.coroutine.jetpack.JetpackCoroutineActivity
 import com.xfhy.allinone.kotlin.coroutine.retrofit.RetrofitWithCoroutineActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
@@ -25,6 +26,9 @@ class KotlinMainActivity : TitleBarActivity() {
     private fun initView() {
         btnGoJetpackCoroutine.setOnClickListener {
             startActivity<JetpackCoroutineActivity>()
+        }
+        btnGoCancelAndException.setOnClickListener {
+            startActivity<KotlinCoroutineActivity>()
         }
         btnGoKotlinCoroutineWithRetrofit.setOnClickListener {
             startActivity<RetrofitWithCoroutineActivity>()

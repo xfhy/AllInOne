@@ -76,6 +76,7 @@
         <activity android:name=".kotlin.coroutine.jetpack.JetpackCoroutineActivity" />
         <activity android:name=".kotlin.coroutine.retrofit.RetrofitWithCoroutineActivity" />
         <activity android:name=".kotlin.KotlinMainActivity" />
+        <activity android:name=".kotlin.coroutine.concept.KotlinCoroutineActivity" />
         <activity android:name=".opensource.rxjava.RxJavaActivity" />
         <activity android:name=".actual.plugin.PluginAppActivity" />
         <activity android:name=".actual.plugin.StubActivity" />

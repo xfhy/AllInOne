@@ -11,6 +11,13 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btnGoCancelAndException"
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kotlin 协程 取消和异常" />
+
+        <Button
             android:id="@+id/btnGoJetpackCoroutine"
             style="@style/HorizontalBtnStyle"
             android:layout_width="match_parent"
