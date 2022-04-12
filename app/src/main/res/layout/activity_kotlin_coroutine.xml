@@ -11,10 +11,18 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btnCancel"
             style="@style/HorizontalBtnStyle"
             android:layout_width="match_parent"
-            android:text="取消"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="取消" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testCancelEarly"
+            android:text="提前取消" />
 
     </LinearLayout>
 
