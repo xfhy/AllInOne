@@ -24,6 +24,13 @@
             android:onClick="testCancelEarly"
             android:text="提前取消" />
 
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testCancellationIsNotPossible"
+            android:text="无法取消" />
+
     </LinearLayout>
 
 </ScrollView>
