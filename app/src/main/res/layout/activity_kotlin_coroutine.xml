@@ -31,6 +31,40 @@
             android:onClick="testCancellationIsNotPossible"
             android:text="无法取消" />
 
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="cancellableWithContext"
+            android:text="可以取消的withContext" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="cancellableDelay"
+            android:text="可以取消的delay" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="yieldTest"
+            android:text="yield" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="testJobCancel"
+            android:text="job.cancel" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="cleanByTryCatch"
+            android:text="try.catch 清理工作" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="cleanByInvokeOnCancellation"
+            android:text="invokeOnCancellation 清理工作" />
+
     </LinearLayout>
 
 </ScrollView>
