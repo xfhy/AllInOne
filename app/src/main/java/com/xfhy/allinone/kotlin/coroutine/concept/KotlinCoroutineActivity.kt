@@ -331,5 +331,39 @@ class KotlinCoroutineActivity : TitleBarActivity() {
         //Done!
     }
 
+    fun childCoroutineThrowsException(view: View) {
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        scope.launch {
+            val deferred1 = async {
+                log("hello")
+                delay(300)
+                throw IllegalStateException("hello")
+            }
+            val deferred2 = async {
+                log("world")
+                delay(10000)
+                log("卧槽")
+            }
+            deferred1.await()
+            deferred2.await()
+            log("哈哈")
+            //打印结果：
+            //hello
+            //world
+
+            //然后就崩了
+            //2022-04-26 07:34:28.872 30183-31481/com.xfhy.allinone E/AndroidRuntime: FATAL EXCEPTION: DefaultDispatcher-worker-2
+            //    Process: com.xfhy.allinone, PID: 30183
+            //    java.lang.IllegalStateException: hello
+            //        at com.xfhy.allinone.kotlin.coroutine.concept.KotlinCoroutineActivity$childCoroutineThrowsException$1$deferred1$1.invokeSuspend(KotlinCoroutineActivity.kt:340)
+            //        at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+            //        at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+            //        at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:571)
+            //        at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:738)
+            //        at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:678)
+            //        at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:665)
+        }
+    }
+
 
 }

@@ -65,6 +65,11 @@
             android:onClick="cleanByInvokeOnCancellation"
             android:text="invokeOnCancellation 清理工作" />
 
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="childCoroutineThrowsException"
+            android:text="子协程中抛异常" />
+
     </LinearLayout>
 
 </ScrollView>
