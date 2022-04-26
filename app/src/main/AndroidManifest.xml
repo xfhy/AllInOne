@@ -83,6 +83,7 @@
         <activity android:name=".actual.hotfix.HotFixActivity" />
         <activity android:name=".actual.apt.AptActivity" />
         <activity android:name=".db.DbActivity" />
+        <activity android:name=".widget.CustomWidgetActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

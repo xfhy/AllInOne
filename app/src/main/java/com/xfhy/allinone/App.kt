@@ -28,7 +28,7 @@ public class App : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        HotFixUtil.loadPatch()
+        //HotFixUtil.loadPatch()
     }
 
 }

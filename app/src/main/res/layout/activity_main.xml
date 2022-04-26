@@ -61,6 +61,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="Kotlin" />
 
+        <Button
+            android:id="@+id/btnGoCustomView"
+            style="@style/HorizontalBtnStyle"
+            android:text="自定义View" />
+
     </LinearLayout>
 
 </ScrollView>

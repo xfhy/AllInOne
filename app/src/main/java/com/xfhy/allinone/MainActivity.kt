@@ -11,6 +11,7 @@ import com.xfhy.allinone.performance.PerformanceHomeActivity
 import com.xfhy.allinone.scroll.ScrollMainActivity
 import com.xfhy.allinone.smali.SmaliActivity
 import com.xfhy.allinone.view.ViewHomeActivity
+import com.xfhy.allinone.widget.CustomWidgetActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
@@ -54,6 +55,9 @@ class MainActivity : TitleBarActivity() {
         }
         btnGoKotlinHome.setOnClickListener {
             startActivity<KotlinMainActivity>()
+        }
+        btnGoCustomView.setOnClickListener {
+            startActivity<CustomWidgetActivity>()
         }
     }
 }
