@@ -80,9 +80,9 @@ class SimpleSwitch @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     private fun drawCircle(canvas: Canvas?) {
         if (isOn) {
-            canvas?.drawCircle(space / 2f + mRadius, mHeight / 2f, mRadius, mCirclePaint)
-        } else {
             canvas?.drawCircle(mWidth - mRadius - space / 2f, mHeight / 2f, mRadius, mCirclePaint)
+        } else {
+            canvas?.drawCircle(space / 2f + mRadius, mHeight / 2f, mRadius, mCirclePaint)
         }
     }
 
