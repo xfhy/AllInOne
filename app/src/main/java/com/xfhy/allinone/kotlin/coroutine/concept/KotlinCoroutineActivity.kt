@@ -365,5 +365,48 @@ class KotlinCoroutineActivity : TitleBarActivity() {
         }
     }
 
+    fun SupervisorJobCatchAsync(view: View) {
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
+        //下面的代码会崩溃
+//        lifecycleScope.launch {
+//            try {
+//                val deferred = async {
+//                    throw IllegalStateException("hello")
+//                }
+//                deferred.await()
+//            } catch (e: Exception) {
+//                //异常不会在这里被捕获到,但会在作用域内传播
+//                log("catch")
+//            }
+//        }
+
+        //下面的代码会崩溃
+        try {
+            lifecycleScope.launch {
+                try {
+                    val deferred = async {
+                        //要想不崩溃
+                        // 1. 只能在这里把async内部全部catch住
+                         //2. 加一个CoroutineExceptionHandler
+                        throw IllegalStateException("hello")
+                    }
+                    deferred.await()
+                } catch (e: Exception) {
+                    //异常不会在这里被捕获到,但会在作用域内传播
+                    log("catch inner")
+                }
+            }
+        } catch (e: Exception) {
+            log("catch outer")
+        }
+
+        //解决方案有2个：
+        //
+        //1. 每个子协程内部都用try.catch包住
+        //2. 设置CoroutineExceptionHandler（后面会详细说这个）
+    }
+
+
 
 }

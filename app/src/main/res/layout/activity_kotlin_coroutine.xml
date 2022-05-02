@@ -70,6 +70,11 @@
             android:onClick="childCoroutineThrowsException"
             android:text="子协程中抛异常" />
 
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="SupervisorJobCatchAsync"
+            android:text="SupervisorJobCatchAsync" />
+
     </LinearLayout>
 
 </ScrollView>
