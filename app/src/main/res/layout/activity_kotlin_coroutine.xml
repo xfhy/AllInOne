@@ -75,6 +75,11 @@
             android:onClick="SupervisorJobCatchAsync"
             android:text="SupervisorJobCatchAsync" />
 
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="CoroutineExceptionHandler"
+            android:text="CoroutineExceptionHandler" />
+
     </LinearLayout>
 
 </ScrollView>

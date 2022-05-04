@@ -407,6 +407,27 @@ class KotlinCoroutineActivity : TitleBarActivity() {
         //2. 设置CoroutineExceptionHandler（后面会详细说这个）
     }
 
+    private val exceptionHandler = CoroutineExceptionHandler { croutineContext, throwable ->
+        log("exceptionHandler ${throwable.message}")
+    }
+    fun CoroutineExceptionHandler(view: View) {
+        lifecycleScope.launch(exceptionHandler) {
+            val deferred = async {
+                delay(1000)
+                throw Exception("async 抛出了一个异常")
+            }
+            //加个延时 主要是验证异常是不是在await的时候抛出
+            delay(2000)
+            try {
+                deferred.await()
+            } catch (e: Exception) {
+                log("deferred await catch")
+            }
+            log("后续代码")
+        }
+        //打印结果   CoroutineExceptionHandler把异常捕获住了
+        //exceptionHandler async 抛出了一个异常
+    }
 
 
 }
