@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.xfhy.allinone.view.request.LogFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lfl_first_level"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:tag="第一层">
+
+    <com.xfhy.allinone.view.request.OtherFrameLayout
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#009688"
+        android:layout_gravity="bottom"
+        android:tag="第一层 1"/>
+
+    <com.xfhy.allinone.view.request.LogFrameLayout
+        android:id="@+id/lfl_second_level"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:background="#ff0000"
+        android:tag="第二层">
+
+        <com.xfhy.allinone.view.request.LogFrameLayout
+            android:id="@+id/lfl_third_level"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="#CDDC39"
+            android:tag="第三层 1">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="云天明" />
+
+        </com.xfhy.allinone.view.request.LogFrameLayout>
+
+        <com.xfhy.allinone.view.request.OtherFrameLayout
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="#FF5722"
+            android:layout_gravity="end"
+            android:tag="第三层 2"/>
+
+    </com.xfhy.allinone.view.request.LogFrameLayout>
+
+</com.xfhy.allinone.view.request.LogFrameLayout>

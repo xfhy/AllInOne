@@ -84,6 +84,7 @@
         <activity android:name=".actual.apt.AptActivity" />
         <activity android:name=".db.DbActivity" />
         <activity android:name=".widget.CustomWidgetActivity" />
+        <activity android:name=".view.request.RequestLayoutActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

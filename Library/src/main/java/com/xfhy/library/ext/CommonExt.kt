@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.blankj.utilcode.util.ConvertUtils
 import com.google.android.material.snackbar.Snackbar
 import com.xfhy.library.utils.SnackbarUtil
 import com.xfhy.library.widgets.DefaultTextWatcher
@@ -70,3 +71,6 @@ fun Bitmap.toByteArray(): ByteArray {
     )
     return byteArrayOutputStream.toByteArray()
 }
+
+val Int.dp: Int
+    get() = ConvertUtils.dp2px(this.toFloat())
