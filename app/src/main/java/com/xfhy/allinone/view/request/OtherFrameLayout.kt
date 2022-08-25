@@ -1,6 +1,7 @@
 package com.xfhy.allinone.view.request
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.xfhy.library.ext.log
@@ -21,6 +22,11 @@ class OtherFrameLayout @JvmOverloads constructor(context: Context, attrs: Attrib
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         log("OtherFrameLayout tag=$tag onMeasure")
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        log("OtherFrameLayout tag=$tag onDraw")
     }
 
     override fun requestLayout() {

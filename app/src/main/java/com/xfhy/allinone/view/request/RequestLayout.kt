@@ -14,6 +14,10 @@ import kotlinx.coroutines.launch
  * @author : xfhy
  * Create time : 2022/8/25 6:44 上午
  * Description : requestLayout学习
+ *
+ * 结论: 当修改某个View的宽度或者高度,View树中由它通向View树根节点的这条线上的View,都会onMeasure,onLayout,onDraw重绘.
+ * 因为沿着这个View往View树上面走,这条线上的View都会打上PFLAG_FORCE_LAYOUT标记,到下个VSYNC信号到来时,会走View的三大流程.
+ *
  */
 class RequestLayoutActivity : TitleBarActivity() {
 
