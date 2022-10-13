@@ -85,6 +85,7 @@
         <activity android:name=".db.DbActivity" />
         <activity android:name=".widget.CustomWidgetActivity" />
         <activity android:name=".view.request.RequestLayoutActivity" />
+        <activity android:name=".view.viewanimation.ViewAnimationActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"

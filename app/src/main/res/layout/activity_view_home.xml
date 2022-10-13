@@ -26,6 +26,15 @@
             style="@style/HorizontalBtnStyle"
             android:text="requestLayout" />
 
+        <Button
+            android:id="@+id/btnGoViewAnimation"
+            style="@style/HorizontalBtnStyle"
+            android:text="View动画" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:text="属性动画" />
+
     </LinearLayout>
 
 </ScrollView>
