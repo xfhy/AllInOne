@@ -29,6 +29,11 @@
             style="@style/HorizontalBtnStyle"
             android:onClick="goApt"
             android:text="APT" />
+
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="watchIdleHandler"
+            android:text="监控IdleHandler耗时问题" />
     </LinearLayout>
 
 </ScrollView>

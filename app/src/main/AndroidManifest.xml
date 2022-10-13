@@ -86,6 +86,7 @@
         <activity android:name=".widget.CustomWidgetActivity" />
         <activity android:name=".view.request.RequestLayoutActivity" />
         <activity android:name=".view.viewanimation.ViewAnimationActivity" />
+        <activity android:name=".actual.idlehandler.WatchIdleHandlerActivity" />
 
         <service
             android:name=".ipc.messenger.MessengerService"
