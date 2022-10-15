@@ -1,13 +1,12 @@
 package com.xfhy.allinone.actual.idlehandler
 
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
+import android.os.MessageQueue.IdleHandler
 import android.view.View
 import androidx.annotation.RequiresApi
 import com.xfhy.allinone.R
 import com.xfhy.library.basekit.activity.TitleBarActivity
+import com.xfhy.library.ext.log
 
 /**
  * @author : xfhy
@@ -37,8 +36,9 @@ class WatchIdleHandlerActivity : TitleBarActivity() {
         //@UnsupportedAppUsage
         //https://github.com/tiann/FreeReflection
         val mIdleHandlers = mIdleHandlersField.get(messageQueue)
-        // todo xfhy: 待完善 
+        mIdleHandlersField.set(messageQueue, MyArrayList())
     }
+
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun startTimeConsuming(view: View) {
@@ -46,6 +46,28 @@ class WatchIdleHandlerActivity : TitleBarActivity() {
             Thread.sleep(20000)
             false
         }
+    }
+
+}
+
+class MyIdleHandler(private val originIdleHandler: IdleHandler) : IdleHandler {
+
+    override fun queueIdle(): Boolean {
+        val startTime = System.currentTimeMillis()
+        log("开始执行idleHandler")
+        val result = originIdleHandler.queueIdle()
+        if (System.currentTimeMillis() - startTime > 2000) {
+            // todo xfhy : do something
+            log("idleHandler卡顿")
+        }
+        return result
+    }
+}
+
+class MyArrayList : ArrayList<IdleHandler>() {
+
+    override fun add(element: IdleHandler): Boolean {
+        return super.add(MyIdleHandler(element))
     }
 
 }
