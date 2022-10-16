@@ -5,6 +5,7 @@ import android.os.MessageQueue.IdleHandler
 import android.view.View
 import androidx.annotation.RequiresApi
 import com.xfhy.allinone.R
+import com.xfhy.allinone.util.getMainThreadStackTrace
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import com.xfhy.library.ext.log
 
@@ -50,24 +51,54 @@ class WatchIdleHandlerActivity : TitleBarActivity() {
 
 }
 
-class MyIdleHandler(private val originIdleHandler: IdleHandler) : IdleHandler {
+class MyIdleHandler(private val originIdleHandler: IdleHandler, private val threadHandler: Handler) : IdleHandler {
 
     override fun queueIdle(): Boolean {
-        val startTime = System.currentTimeMillis()
         log("开始执行idleHandler")
-        val result = originIdleHandler.queueIdle()
-        if (System.currentTimeMillis() - startTime > 2000) {
-            // todo xfhy : do something
-            log("idleHandler卡顿")
+
+        //1. 延迟发送Runnable，Runnable收集主线程堆栈信息
+        val runnable = {
+            log("idleHandler卡顿 \n ${getMainThreadStackTrace()}")
         }
+        threadHandler.postDelayed(runnable, 2000)
+        val result = originIdleHandler.queueIdle()
+        //2. idleHandler如果及时完成，那么就移除Runnable。如果上面的Runnable得到执行，说明主线程的idleHandler已经执行了2秒还没执行完，可以收集信息，对照着检查一下代码了
+        threadHandler.removeCallbacks(runnable)
         return result
     }
+
+    /*
+    demo中获取到的日志信息：
+    2022-10-17 07:33:50.282 28825-28825/com.xfhy.allinone D/xfhy_tag: 开始执行idleHandler
+    2022-10-17 07:33:52.286 28825-29203/com.xfhy.allinone D/xfhy_tag: idleHandler卡顿
+     java.lang.Thread.sleep(Native Method)
+    java.lang.Thread.sleep(Thread.java:443)
+    java.lang.Thread.sleep(Thread.java:359)
+    com.xfhy.allinone.actual.idlehandler.WatchIdleHandlerActivity$startTimeConsuming$1.queueIdle(WatchIdleHandlerActivity.kt:47)
+    com.xfhy.allinone.actual.idlehandler.MyIdleHandler.queueIdle(WatchIdleHandlerActivity.kt:62)
+    android.os.MessageQueue.next(MessageQueue.java:465)
+    android.os.Looper.loop(Looper.java:176)
+    android.app.ActivityThread.main(ActivityThread.java:8668)
+    java.lang.reflect.Method.invoke(Native Method)
+    com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:513)
+    com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1109)
+    * */
+
 }
 
 class MyArrayList : ArrayList<IdleHandler>() {
 
+    private val handlerThread by lazy {
+        HandlerThread("").apply {
+            start()
+        }
+    }
+    private val threadHandler by lazy {
+        Handler(handlerThread.looper)
+    }
+
     override fun add(element: IdleHandler): Boolean {
-        return super.add(MyIdleHandler(element))
+        return super.add(MyIdleHandler(element, threadHandler))
     }
 
 }
