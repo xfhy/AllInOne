@@ -13,7 +13,9 @@ import com.xfhy.library.ext.log
  * @author : xfhy
  * Create time : 2022/10/13
  * Description : 监控IdleHandler耗时问题
- * 把MessageQueue这个idlelist替换成自己的，重写add方法，添加进来的IdleHandler 给它包装一下，包装的那个类在执行queueIdle 时进行计时，这样添加进来的每个IdleHandler在执行的时候我们都能拿到其queueIdle 的执行时间。
+ * IdleHandler任务最终会被存储到MessageQueue的mIdleHandlers （一个ArrayList）中，在主线程空闲时，也就是MessageQueue的next方法暂时没有message可以取出来用时，
+ * 会从mIdleHandlers 中取出IdleHandler任务进行执行。那我们可以把这个mIdleHandlers 替换成自己的，重写add方法，添加进来的 IdleHandler 给它包装一下，
+ * 包装的那个类在执行 queueIdle 时进行计时，这样添加进来的每个IdleHandler在执行的时候我们都能拿到其 queueIdle 的执行时间 。如果超时我们就进行记录或者上报。
  */
 class WatchIdleHandlerActivity : TitleBarActivity() {
 
