@@ -33,10 +33,7 @@ class WatchIdleHandlerActivity : TitleBarActivity() {
         val mIdleHandlersField = messageQueueJavaClass.getDeclaredField("mIdleHandlers")
         mIdleHandlersField.isAccessible = true
 
-        //得处理一下 系统不让反射mIdleHandlers  Method threw 'java.lang.IllegalAccessException' exception.
-        //@UnsupportedAppUsage
-        //https://github.com/tiann/FreeReflection
-        val mIdleHandlers = mIdleHandlersField.get(messageQueue)
+        //虽然mIdleHandlers在Android Q以上被标记为UnsupportedAppUsage,但居然可以成功设置.  只有在反射访问mIdleHandlers时,才会触发系统的限制
         mIdleHandlersField.set(messageQueue, MyArrayList())
     }
 
