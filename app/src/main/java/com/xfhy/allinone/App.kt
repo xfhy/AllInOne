@@ -3,6 +3,7 @@ package com.xfhy.allinone
 import android.content.Context
 import com.xfhy.allinone.actual.plugin.HookHelper
 import com.xfhy.library.common.BaseApplication
+import me.weishu.reflection.Reflection
 
 /**
  * @author : xfhy
@@ -23,6 +24,8 @@ public class App : BaseApplication() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        Reflection.unseal(base)
     }
 
     override fun onCreate() {

@@ -72,4 +72,7 @@ dependencies {
     implementation project(':lib')
     kapt project(':lib-processor')
 
+    //突破Android 反射限制
+    implementation 'com.github.tiann:FreeReflection:3.1.0'
+
 }

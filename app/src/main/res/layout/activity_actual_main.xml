@@ -34,6 +34,10 @@
             style="@style/HorizontalBtnStyle"
             android:onClick="watchIdleHandler"
             android:text="监控IdleHandler耗时问题" />
+        <Button
+            style="@style/HorizontalBtnStyle"
+            android:onClick="watchSyncBarrier"
+            android:text="监控SyncBarrier泄露问题" />
     </LinearLayout>
 
 </ScrollView>

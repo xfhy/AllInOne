@@ -7,6 +7,7 @@ import com.xfhy.allinone.actual.apt.AptActivity
 import com.xfhy.allinone.actual.hotfix.HotFixActivity
 import com.xfhy.allinone.actual.idlehandler.WatchIdleHandlerActivity
 import com.xfhy.allinone.actual.plugin.PluginAppActivity
+import com.xfhy.allinone.actual.syncbarrier.WatchSyncBarrierActivity
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_actual_main.*
 import org.jetbrains.anko.startActivity
@@ -43,5 +44,9 @@ class ActualMainActivity : TitleBarActivity() {
 
     fun watchIdleHandler(view: View) {
         startActivity<WatchIdleHandlerActivity>()
+    }
+
+    fun watchSyncBarrier(view: View) {
+        startActivity<WatchSyncBarrierActivity>()
     }
 }
