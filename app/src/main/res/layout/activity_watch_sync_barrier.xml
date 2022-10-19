@@ -14,4 +14,9 @@
         android:onClick="makeSyncBarrierLeak"
         android:text="制造SyncBarrier泄露" />
 
+    <Button
+        style="@style/HorizontalBtnStyle"
+        android:onClick="startTestAnimation"
+        android:text="执行一个动画"/>
+
 </LinearLayout>
