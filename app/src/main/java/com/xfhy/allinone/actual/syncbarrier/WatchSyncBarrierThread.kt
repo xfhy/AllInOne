@@ -9,6 +9,13 @@ import com.xfhy.library.ext.log
  * @author : xfhy
  * Create time : 2022/10/19 22:56
  * Description : WatchSyncBarrier泄露
+ *
+ * 1. 开个子线程，轮询检查主线程的MessageQueue里面的message，检查是否有同步屏障消息的when已经过去了很久了，但还没得到执行
+ * 2. 此时可以合理怀疑该同步屏障消息可能已泄露，但还不能确定
+ * 3. 这个时候，往主线程发一个同步消息和一个异步消息（可以间隔地多发几次，增加可信度），如果同步消息没有得到执行，但异步消息得到执行了，这说明什么？
+ * 说明主线程的MessageQueue中有一个同步屏障一直没得到移除，所以同步消息才没得到执行，而异步消息得到执行了。
+ * 4. 此时，可以激进一点，把这个泄露的同步泄露消息给移除掉。
+ *
  */
 @SuppressLint("DiscouragedPrivateApi")
 @RequiresApi(Build.VERSION_CODES.M)
