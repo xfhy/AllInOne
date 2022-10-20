@@ -1,5 +1,6 @@
 package com.xfhy.allinone.actual.syncbarrier
 
+import android.animation.Animator
 import android.os.*
 import android.os.MessageQueue.IdleHandler
 import android.view.View
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 这个时候发个异步消息，再发个同步消息到主线程，如果异步消息被处理，同步消息未被处理，那么就是泄露了，这个时候把这个同步屏障给移除掉。
  *
  */
+@RequiresApi(Build.VERSION_CODES.M)
 class WatchSyncBarrierActivity : TitleBarActivity() {
 
     override fun getThisTitle() = "监控SyncBarrier泄露问题"
@@ -42,7 +44,6 @@ class WatchSyncBarrierActivity : TitleBarActivity() {
         setContentView(R.layout.activity_watch_sync_barrier)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     fun makeSyncBarrierLeak(view: View) {
         //制造SyncBarrier泄露
         val messageQueue = mainHandler.looper.queue
