@@ -33,7 +33,11 @@
         <activity android:name=".opensource.OpenSourceActivity" />
         <activity android:name=".smali.SmaliActivity" />
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
@@ -84,11 +88,7 @@
         <activity android:name=".view.viewanimation.ViewAnimationActivity" />
         <activity android:name=".actual.idlehandler.WatchIdleHandlerActivity" />
         <activity android:name=".actual.syncbarrier.WatchSyncBarrierActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <service
             android:name=".ipc.messenger.MessengerService"
