@@ -7,19 +7,11 @@
     tools:context=".image.ImageHomeActivity">
 
     <LinearLayout
+        android:id="@+id/ll_business"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btn_detect_caton"
-            style="@style/HorizontalBtnStyle"
-            android:text="卡顿检测" />
-
-        <Button
-            android:id="@+id/btn_memory_leak"
-            style="@style/HorizontalBtnStyle"
-            android:text="内存优化" />
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp">
 
     </LinearLayout>
 

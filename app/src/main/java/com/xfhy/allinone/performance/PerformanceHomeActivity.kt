@@ -1,10 +1,8 @@
 package com.xfhy.allinone.performance
 
-import android.os.Bundle
-import com.xfhy.allinone.databinding.ActivityPerformanceHomeBinding
+import com.xfhy.allinone.base.BaseDemoActivity
 import com.xfhy.allinone.performance.caton.CatonDetectionActivity
-import com.xfhy.allinone.performance.memory.MemoryLeakActivity
-import com.xfhy.library.basekit.activity.TitleBarActivity
+import com.xfhy.allinone.performance.memory.MemoryOptActivity
 import org.jetbrains.anko.startActivity
 
 /**
@@ -12,22 +10,16 @@ import org.jetbrains.anko.startActivity
  * Create time : 2021/4/3 6:40 AM
  * Description :
  */
-class PerformanceHomeActivity : TitleBarActivity() {
+class PerformanceHomeActivity : BaseDemoActivity() {
 
-    private lateinit var performanceHomeBinding: ActivityPerformanceHomeBinding
     override fun getThisTitle() = "性能优化"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        performanceHomeBinding = ActivityPerformanceHomeBinding.inflate(layoutInflater)
-        setContentView(performanceHomeBinding.root)
-
-        performanceHomeBinding.btnDetectCaton.setOnClickListener {
+    override fun initButtons() {
+        addButtonItem("卡顿检测") {
             startActivity<CatonDetectionActivity>()
         }
-        performanceHomeBinding.btnMemoryLeak.setOnClickListener {
-            startActivity<MemoryLeakActivity>()
+        addButtonItem("内存优化") {
+            startActivity<MemoryOptActivity>()
         }
     }
-
 }

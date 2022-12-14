@@ -90,6 +90,8 @@
         <activity android:name=".actual.syncbarrier.WatchSyncBarrierActivity" >
 
         </activity>
+        <activity android:name=".performance.memory.MemoryOptActivity" />
+
         <service
             android:name=".ipc.messenger.MessengerService"
             android:enabled="true"
