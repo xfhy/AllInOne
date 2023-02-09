@@ -3,3 +3,4 @@ include ':app',":Library"
 include ':lib'
 include ':lib-annotation'
 include ':lib-processor'
+include ':nativelib'

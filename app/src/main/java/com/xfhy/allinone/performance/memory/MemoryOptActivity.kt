@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.content.Context
 import com.xfhy.allinone.base.BaseDemoActivity
 import com.xfhy.library.ext.log
+import com.xfhy.nativelib.TestMalloc
 
 /**
  * @author : xfhy
@@ -11,12 +12,22 @@ import com.xfhy.library.ext.log
  * Description : 内存优化
  */
 class MemoryOptActivity : BaseDemoActivity() {
+
+    companion object {
+        var aa:IntArray?=null
+    }
+
     override fun getThisTitle(): CharSequence {
         return "内存优化"
     }
 
     override fun initButtons() {
         addButtonItem("获取内存数据", ::getMemoryData)
+        addButtonItem("native申请内存", ::nativeCreateMemory)
+    }
+
+    private fun nativeCreateMemory() {
+        aa = TestMalloc().testMalloc()
     }
 
     //1。线下获取内存数据

@@ -70,6 +70,7 @@ dependencies {
 
     implementation project(':Library')
     implementation project(':lib')
+    implementation project(':nativelib')
     kapt project(':lib-processor')
 
     //突破Android 反射限制
