@@ -21,7 +21,10 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             nativelib.cpp )
+             nativelib.cpp
+            monitormalloc.cpp
+            common.h
+        )
 
 add_library( # Sets the name of the library.
         testmalloc

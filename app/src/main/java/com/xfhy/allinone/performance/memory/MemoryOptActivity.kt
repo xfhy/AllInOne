@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.content.Context
 import com.xfhy.allinone.base.BaseDemoActivity
 import com.xfhy.library.ext.log
+import com.xfhy.nativelib.MonitorMalloc
 import com.xfhy.nativelib.TestMalloc
 
 /**
@@ -23,11 +24,16 @@ class MemoryOptActivity : BaseDemoActivity() {
 
     override fun initButtons() {
         addButtonItem("获取内存数据", ::getMemoryData)
+        addButtonItem("开始监测malloc内存申请", ::startMonitorMalloc)
         addButtonItem("native申请内存", ::nativeCreateMemory)
     }
 
+    private fun startMonitorMalloc() {
+        MonitorMalloc().startMonitor()
+    }
+
     private fun nativeCreateMemory() {
-        aa = TestMalloc().testMalloc()
+        TestMalloc().testMalloc()
     }
 
     //1。线下获取内存数据

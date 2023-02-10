@@ -14,6 +14,6 @@ class TestMalloc {
         }
     }
 
-    external fun testMalloc():IntArray
+    external fun testMalloc()
 
 }
