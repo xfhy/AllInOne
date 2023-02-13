@@ -59,6 +59,15 @@ android {
         // dataBinding = true // 数据绑定
     }
 
+    packagingOptions {
+        doNotStrip "*/armeabi/*.so"
+        doNotStrip "*/armeabi-v7a/*.so"
+        doNotStrip "*/arm64-v8a/*.so"
+        doNotStrip "*/x86/*.so"
+        doNotStrip "*/x86_64/*.so"
+        doNotStrip "*/mips/*.so"
+        doNotStrip "*/mips64/*.so"
+    }
 }
 
 dependencies {
@@ -70,6 +79,7 @@ dependencies {
 
     implementation project(':Library')
     implementation project(':lib')
+    //主App对Library的依赖是release的，因此会导致Library native代码不可调试。
     implementation project(':nativelib')
     kapt project(':lib-processor')
 

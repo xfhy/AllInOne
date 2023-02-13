@@ -1,10 +1,14 @@
 #include <jni.h>
 #include <cstdio>
+#include <cstring>
+#include <inttypes.h>
+#include <elf.h>
 #include "common.h"
 
 //
 // Created by xfhy on 2023/2/10.
 //
+
 
 void readTestMallocSoAddress() {
 
@@ -26,17 +30,36 @@ HWBKL:/ # cat /proc/8644/maps | grep malloc
 
  */
 
+    //--------------------------------1. 找到libtestmalloc.so的地址
     //进程的虚拟内存每一页上存放了什么数据，都会记录在maps文件中
     //看上面的maps文件的部分内容，我们可以找到libtestmalloc.so加载进内存之后的起始和结束地址
     //我们需要一行一行地读取该文件内容，从而找到libtestmalloc.so的基地址（起始地址）
     FILE *fp = fopen("/proc/self/maps", "r");
     char line[200];
+    unsigned int base_addr = 0;
     //读取maps文件内容，一行一行地读
     while (fgets(line, sizeof(line), fp)) {
-        //todo xfhy 未完  读取到有libtestmalloc.so内容就break,同时把地址记录下来
-        LOGD("%s", line);
+        //读取到有libtestmalloc.so内容就break,同时把地址记录下来
+        // “PRIxPTR”是将数据转换成 16 进制地址格式的标志，然后赋值给 base_addr
+        if (nullptr != strstr(line, "libtestmalloc.so") &&
+            sscanf(line, "%" PRIxPTR"-%*lx %*4s 00000000", &base_addr) == 1) {
+            LOGD("%s", line);
+            break;
+        }
     }
     fclose(fp);
+
+    //---------------------------------2.计算 so 库中程序头部表的地址，头部表中记录了 ELF 文件中各个段的地址：
+
+    //将 base_addr 强制转换成Elf32_Ehdr格式，即32位 ELF header的结构体，如果是 64 位需要转换成 Elf64_Ehdr
+    Elf64_Ehdr *header = (Elf64_Ehdr *) (base_addr);
+
+    Elf64_Phdr *phdr_table = (Elf64_Phdr *) (base_addr + header->e_phoff);  // 程序头部表的地址
+    if (phdr_table == 0) {
+        return;
+    }
+    size_t phr_count = header->e_phnum;  // 程序头表项个数
+    LOGD("程序头表项个数: %d", phr_count);
 }
 
 extern "C"
