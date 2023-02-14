@@ -29,7 +29,7 @@ class MemoryOptActivity : BaseDemoActivity() {
     }
 
     private fun startMonitorMalloc() {
-        MonitorMalloc().startMonitor()
+        MonitorMalloc().start()
     }
 
     private fun nativeCreateMemory() {

@@ -13,6 +13,11 @@ class MonitorMalloc {
         }
     }
 
-    external fun startMonitor()
+    fun start() {
+        BHookHelper.initBHook()
+        startMonitor()
+    }
+
+    private external fun startMonitor()
 
 }

@@ -104,10 +104,84 @@ HWBKL:/ # cat /proc/8644/maps | grep malloc
 //    }
 }
 
+bool thread_hooked = false;
+
+void *malloc_hook(size_t len) {
+    //确保在代理函数返回前调用 BYTEHOOK_POP_STACK() 宏。在 CPP 源文件中，也可以改为在代理函数的开头调用 BYTEHOOK_STACK_SCOPE() 宏。
+    BYTEHOOK_STACK_SCOPE();
+
+    //此处为自己的逻辑，做点事情
+    LOGD("malloc hook, size=%d", len);
+
+    //如果需要在代理函数中调用原函数，请始终使用 BYTEHOOK_CALL_PREV() 宏来完成。
+    return BYTEHOOK_CALL_PREV(malloc_hook, len);
+}
+
+void bhookTest() {
+    //bhook api : https://github.com/bytedance/bhook/blob/c0a83d41e0820506068031149f5f0057cde0abfe/doc/native_manual.zh-CN.md
+    if (thread_hooked) {
+        return;
+    }
+    thread_hooked = true;
+
+    /*
+     //hook 进程中的单个动态库
+     //返回NULL表示添加任务失败，否则为成功。
+    bytehook_stub_t bytehook_hook_single(
+        const char *caller_path_name, //调用者的pathname或basename（不可为NULL）
+        const char *callee_path_name, //被调用者的pathname
+        const char *sym_name, //需要hook的函数名（不可为NULL）
+        void *new_func, //新函数（不可为NULL）
+        bytehook_hooked_t hooked, //hook后的回调函数
+        void *hooked_arg); //回调函数的自定义参数
+
+     //hook 进程中的部分动态库
+    //过滤器函数定义。返回true表示需要hook该调用者，返回false表示不需要。
+    typedef bool (*bytehook_caller_allow_filter_t)(
+        const char *caller_path_name, //调用者的pathname或basename
+        void *arg); //bytehook_hook_partial中传递的caller_allow_filter_arg值
+
+    //返回NULL表示添加任务失败，否则为成功。
+    bytehook_stub_t bytehook_hook_partial(
+        bytehook_caller_allow_filter_t caller_allow_filter, //过滤器函数（不可为NULL）
+        void *caller_allow_filter_arg, //过滤器函数的自定义参数
+        const char *callee_path_name, //被调用者的pathname，NULL表示所有的被调用者
+        const char *sym_name, //需要hook的函数名（不可为NULL）
+        void *new_func, //新函数（不可为NULL）
+        bytehook_hooked_t hooked, //hook后的回调函数
+        void *hooked_arg); //回调函数的自定义参数
+
+     //hook 进程中的全部动态库
+    //返回NULL表示添加任务失败，否则为成功。
+    bytehook_stub_t bytehook_hook_all(
+        const char *callee_path_name, //被调用者的pathname，NULL表示所有的被调用者
+        const char *sym_name, //需要hook的函数名（不可为NULL）
+        void *new_func, //新函数（不可为NULL）
+        bytehook_hooked_t hooked, //hook后的回调函数
+        void *hooked_arg); //回调函数的自定义参数
+
+    int bytehook_unhook(bytehook_stub_t stub);
+     */
+
+    //hook 执行后返回的存根（stub）的定义，用于后续调用 unhook：
+    //typedef void* bytehook_stub_t;
+
+    bytehook_stub_t stub = bytehook_hook_single(
+            "libtestmalloc.so",
+            nullptr,
+            "malloc",
+            reinterpret_cast<void *>(malloc_hook),
+            nullptr,
+            nullptr
+    );
+
+    //这是unhook
+    //bytehook_unhook(stub);
+}
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_xfhy_nativelib_MonitorMalloc_startMonitor(JNIEnv *env, jobject thiz) {
-    pltHook();
-
-    //todo xfhy bhookTest()
+    //pltHook();
+    bhookTest();
 }
