@@ -3,14 +3,18 @@
 #include <cstring>
 #include <inttypes.h>
 #include <elf.h>
+#include <unistd.h>
+#include <sys/mman.h>
 #include "common.h"
 
+
+#define PAGE_START(addr) ((addr) & PAGE_MASK)
+#define PAGE_END(addr)   (PAGE_START(addr) + PAGE_SIZE)
 //
 // Created by xfhy on 2023/2/10.
 //
 
-
-void readTestMallocSoAddress() {
+void pltHook() {
 
     /*
 
@@ -53,17 +57,54 @@ HWBKL:/ # cat /proc/8644/maps | grep malloc
 
     //将 base_addr 强制转换成Elf32_Ehdr格式，即32位 ELF header的结构体，如果是 64 位需要转换成 Elf64_Ehdr
     Elf64_Ehdr *header = (Elf64_Ehdr *) (base_addr);
-
     Elf64_Phdr *phdr_table = (Elf64_Phdr *) (base_addr + header->e_phoff);  // 程序头部表的地址
     if (phdr_table == 0) {
         return;
     }
     size_t phr_count = header->e_phnum;  // 程序头表项个数
     LOGD("程序头表项个数: %d", phr_count);
+
+    //-----------------3.遍历程序头部表，获取 .dynamic 段的地址
+    unsigned long dynamicAddr;
+    unsigned int dynamicSize;
+    for (int i = 0; i < phr_count; i++) {
+        if (phdr_table[i].p_type == PT_DYNAMIC) {
+            //so基地址加dynamic段的偏移地址，就是dynamic段的实际地址
+            dynamicAddr = phdr_table[i].p_vaddr + base_addr;
+            dynamicSize = phdr_table[i].p_memsz;
+            break;
+        }
+    }
+
+    //----------------4.遍历 .dynamic 段，d_tag为 3（不同平台下的 so，这里的序列可能会不一样，所以为了兼容性考虑，我们最好用名称来进行确认） 即为 .got.plt 表地址：
+    int symbolTableAddr = 0;
+    Elf32_Dyn *dynamic_table = (Elf32_Dyn *) dynamicAddr;
+    for (int i = 0; i < dynamicSize; i++) {
+        int val = dynamic_table[i].d_un.d_val;
+        if (dynamic_table[i].d_tag == 3) {
+            symbolTableAddr = val + base_addr;
+            break;
+        }
+    }
+
+    //-------------5.修改内存属性为可写，并遍历 .got.plt 表，找到 Malloc 函数的地址后，将 Malloc 函数地址替换成我们自己的 Malloc_hook 函数地址：
+    //读写权限改为可写
+    mprotect((void *) PAGE_START(symbolTableAddr), PAGE_SIZE, PROT_READ | PROT_WRITE);
+
+//    int oldFunc = &malloc - (int) base_addr; // 目标函数偏移地址
+//    int newFunc = &malloc_hook;  // 替换的hook函数的偏移地址
+//    int i = 0;
+//    while (1) {
+//        if (symbolTableAddr[i].st_value == oldFunc) {
+//            symbolTableAddr[i].st_value = newFunc;
+//            break;
+//        }
+//        i++;
+//    }
 }
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_xfhy_nativelib_MonitorMalloc_startMonitor(JNIEnv *env, jobject thiz) {
-    readTestMallocSoAddress();
+    pltHook();
 }
