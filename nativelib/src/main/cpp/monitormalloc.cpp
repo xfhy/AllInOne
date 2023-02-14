@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include "common.h"
+#include "bytehook.h"
 
 
 #define PAGE_START(addr) ((addr) & PAGE_MASK)
@@ -107,4 +108,6 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_xfhy_nativelib_MonitorMalloc_startMonitor(JNIEnv *env, jobject thiz) {
     pltHook();
+
+    //todo xfhy bhookTest()
 }
