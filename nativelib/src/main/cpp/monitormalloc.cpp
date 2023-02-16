@@ -5,6 +5,8 @@
 #include <elf.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <unwind.h> //引入 unwind 库
+#include <dlfcn.h>
 #include "common.h"
 #include "bytehook.h"
 
@@ -166,6 +168,7 @@ void bhookTest() {
     //hook 执行后返回的存根（stub）的定义，用于后续调用 unhook：
     //typedef void* bytehook_stub_t;
 
+    //这里仅 hook 了malloc 函数，但如果我们想要统计全面，还需要把其他的所有内存申请相关的函数（ malloc 、calloc 、realloc 、mmap 等函数） hook 住，内存释放的函数也 hook 住。
     bytehook_stub_t stub = bytehook_hook_single(
             "libtestmalloc.so",
             nullptr,
@@ -179,9 +182,99 @@ void bhookTest() {
     //bytehook_unhook(stub);
 }
 
+
+//--------------------------获取native堆栈 start------------------------
+//堆栈回溯的两个指针，current指向当前位置，end指向栈顶位置
+struct BacktraceState {
+    void **current;
+    void **end;
+};
+
+//堆栈回溯的本体，原理就是通过_Unwind_GetIP函数来获得context的pc值
+// （在linux系统中，pc的位置为每个堆栈的栈顶），我们只要找到每个栈顶也就是pc值，
+// 其实就算完成了回溯。在这里这个函数帮你封装的很好，
+// 当达到root的时候，则会返回_URC_NO_REASON，否则返回_URC_END_OF_STACK。
+static _Unwind_Reason_Code UnwindCallback(struct _Unwind_Context *context, void *arg) {
+    BacktraceState *state = static_cast<BacktraceState *>(arg);
+    uintptr_t pc = _Unwind_GetIP(context);
+    if (pc) {
+        if (state->current == state->end) {
+            return _URC_END_OF_STACK;
+        } else {
+            *state->current++ = reinterpret_cast<void *>(pc);
+        }
+    }
+    return _URC_NO_REASON;
+}
+
+// void** buffer和size_t max，前者是函数指针，后者是回溯的最大层数
+static size_t CaptureBacktrace(void **buffer, size_t max) {
+    //声明了一个新的BacktraceState 作为子容器
+    BacktraceState state = {buffer, buffer + max};
+    //_Unwind_Backtrace通过回调来触发UnwindCallback
+    _Unwind_Backtrace(UnwindCallback, &state);
+
+    //返回值state.current - buffer为当前共进行回溯的次数（也可以理解为层数）
+    return state.current - buffer;
+}
+
+static void LogBacktrace() {
+    const size_t max = 100;
+    void *buffer[max];
+    //回溯的次数
+    const size_t count = CaptureBacktrace(buffer, max);
+
+    //只需要轮训打印即可输出堆栈
+    for (size_t idx = 0; idx < count; ++idx) {
+        const void *addr = buffer[idx];
+        const char *symbol = "Null";
+        const char *fileName = "";
+
+        //但此时我们获取到的仅仅是地址而已，地址是没有可读性的，往往需要将地址转换为函数名或者so名，
+        // 这里就用到了Dl_info。Dl_info可以获取某个地址的符号信息，并存到info中。
+        Dl_info info;
+        //dladdr 函数: 传入一个地址和 Dl_info 结构体指针，便能在结构体中获取该函数的 so 名及 so库的基地址。
+        if (dladdr(addr, &info)) {
+            //访问info.dli_sname就可以获得该地址对应的函数名
+            if (info.dli_sname) {
+                symbol = info.dli_sname;
+            }
+
+            //info.dli_fname获得该内存地址对应的so文件名
+            if (info.dli_fname) {
+                fileName = info.dli_fname;
+            }
+
+            //使用 addr2line 工具，根据函数偏移地址，获取地址对应的函数名、行号等信息。
+            //addr2line -C -f -e xxx.so 函数偏移地址
+            //
+            //-C:将低级别的符号名解码为用户级别的名字。
+            //-e:指定需要转换地址的可执行文件名
+            //-f:在显示文件名、行号信息的同时显示函数名。
+
+            //函数偏移地址=函数的绝对地址-so库相对地址   我这里打印出来是0x10788
+            const uintptr_t addr_relative = ((uintptr_t)addr - (uintptr_t)info.dli_fbase);
+
+            LOGD(
+                    "#%02d  pc %lx %s %s(%p)\n",
+                    idx,
+                    (unsigned long) addr - (unsigned long) info.dli_fbase,
+                    fileName,
+                    symbol,
+                    addr_relative
+            );
+
+        }
+    }
+}
+
+//--------------------------获取native堆栈 end------------------------
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_xfhy_nativelib_MonitorMalloc_startMonitor(JNIEnv *env, jobject thiz) {
     //pltHook();
-    bhookTest();
+    //bhookTest();
+
+    LogBacktrace();
 }

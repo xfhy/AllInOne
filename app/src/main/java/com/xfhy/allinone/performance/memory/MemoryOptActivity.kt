@@ -2,6 +2,7 @@ package com.xfhy.allinone.performance.memory
 
 import android.app.ActivityManager
 import android.content.Context
+import android.os.Debug
 import com.xfhy.allinone.base.BaseDemoActivity
 import com.xfhy.library.ext.log
 import com.xfhy.nativelib.MonitorMalloc
