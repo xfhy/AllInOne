@@ -2,9 +2,10 @@ package com.xfhy.allinone.performance.memory
 
 import android.app.ActivityManager
 import android.content.Context
-import android.os.Debug
+import com.xfhy.allinone.App
 import com.xfhy.allinone.base.BaseDemoActivity
 import com.xfhy.library.ext.log
+import com.xfhy.nativelib.BMemoryLeakDetector
 import com.xfhy.nativelib.MonitorMalloc
 import com.xfhy.nativelib.TestMalloc
 
@@ -16,7 +17,7 @@ import com.xfhy.nativelib.TestMalloc
 class MemoryOptActivity : BaseDemoActivity() {
 
     companion object {
-        var aa:IntArray?=null
+        var aa: IntArray? = null
     }
 
     override fun getThisTitle(): CharSequence {
@@ -26,11 +27,21 @@ class MemoryOptActivity : BaseDemoActivity() {
     override fun initButtons() {
         addButtonItem("获取内存数据", ::getMemoryData)
         addButtonItem("开始监测malloc内存申请", ::startMonitorMalloc)
-        addButtonItem("native申请内存", ::nativeCreateMemory)
+        addButtonItem("native制造malloc泄露", ::nativeCreateMemory)
+        addButtonItem("使用MemoryLeakDetector监测内存泄露", ::startMemoryLeakDetector)
+        addButtonItem("MemoryLeakDetector输出结果", ::printResultForMemoryLeakDetector)
     }
 
     private fun startMonitorMalloc() {
         MonitorMalloc().start()
+    }
+
+    private fun startMemoryLeakDetector() {
+        BMemoryLeakDetector.startDetector(App.getAppContext())
+    }
+
+    private fun printResultForMemoryLeakDetector() {
+        BMemoryLeakDetector.printResult()
     }
 
     private fun nativeCreateMemory() {
