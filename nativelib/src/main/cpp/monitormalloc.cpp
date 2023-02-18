@@ -17,6 +17,8 @@
 // Created by xfhy on 2023/2/10.
 //
 
+static void LogBacktrace();
+
 void pltHook() {
 
     /*
@@ -114,6 +116,8 @@ void *malloc_hook(size_t len) {
 
     //此处为自己的逻辑，做点事情
     LOGD("malloc hook, size=%d", len);
+    //打印堆栈信息
+    LogBacktrace();
 
     //如果需要在代理函数中调用原函数，请始终使用 BYTEHOOK_CALL_PREV() 宏来完成。
     return BYTEHOOK_CALL_PREV(malloc_hook, len);
@@ -274,7 +278,15 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_xfhy_nativelib_MonitorMalloc_startMonitor(JNIEnv *env, jobject thiz) {
     //pltHook();
-    //bhookTest();
-
-    LogBacktrace();
+    bhookTest();
 }
+
+//堆栈信息 windows
+//debug 的 so文件去这里拿：AllInOne/nativelib/build/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libnativelib.so
+//编译产物文件中有一个 stripped_native_libs 的文件，里面的 so 都是去符号表的，记得不要选择这里面的 so。
+//对于第三方 sdk，都是已经去符号表的，是没法通过 add2line 查看到对应行数的
+//如果是线上监控，需要考虑到性能，那么只需要抓取到 16 进制的堆栈就行了，然后将 16 进制的堆栈和 maps 文件上传到服务端，服务端通过 maps 文件的方案，确认对应的 so 名和函数名，如果服务端有带符号表的 so ，还能进一步确定行号。
+
+//C:\SDK\ndk\21.1.6352462\toolchains\aarch64-linux-android-4.9\prebuilt\windows-x86_64\bin>aarch64-linux-android-addr2line.exe -C -f -e libnativelib.so 0x10788
+//Java_com_xfhy_nativelib_MonitorMalloc_startMonitor
+//D:/github/AllInOne/nativelib/src/main/cpp/monitormalloc.cpp:279
