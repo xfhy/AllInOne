@@ -1,10 +1,7 @@
 package com.xfhy.allinone.actual.apt
 
 import android.os.Bundle
-import android.widget.TextView
 import com.xfhy.allinone.R
-import com.xfhy.annotation.BindView
-import com.xfhy.lib.Binding
 import com.xfhy.library.basekit.activity.TitleBarActivity
 
 /**
@@ -18,8 +15,8 @@ class AptActivity : TitleBarActivity() {
 
     override fun getThisTitle() = "APT"
 
-    @BindView(R.id.tv_apt_test)
-    lateinit var tvAptTest: TextView
+//    @BindView(R.id.tv_apt_test)
+//    lateinit var tvAptTest: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +24,9 @@ class AptActivity : TitleBarActivity() {
 
         //生成的AptActivityBinding文件在
         // AllInOne/app/build/generated/source/kapt/debug/com/xfhy/allinone/actual/apt 文件夹里面
-        Binding.bind(this)
+//        Binding.bind(this)
 
-        tvAptTest.text = "卧槽,成功了"
+//        tvAptTest.text = "卧槽,成功了"
     }
 
 }

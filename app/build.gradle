@@ -82,10 +82,11 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
 
     implementation project(':Library')
-    implementation project(':lib')
+//    implementation project(':lib')
+    //    kapt project(':lib-processor')
+
     //主App对Library的依赖是release的，因此会导致Library native代码不可调试。
     implementation project(':nativelib')
-    kapt project(':lib-processor')
 
     //突破Android 反射限制
     implementation 'com.github.tiann:FreeReflection:3.1.0'
