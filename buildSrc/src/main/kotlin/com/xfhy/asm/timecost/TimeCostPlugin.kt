@@ -10,6 +10,9 @@ import org.gradle.api.Project
  * @author : xfhy
  * Create time : 2023/2/20 21:20
  * Description : 方法耗时统计 , ASM插桩
+ *
+ * Gradle 7.0 开始是通过 AndroidComponentsExtension来注册脚本的，之前的Transform被标记为废弃
+ *
  */
 class TimeCostPlugin : Plugin<Project> {
 

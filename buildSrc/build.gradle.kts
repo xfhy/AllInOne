@@ -13,8 +13,8 @@ repositories {
 dependencies {
     implementation(gradleApi())
     implementation("com.android.tools.build:gradle:7.2.0")
-    compileOnly("commons-io:commons-io:2.6")
-    compileOnly("commons-codec:commons-codec:1.15")
-    compileOnly("org.ow2.asm:asm-commons:9.3")
-    compileOnly("org.ow2.asm:asm-tree:9.3")
+    implementation("commons-io:commons-io:2.6")
+    implementation("commons-codec:commons-codec:1.15")
+    implementation("org.ow2.asm:asm-commons:9.3")
+    implementation("org.ow2.asm:asm-tree:9.3")
 }

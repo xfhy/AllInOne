@@ -7,6 +7,7 @@ plugins {
 //    id 'kotlin-kapt'
 }
 
+//asm 插桩，统计每个方法的耗时。
 //apply plugin: TimeCostPlugin
 
 apply from: "$rootDir/gradle/library_depend.gradle"
@@ -96,8 +97,4 @@ dependencies {
 
     //突破Android 反射限制
     implementation 'com.github.tiann:FreeReflection:3.1.0'
-
-    //asm
-    implementation 'org.ow2.asm:asm:9.3'
-    implementation 'org.ow2.asm:asm-commons:9.3'
 }
