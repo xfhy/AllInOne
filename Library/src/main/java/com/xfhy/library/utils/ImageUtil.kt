@@ -3,7 +3,7 @@ package com.xfhy.library.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.orhanobut.logger.Logger
+import com.xfhy.library.ext.log
 import java.io.File
 import java.io.FileOutputStream
 
@@ -27,7 +27,7 @@ object ImageUtil {
         BitmapFactory.decodeFile(path, options)
         val imageWidth = options.outWidth
         val imageHeight = options.outHeight
-        Logger.e("宽 :$imageWidth   高:$imageHeight")
+        log("宽 :$imageWidth   高:$imageHeight")
 
         //根据需要显示的控件宽高来获取缩放比例   因为用户头像展示ImageView宽高为80dp
         var scale = 1
@@ -41,7 +41,7 @@ object ImageUtil {
             scale = scaleY
         }
 
-        Logger.e("缩放比:$scale")
+        log("缩放比:$scale")
         //设置图片的缩放比 ,用来节约内存
         options.inSampleSize = scale
         options.inJustDecodeBounds = false

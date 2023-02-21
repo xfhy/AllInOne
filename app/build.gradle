@@ -72,6 +72,10 @@ android {
         doNotStrip "*/mips/*.so"
         doNotStrip "*/mips64/*.so"
     }
+
+    defaultConfig {
+        resConfigs "zh"
+    }
 }
 
 dependencies {
