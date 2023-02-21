@@ -1,4 +1,4 @@
-import com.xfhy.asm.timecost.TimeCostPlugin
+//import com.xfhy.asm.timecost.TimeCostPlugin
 
 plugins {
     id 'com.android.application'
@@ -7,7 +7,7 @@ plugins {
     id 'kotlin-kapt'
 }
 
-apply plugin: TimeCostPlugin
+//apply plugin: TimeCostPlugin
 
 android {
     compileSdkVersion 30
