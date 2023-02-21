@@ -10,23 +10,8 @@ import org.objectweb.asm.commons.AdviceAdapter
  * Create time : 2023/2/20 20:52
  * Description :
  */
-class TimeCostClassVisitor(nextClassVisitor: ClassVisitor) :
+class TimeCostClassVisitor(nextClassVisitor: ClassVisitor, private val className: String) :
     ClassVisitor(Opcodes.ASM5, nextClassVisitor) {
-
-    private var className: String? = null
-
-    override fun visit(
-        version: Int,
-        access: Int,
-        name: String?,
-        signature: String?,
-        superName: String?,
-        interfaces: Array<out String>?
-    ) {
-        className = name
-        println("className = $className , superName = $superName")
-        super.visit(version, access, name, signature, superName, interfaces)
-    }
 
     override fun visitMethod(
         access: Int,
@@ -40,48 +25,34 @@ class TimeCostClassVisitor(nextClassVisitor: ClassVisitor) :
             object : AdviceAdapter(Opcodes.ASM5, methodVisitor, access, name, descriptor) {
                 override fun onMethodEnter() {
                     //方法开始
-                    try {
-                        if (isNeedVisiMethod(name, className)) {
-                            mv.visitLdcInsn(name)
-                            mv.visitMethodInsn(
-                                INVOKESTATIC,
-                                "com/xfhy/allinone/util/TimeCache",
-                                "putStartTime",
-                                "(Ljava/lang/String;Ljava/lang/String;)V",
-                                false
-                            )
-                        }
-
-                    } catch (e: Throwable) {
-                        println("-----------------------出错了--------------------")
-                        e.printStackTrace()
-                    } finally {
-                        super.onMethodEnter()
+                    if (isNeedVisiMethod(name, className)) {
+                        mv.visitLdcInsn(name)
+                        mv.visitLdcInsn(className)
+                        mv.visitMethodInsn(
+                            INVOKESTATIC,
+                            "com/xfhy/allinone/util/TimeCache",
+                            "putStartTime",
+                            "(Ljava/lang/String;Ljava/lang/String;)V",
+                            false
+                        )
                     }
-
+                    super.onMethodEnter()
                 }
 
                 override fun onMethodExit(opcode: Int) {
                     //方法结束
-                    try {
-                        if (isNeedVisiMethod(name, className)) {
-                            mv.visitLdcInsn(name)
-                            mv.visitMethodInsn(
-                                INVOKESTATIC,
-                                "com/xfhy/allinone/util/TimeCache",
-                                "putEndTime",
-                                "(Ljava/lang/String;Ljava/lang/String;)V",
-                                false
-                            )
-                        }
-                    } catch (e: Throwable) {
-                        println("-----------------------出错了--------------------")
-                        e.printStackTrace()
-                    } finally {
-                        super.onMethodExit(opcode)
+                    if (isNeedVisiMethod(name, className)) {
+                        mv.visitLdcInsn(name)
+                        mv.visitLdcInsn(className)
+                        mv.visitMethodInsn(
+                            INVOKESTATIC,
+                            "com/xfhy/allinone/util/TimeCache",
+                            "putEndTime",
+                            "(Ljava/lang/String;Ljava/lang/String;)V",
+                            false
+                        )
                     }
-
-
+                    super.onMethodExit(opcode)
                 }
             }
         return newMethodVisitor
@@ -92,12 +63,8 @@ class TimeCostClassVisitor(nextClassVisitor: ClassVisitor) :
         if (className.isNullOrBlank()) {
             return false
         }
-        if (!className.contains("xfhy")) {
-            return false
-        }
-        if (className.contains("Activity")) {
-            return false
-        }
+        //<clinit> : jvm第一次加载class文件时调用,包括静态变量初始化语句和静态块的执行
+        //<init> : 实例创建出来的时候调用. 场景: new 对象的时候、调用Class或Java.lang.reflect.Constructor对象的newInstance()方法、调用任何现有对象的clone()方法、通过java.io.ObjectInputStream类的getObject()方法反序列化。
         return name != "putStartTime" && name != "putEndTime" && name != "printlnTime" && name != "<clinit>" && name != "<init>"
     }
 
