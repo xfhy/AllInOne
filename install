@@ -1,0 +1,2 @@
+./gradlew :app:installDebug --console=plain
+adb shell am start -n com.xfhy.allinone/.MainActivity
