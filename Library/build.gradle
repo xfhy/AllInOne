@@ -59,10 +59,10 @@ dependencies {
     api "com.squareup.retrofit2:converter-gson:2.9.0"
 
     //log
-    api "com.orhanobut:logger:2.2.0"
+    //api "com.orhanobut:logger:2.2.0"
 
     //RxPermission 权限
-    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+    //api 'com.github.tbruyelle:rxpermissions:0.10.2'
 
     //anko
     api "org.jetbrains.anko:anko:0.10.5"
