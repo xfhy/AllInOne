@@ -28,7 +28,7 @@ abstract class BaseDemoActivity : TitleBarActivity(), View.OnClickListener {
     abstract fun initButtons()
 
     protected fun addButtonItem(buttonText: String, onClickMethod: () -> Unit) {
-        val button = Button(this, null, 0, R.style.HorizontalBtnStyle).apply {
+        val button = Button(this, null, 0, com.xfhy.library.R.style.HorizontalBtnStyle).apply {
             id = View.generateViewId()
             onClickMethodMap[id] = onClickMethod
             text = buttonText

@@ -233,7 +233,7 @@ object SnackbarUtil {
         //设置Snackbar自己的布局的背景颜色
         view.setBackgroundColor(backgroundColor)
         //设置Snackbar自己的布局中的TextView的颜色
-        (view.findViewById<View>(R.id.snackbar_text) as TextView).setTextColor(messageColor)
+        (view.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView).setTextColor(messageColor)
     }
 
     /**

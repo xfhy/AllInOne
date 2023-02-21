@@ -75,7 +75,7 @@ class GlideActivity : TitleBarActivity() {
 
     private fun simpleTest() {
         val requestOptions = RequestOptions()
-            .placeholder(R.drawable.splash_bg)
+            .placeholder(com.xfhy.library.R.drawable.splash_bg)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .error(R.mipmap.ic_launcher)
             .override(200, 200)
