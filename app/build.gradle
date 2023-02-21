@@ -9,6 +9,8 @@ plugins {
 
 //apply plugin: TimeCostPlugin
 
+apply from: "$rootDir/gradle/library_depend.gradle"
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -79,13 +81,13 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
 
     //kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
 
-    implementation project(':Library')
+    //implementation project(':Library')
 //    implementation project(':lib')
     //    kapt project(':lib-processor')
 
