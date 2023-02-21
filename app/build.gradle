@@ -4,7 +4,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
+//    id 'kotlin-kapt'
 }
 
 //apply plugin: TimeCostPlugin
@@ -81,7 +81,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    //kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
 
