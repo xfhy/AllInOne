@@ -86,7 +86,8 @@
         <activity android:name=".actual.syncbarrier.WatchSyncBarrierActivity" >
 
         </activity>
-        <activity android:name=".performance.memory.MemoryOptActivity" >
+        <activity android:name=".performance.memory.MemoryOptActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

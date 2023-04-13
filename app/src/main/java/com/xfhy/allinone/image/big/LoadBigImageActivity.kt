@@ -33,7 +33,7 @@ class LoadBigImageActivity : TitleBarActivity() {
         val bitmapRegionDecoder = BitmapRegionDecoder.newInstance(assets.open("tobias.jpg"), false)
         val options = BitmapFactory.Options()
         options.inPreferredConfig = Bitmap.Config.RGB_565
-        val bitmap = bitmapRegionDecoder.decodeRegion(Rect(0, 0, 200, 200), options)
+        val bitmap = bitmapRegionDecoder?.decodeRegion(Rect(0, 0, 200, 200), options)
         ivShowImage.setImageBitmap(bitmap)
     }
 
