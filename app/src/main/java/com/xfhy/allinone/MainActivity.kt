@@ -5,6 +5,7 @@ import com.xfhy.allinone.actual.ActualMainActivity
 import com.xfhy.allinone.db.DbActivity
 import com.xfhy.allinone.image.ImageHomeActivity
 import com.xfhy.allinone.ipc.IpcMainActivity
+import com.xfhy.allinone.jetpack.JetpackMainActivity
 import com.xfhy.allinone.kotlin.KotlinMainActivity
 import com.xfhy.allinone.opensource.OpenSourceActivity
 import com.xfhy.allinone.performance.PerformanceHomeActivity
@@ -58,6 +59,9 @@ class MainActivity : TitleBarActivity() {
         }
         btnGoCustomView.setOnClickListener {
             startActivity<CustomWidgetActivity>()
+        }
+        btnGoJetpack.setOnClickListener {
+            startActivity<JetpackMainActivity>()
         }
     }
 }

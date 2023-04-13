@@ -61,6 +61,9 @@ dependencies {
     //paging
     implementation 'androidx.paging:paging-runtime:3.1.1'
 
+    //一些方便的扩展,如viewModels
+    implementation 'androidx.activity:activity-ktx:1.6.0'
+
     //ARouter  路由
     //api "com.alibaba:arouter-api:1.3.1"
 

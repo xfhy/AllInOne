@@ -66,6 +66,11 @@
             style="@style/HorizontalBtnStyle"
             android:text="自定义View" />
 
+        <Button
+            android:id="@+id/btnGoJetpack"
+            style="@style/HorizontalBtnStyle"
+            android:text="Jetpack" />
+
     </LinearLayout>
 
 </ScrollView>
