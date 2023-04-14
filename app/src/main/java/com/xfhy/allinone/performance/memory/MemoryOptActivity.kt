@@ -5,9 +5,11 @@ import android.content.Context
 import com.xfhy.allinone.App
 import com.xfhy.allinone.base.BaseDemoActivity
 import com.xfhy.library.ext.log
-import com.xfhy.nativelib.BMemoryLeakDetector
-import com.xfhy.nativelib.MonitorMalloc
-import com.xfhy.nativelib.TestMalloc
+//import com.xfhy.nativelib.BMemoryLeakDetector
+//import com.xfhy.nativelib.MonitorMalloc
+//import com.xfhy.nativelib.TestMalloc
+
+//2023年4月14日16:40:25  暂时把nativelib注释了，需要的时候再放开
 
 /**
  * @author : xfhy
@@ -15,10 +17,6 @@ import com.xfhy.nativelib.TestMalloc
  * Description : 内存优化
  */
 class MemoryOptActivity : BaseDemoActivity() {
-
-    companion object {
-        var aa: IntArray? = null
-    }
 
     override fun getThisTitle(): CharSequence {
         return "内存优化"
@@ -33,19 +31,19 @@ class MemoryOptActivity : BaseDemoActivity() {
     }
 
     private fun startMonitorMalloc() {
-        MonitorMalloc().start()
+        //MonitorMalloc().start()
     }
 
     private fun startMemoryLeakDetector() {
-        BMemoryLeakDetector.startDetector(App.getAppContext())
+        //BMemoryLeakDetector.startDetector(App.getAppContext())
     }
 
     private fun printResultForMemoryLeakDetector() {
-        BMemoryLeakDetector.printResult()
+        //BMemoryLeakDetector.printResult()
     }
 
     private fun nativeCreateMemory() {
-        TestMalloc().testMalloc()
+        //TestMalloc().testMalloc()
     }
 
     //1。线下获取内存数据
