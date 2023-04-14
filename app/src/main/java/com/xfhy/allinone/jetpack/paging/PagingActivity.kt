@@ -48,7 +48,12 @@ class PagingActivity : TitleBarActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = repoAdapter
+
+        //简单实用
+//        recyclerView.adapter = repoAdapter
+        //配合footer使用
+        recyclerView.adapter = repoAdapter.withLoadStateFooter(FooterAdapter { repoAdapter.retry() })
+
         lifecycleScope.launch {
             //获取数据,然后往repoAdapter里面放
             //这里调用collect之后,消息才能源源不断地往这里传
