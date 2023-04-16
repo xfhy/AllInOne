@@ -8,11 +8,12 @@ import com.xfhy.allinone.jetpack.paging.net.GithubService
 /**
  * @author : xfhy
  * Create time : 2023/4/13 2:54 下午
- * Description :
+ * Description : 定义数据源，以及如何从这里检索数据
  */
                                                             //继承PagingSource,第一个参数表示页数的数据类型,第二个参数是每一个item的数据类型
 class RepoPagingSource(private val gitHubService: GithubService) : PagingSource<Int, GithubRepo>() {
 
+    //paging库将调用load函数，以异步方式获取更多数据
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GithubRepo> {
         return try {
             val page = params.key ?: 1

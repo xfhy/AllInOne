@@ -24,6 +24,16 @@ import kotlinx.coroutines.launch
  * 用了paging之后,它会自动去加载数据.paging将细节隐藏到了它内部,开发者无需监听滑动事件,无需在列表底部手动去加载数据.按他的模子来就行.
  *
  * paging3在列表远没有滑到底部时就提前加载更多数据(默认属性,可配置)
+ *
+ * todo xfhy 下面的需求，怎么实现：
+ * 1. 下拉刷新
+ * 2. header
+ * 3. 在某些位置上增加item（类似，增加banner广告，不是从github api取的）
+ * 4. 多种type的item，怎么处理
+ * 5. 有哪些局限性
+ * 6. 用户一直往后面滑动，内存里面的数据（list data）不断增多，paging是如何解决这个问题的？
+ * 官方paging教程 https://developer.android.com/codelabs/android-paging?hl=zh-cn#0
+ * 官方kotlin flow教程 https://developer.android.com/codelabs/advanced-kotlin-coroutines?hl=zh-cn#0
  */
 class PagingActivity : TitleBarActivity() {
 
