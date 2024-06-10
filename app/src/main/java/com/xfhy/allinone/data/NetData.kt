@@ -25,6 +25,7 @@ class WxList {
 interface WanAndroidService {
 
     /**
+     * 获取公众号列表
      * 加上suspend之后,Retrofit会将该请求放到后台线程去请求
      */
     @GET("wxarticle/chapters/json")

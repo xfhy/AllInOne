@@ -31,6 +31,13 @@
             android:layout_height="wrap_content"
             android:text="Kotlin 协程与Retrofit一起使用" />
 
+        <Button
+            android:id="@+id/btnGoKotlinFlow"
+            style="@style/HorizontalBtnStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kotlin Flow" />
+
     </LinearLayout>
 
 </ScrollView>
