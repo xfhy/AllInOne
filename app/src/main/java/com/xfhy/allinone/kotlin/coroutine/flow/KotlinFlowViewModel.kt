@@ -1,26 +1,13 @@
 package com.xfhy.allinone.kotlin.coroutine.flow
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.xfhy.allinone.data.WANANDROID_BASE_URL
 import com.xfhy.allinone.data.WanAndroidService
 import com.xfhy.allinone.data.WxList
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.single
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -53,7 +40,7 @@ class KotlinFlowViewModel : ViewModel() {
 
 }
 
-fun main() = runBlocking {
+fun main(): Unit = runBlocking {
 //    val numbersFlow: Flow<Int> = flowOf(1, 2, 3, 4, 5)
 //    val resultFlow: Flow<String> = numbersFlow.filter {
 //        println("filter $it")
@@ -139,6 +126,74 @@ fun main() = runBlocking {
 //            println(it)
 //        }
 
-    val single = flowOf(1, 2, 3).toList()
-    println(single)
+//    val single = flowOf(1, 2, 3).toList()
+//    println(single)
+
+//    (1..6).asFlow().transform {
+//        emit(it)
+//        emit("hhhhh $it")
+//        emit(it.toString())
+//        emit(it.toLong())
+//    }.collect {
+//        println(it)
+//    }
+
+//    flowOf(1, 2, 3, 4, 5, 6).map {
+//        it.toString()
+//    }.map {
+//        "转换 $it"
+//    }.collect {
+//        println(it)
+//    }
+
+//    flowOf(1, 2, 3, 4, 5, null, 7, 8).filter {
+//        it != null
+//    }.collect {
+//        println(it)
+//    }
+
+//    flowOf(1, 2, 3, 4, 5, null, 7, 8).mapNotNull {
+//        it?.toString()
+//    }.collect {
+//        println(it)
+//    }
+
+//    val person = Person("一")
+//
+//    // 结论: 相同的对象,也可以emit多次,然后collect收集到
+//    flowOf(person, person, person, person).collect {
+//        println(it)
+//    }
+
+    // 结论: null也可以emit,然后收集到
+//    flow<Any?> {
+//        emit(1)
+//        emit(null)
+//        emit("3")
+//    }.collect {
+//        println(it)
+//    }
+
+    // 结论: zip时,如果2个flow的数据个数不对等,那么谁的个数更少,就仅zip多少个
+//    val flow1 = flowOf(1, 2, 3, 4, 5, 6)
+//    val flow2 = flowOf("a", "b", "c")
+//    flow1.zip(flow2) { value1, value2 ->
+//        "新的数据: $value1 $value2"
+//    }.collect {
+//        println(it)
+//    }
+    // 输出:
+    //新的数据: 1 a
+    //新的数据: 2 b
+    //新的数据: 3 c
+
+    // take操作符: 我只收集x个,x是take调用时传入的参数,多的不要.  内部是通过抛异常来实现的,但这个异常并不会终止程序执行
+//    flowOf(1, 2, 3, 4, 5, 6).take(3).collect {
+//        println(it)
+//    }
+
+
+
 }
+
+data class Person(val name: String)
