@@ -1,18 +1,19 @@
 package com.xfhy.allinone.kotlin.coroutine.flow
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.xfhy.allinone.data.WANANDROID_BASE_URL
 import com.xfhy.allinone.data.WanAndroidService
 import com.xfhy.allinone.data.WxList
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * @author : guoliang08
+ * @author : xfhy
  * Create time : 2024/5/29 07:34
  * Description : Flow ViewModel
  */
@@ -36,11 +37,67 @@ class KotlinFlowViewModel : ViewModel() {
     fun getWxData(): Flow<WxList?> = flow {
         val response = api.listRepos()
         emit(response)
-    }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
+
+    fun getListData(): Flow<Int> = flowOf(1, 2, 3)
 
 }
 
+@OptIn(FlowPreview::class)
 fun main(): Unit = runBlocking {
+    val stateFlow = MutableStateFlow(111)
+    stateFlow.emit(111)
+    stateFlow.emit(111)
+    stateFlow.emit(111)
+    stateFlow
+        .collect {
+            println(it)
+        }
+
+//    flow {
+//        emit(1)
+//        throw RuntimeException("RuntimeException")
+//    }.retry(3).collect {
+//        println(it)
+//    }
+
+//    flowOf("A","B","C","D","E")
+//        .onEach { println("Woman matchmaker emits: $it") }
+//        .collect {
+//            println("Girl appointment with: $it")
+//            delay(1000)
+//        }
+
+//    flowOf(1, 2).flatMapConcat { flowOf(it * 2) }.collect {
+//        println(it)
+//    }
+
+
+    // 创建3个Flow
+//    val firstFlow = flowOf(1, 2)
+//    firstFlow.map {
+//        it + 2
+//    }.collect {
+//        println(it)
+//    }
+
+//    val secondFlow = flow {
+//        emit(3)
+//        emit(4)
+//    }
+//    val thirdFlow = listOf(5, 6).asFlow()
+//
+//    // 挨个收集
+//    firstFlow.collect {
+//        println(it)
+//    }
+//    secondFlow.collect {
+//        println(it)
+//    }
+//    thirdFlow.collect {
+//        println(it)
+//    }
+
 //    val numbersFlow: Flow<Int> = flowOf(1, 2, 3, 4, 5)
 //    val resultFlow: Flow<String> = numbersFlow.filter {
 //        println("filter $it")
@@ -192,6 +249,13 @@ fun main(): Unit = runBlocking {
 //        println(it)
 //    }
 
+//    val flowstateFlow = flowOf(1, 2, 3, 4, 5)
+//    flowstateFlow.collect {
+//        println("第一 $it")
+//    }
+//    flowstateFlow.collect {
+//        println("第二 $it")
+//    }
 
 
 }
