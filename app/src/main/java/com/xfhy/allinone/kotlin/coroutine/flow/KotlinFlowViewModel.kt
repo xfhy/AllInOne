@@ -41,6 +41,56 @@ class KotlinFlowViewModel : ViewModel() {
 
     fun getListData(): Flow<Int> = flowOf(1, 2, 3)
 
+    /**
+     * collect此处,   输出:
+     * 2024-07-02 07:39:19.803 10024-10024/com.xfhy.allinone D/xfhy666: getThrowFlow 获取到的数据 1
+    2024-07-02 07:39:19.803 10024-10024/com.xfhy.allinone D/xfhy666: getThrowFlow 获取到的数据 2
+
+    --------- beginning of crash
+    2024-07-02 07:39:19.836 10024-10024/com.xfhy.allinone E/AndroidRuntime: FATAL EXCEPTION: main
+    Process: com.xfhy.allinone, PID: 10024
+    java.lang.RuntimeException: 异常
+    at com.xfhy.allinone.kotlin.coroutine.flow.KotlinFlowViewModel$getThrowFlow$1.invokeSuspend(KotlinFlowViewModel.kt:47)   // 这一行的ViewModel中我抛出异常的地方
+    at com.xfhy.allinone.kotlin.coroutine.flow.KotlinFlowViewModel$getThrowFlow$1.invoke(Unknown Source:8)
+    at com.xfhy.allinone.kotlin.coroutine.flow.KotlinFlowViewModel$getThrowFlow$1.invoke(Unknown Source:4)
+    at kotlinx.coroutines.flow.SafeFlow.collectSafely(Builders.kt:61)
+    at kotlinx.coroutines.flow.AbstractFlow.collect(Flow.kt:230)    // 到了collect这里
+    at com.xfhy.allinone.kotlin.coroutine.flow.KotlinFlowActivity$initView$1$1$1$1.invokeSuspend(KotlinFlowActivity.kt:55)
+    at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+    at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+    at kotlinx.coroutines.EventLoop.processUnconfinedEvent(EventLoop.common.kt:69)
+    at kotlinx.coroutines.internal.DispatchedContinuationKt.resumeCancellableWith(DispatchedContinuation.kt:376)
+    at kotlinx.coroutines.intrinsics.CancellableKt.startCoroutineCancellable(Cancellable.kt:30)
+    at kotlinx.coroutines.intrinsics.CancellableKt.startCoroutineCancellable$default(Cancellable.kt:25)
+    at kotlinx.coroutines.CoroutineStart.invoke(CoroutineStart.kt:110)
+    at kotlinx.coroutines.AbstractCoroutine.start(AbstractCoroutine.kt:126)
+    at kotlinx.coroutines.BuildersKt__Builders_commonKt.launch(Builders.common.kt:56)
+    at kotlinx.coroutines.BuildersKt.launch(Unknown Source:1)
+    at kotlinx.coroutines.BuildersKt__Builders_commonKt.launch$default(Builders.common.kt:47)
+    at kotlinx.coroutines.BuildersKt.launch$default(Unknown Source:1)
+    at com.xfhy.allinone.kotlin.coroutine.flow.KotlinFlowActivity.initView$lambda-0(KotlinFlowActivity.kt:39)    // lifecycleScope.launch
+    at com.xfhy.allinone.kotlin.coroutine.flow.KotlinFlowActivity.$r8$lambda$l0YhxSN3b9XO48WjJgeEDhKBz1g(Unknown Source:0)
+    at com.xfhy.allinone.kotlin.coroutine.flow.KotlinFlowActivity$$ExternalSyntheticLambda0.onClick(Unknown Source:2)
+    at android.view.View.performClick(View.java:7448)
+    at android.view.View.performClickInternal(View.java:7425)
+    at android.view.View.access$3600(View.java:810)
+    at android.view.View$PerformClick.run(View.java:28305)
+    at android.os.Handler.handleCallback(Handler.java:938)
+    at android.os.Handler.dispatchMessage(Handler.java:99)    //  dispatchMessage
+    at android.os.Looper.loop(Looper.java:223)
+    at android.app.ActivityThread.main(ActivityThread.java:7656)
+    at java.lang.reflect.Method.invoke(Native Method)
+    at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:592)
+    at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
+    Suppressed: kotlinx.coroutines.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@b417ad2, Dispatchers.Main.immediate]
+
+     */
+    fun getThrowFlow(): Flow<Int> = flow {
+        emit(1)
+        emit(2)
+        throw RuntimeException("异常")
+    }
+
 }
 
 @OptIn(FlowPreview::class)
