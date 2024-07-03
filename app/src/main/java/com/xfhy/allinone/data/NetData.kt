@@ -32,6 +32,6 @@ interface WanAndroidService {
     suspend fun listRepos(): WxList?
 
     @GET("wxarticle/chapters/json")
-     fun listReposByRxJava(): Single<WxList?>
+    fun listReposByRxJava(): Single<WxList?>
 
 }

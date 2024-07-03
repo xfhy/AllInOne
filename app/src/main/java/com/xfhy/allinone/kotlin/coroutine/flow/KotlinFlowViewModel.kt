@@ -5,10 +5,18 @@ import androidx.lifecycle.viewModelScope
 import com.xfhy.allinone.data.WANANDROID_BASE_URL
 import com.xfhy.allinone.data.WanAndroidService
 import com.xfhy.allinone.data.WxList
+import com.xfhy.library.ext.log
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -37,9 +45,20 @@ class KotlinFlowViewModel : ViewModel() {
     fun getWxData(): Flow<WxList?> = flow {
         val response = api.listRepos()
         emit(response)
+    }.catch {
+        log("出错了 $it")
+        emit(null)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
 
     fun getListData(): Flow<Int> = flowOf(1, 2, 3)
+
+    fun errorUseFlow1(): Flow<Int> = flow {
+        emit(1)
+        // 下面这种是错误的用法
+        withContext(Dispatchers.IO) {
+            emit(2)
+        }
+    }
 
     /**
      * collect此处,   输出:
@@ -93,16 +112,18 @@ class KotlinFlowViewModel : ViewModel() {
 
 }
 
+data class State(val data: Int/*, val timestamp: Long = System.currentTimeMillis()*/)
+
 @OptIn(FlowPreview::class)
 fun main(): Unit = runBlocking {
-    val stateFlow = MutableStateFlow(111)
-    stateFlow.emit(111)
-    stateFlow.emit(111)
-    stateFlow.emit(111)
-    stateFlow
-        .collect {
-            println(it)
-        }
+//    val stateFlow = MutableStateFlow(111)
+//    stateFlow.emit(111)
+//    stateFlow.emit(111)
+//    stateFlow.emit(111)
+//    stateFlow
+//        .collect {
+//            println(it)
+//        }
 
 //    flow {
 //        emit(1)
@@ -147,6 +168,61 @@ fun main(): Unit = runBlocking {
 //    thirdFlow.collect {
 //        println(it)
 //    }
+
+
+//    val sharedFlow = MutableSharedFlow<Int>()
+//
+//    async {
+//        sharedFlow.emit(1)
+//        sharedFlow.emit(1)
+//        sharedFlow.emit(1)
+//        sharedFlow.emit(1)
+//        sharedFlow.emit(1)
+//    }
+//
+//    sharedFlow.collect {
+//        println(it)
+//    }
+
+//    suspend fun updateData(value: Int) {
+//        stateFlow.emit(State(value))
+//    }
+//
+//    async {
+//        updateData(1)
+//        delay(100)
+//        updateData(1)
+//    }
+//
+//    stateFlow.collect {
+//        println(it)
+//    }
+
+//    val flow1 = flow {
+//        emit(1)
+//        delay(100)
+//        emit(2)
+//        delay(100)
+//        emit(3)
+//    }
+//
+//    val flow2 = flow {
+//        emit("A")
+//        delay(500)
+//        emit("B")
+//        emit("C")
+//    }
+//
+//    val combinedFlow = flow1.combine(flow2) { a, b -> "$a$b" }
+//
+//    combinedFlow.collect { println(it) }
+
+//    flowOf(1, 2, 3).zip(flowOf(4, 5, 6)) { a, b ->
+//        a + b
+//    }.collect {
+//        println(it)
+//    }
+
 
 //    val numbersFlow: Flow<Int> = flowOf(1, 2, 3, 4, 5)
 //    val resultFlow: Flow<String> = numbersFlow.filter {
