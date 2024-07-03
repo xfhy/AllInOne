@@ -4,7 +4,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-//    id 'kotlin-kapt'
+    id 'kotlin-kapt'
 }
 
 //asm 插桩，统计每个方法的耗时。
@@ -13,13 +13,13 @@ plugins {
 apply from: "$rootDir/gradle/library_depend.gradle"
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion "33.0.2"
+    compileSdkVersion 34
+    buildToolsVersion "34.0.0"
 
     defaultConfig {
         applicationId "com.xfhy.allinone"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
 
@@ -97,4 +97,10 @@ dependencies {
 
     //突破Android 反射限制
     implementation 'com.github.tiann:FreeReflection:3.1.0'
+
+    def room_version = "2.6.1"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:$room_version"
 }

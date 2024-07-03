@@ -112,7 +112,7 @@ class LargeImageView @JvmOverloads constructor(
         log(TAG, "onLayout()")
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         log(TAG, "onDraw()")
         val bitmap = mDecoder?.decodeRegion(mRect, mOptions)

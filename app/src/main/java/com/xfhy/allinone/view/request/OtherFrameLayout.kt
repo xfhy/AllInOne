@@ -24,7 +24,7 @@ class OtherFrameLayout @JvmOverloads constructor(context: Context, attrs: Attrib
         log("OtherFrameLayout tag=$tag onMeasure")
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         log("OtherFrameLayout tag=$tag onDraw")
     }
