@@ -19,10 +19,10 @@ interface UserDao {
     @Insert
     fun insertUser(user: User)
 
+    // 带了suspend,会自动切换到子线程
     @Insert
     suspend fun insertUserBySuspend(user: User)
 
-    // 带了suspend,会自动切换到子线程
     @Query("SELECT * FROM user")
     fun getAllBySuspendFlow(): Flow<List<User>>
 

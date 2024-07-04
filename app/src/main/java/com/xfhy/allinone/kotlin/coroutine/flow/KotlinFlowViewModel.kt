@@ -125,8 +125,11 @@ class KotlinFlowViewModel : ViewModel() {
      */
     fun insertUserData() {
         val user = User(name = "${random.nextInt()} 罗辑", age = random.nextInt())
-        viewModelScope.launch(Dispatchers.IO) {
-            userDao.insertUser(user)
+//        viewModelScope.launch(Dispatchers.IO) {
+//            userDao.insertUser(user)
+//        }
+        viewModelScope.launch {
+            userDao.insertUserBySuspend(user)
         }
     }
 
