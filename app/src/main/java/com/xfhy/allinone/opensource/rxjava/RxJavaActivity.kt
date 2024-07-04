@@ -3,9 +3,9 @@ package com.xfhy.allinone.opensource.rxjava
 import android.os.Bundle
 import android.view.View
 import com.xfhy.allinone.R
-import com.xfhy.allinone.data.WANANDROID_BASE_URL
-import com.xfhy.allinone.data.WanAndroidService
-import com.xfhy.allinone.data.WxList
+import com.xfhy.allinone.data.net.WANANDROID_BASE_URL
+import com.xfhy.allinone.data.net.WanAndroidService
+import com.xfhy.allinone.data.net.WxList
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import com.xfhy.library.ext.log
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory

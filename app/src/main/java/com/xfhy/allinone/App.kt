@@ -10,7 +10,7 @@ import me.weishu.reflection.Reflection
  * Create time : 2020/11/27 7:34 AM
  * Description :
  */
-public class App : BaseApplication() {
+class App : BaseApplication() {
 
     companion object {
         fun getAppContext() = context

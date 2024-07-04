@@ -6,9 +6,13 @@
 
     <Button
         android:id="@+id/btn_get_wx_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/HorizontalBtnStyle"
         android:text="获取数据" />
+
+    <Button
+        android:id="@+id/btn_insert_user_data"
+        style="@style/HorizontalBtnStyle"
+        android:text="新增Room User数据" />
 
     <TextView
         android:id="@+id/tv_data"

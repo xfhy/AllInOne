@@ -1,4 +1,4 @@
-package com.xfhy.allinone.data.local.db
+package com.xfhy.allinone.data.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
  */
 @Entity
 data class User(
-    @PrimaryKey val uid: Int,
+    @PrimaryKey(autoGenerate = true) val uid: Int = 0,
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "age") val age: Int?,
 )

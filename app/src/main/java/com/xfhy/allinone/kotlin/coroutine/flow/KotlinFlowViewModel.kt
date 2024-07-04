@@ -1,10 +1,14 @@
 package com.xfhy.allinone.kotlin.coroutine.flow
 
+import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.xfhy.allinone.data.WANANDROID_BASE_URL
-import com.xfhy.allinone.data.WanAndroidService
-import com.xfhy.allinone.data.WxList
+import com.xfhy.allinone.App
+import com.xfhy.allinone.data.db.AppDatabase
+import com.xfhy.allinone.data.db.User
+import com.xfhy.allinone.data.net.WANANDROID_BASE_URL
+import com.xfhy.allinone.data.net.WanAndroidService
+import com.xfhy.allinone.data.net.WxList
 import com.xfhy.library.ext.log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -14,11 +18,14 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.random.Random
 
 /**
  * @author : xfhy
@@ -109,6 +116,26 @@ class KotlinFlowViewModel : ViewModel() {
         emit(2)
         throw RuntimeException("异常")
     }
+
+    private val userDao = AppDatabase.getDb(App.getAppContext()).userDao()
+    private val random = Random(100)
+
+    /**
+     * 插入数据到room
+     */
+    fun insertUserData() {
+        val user = User(name = "${random.nextInt()} 罗辑", age = random.nextInt())
+        viewModelScope.launch(Dispatchers.IO) {
+            userDao.insertUser(user)
+        }
+    }
+
+    /**
+     * collect之后,实时接收数据库中所有的user
+     */
+    val userDataList: Flow<List<User>?> = userDao
+        .getAllBySuspendFlow()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
 
 }
 

@@ -3,8 +3,8 @@ package com.xfhy.allinone.kotlin.coroutine.retrofit
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.xfhy.allinone.R
-import com.xfhy.allinone.data.WANANDROID_BASE_URL
-import com.xfhy.allinone.data.WanAndroidService
+import com.xfhy.allinone.data.net.WANANDROID_BASE_URL
+import com.xfhy.allinone.data.net.WanAndroidService
 import com.xfhy.library.basekit.activity.TitleBarActivity
 import kotlinx.android.synthetic.main.activity_kotlin_coroutine_with_retrofit.*
 import kotlinx.coroutines.async

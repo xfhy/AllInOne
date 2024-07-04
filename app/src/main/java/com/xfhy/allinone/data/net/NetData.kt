@@ -1,4 +1,4 @@
-package com.xfhy.allinone.data
+package com.xfhy.allinone.data.net
 
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
