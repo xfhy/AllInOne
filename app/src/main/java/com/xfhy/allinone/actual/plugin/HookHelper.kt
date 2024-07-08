@@ -29,14 +29,14 @@ object HookHelper {
         val SingletonClazz = Class.forName("android.util.Singleton")
         val mInstanceField = FieldUtil.getField(SingletonClazz, "mInstance")
         val IActivityManager = mInstanceField.get(defaultSingleton)
-        log("获取到了IActivityManager")
+//        log("获取到了IActivityManager")
 
         //设置动态代理
         val IActivityManagerClazz = Class.forName("android.app.IActivityManager")
         val proxy =
             Proxy.newProxyInstance(Thread.currentThread().contextClassLoader, arrayOf(IActivityManagerClazz), IActivityManagerProxy(IActivityManager))
         mInstanceField.set(defaultSingleton, proxy)
-        log("设置动态代理IActivityManager成功")
+//        log("设置动态代理IActivityManager成功")
     }
 
     fun hookHandler() {

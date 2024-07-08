@@ -19,6 +19,14 @@ class WxList {
     class Wx {
         var id: Int = 0
         var name: String = ""
+
+        override fun toString(): String {
+            return "Wx(id=$id, name='$name')"
+        }
+    }
+
+    override fun toString(): String {
+        return "WxList(errorMsg='$errorMsg', errorCode=$errorCode, data=$data)"
     }
 }
 

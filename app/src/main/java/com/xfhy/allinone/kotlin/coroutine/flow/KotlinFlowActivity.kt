@@ -32,6 +32,21 @@ class KotlinFlowActivity : TitleBarActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kotlin_flow)
         initView()
+        initData()
+    }
+
+    private fun initData() {
+        flowViewModel.fetchData1()
+        flowViewModel.livedata1.observe(this) {
+            log("livedata1 数据 $it")
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                flowViewModel.flow1.collect {
+                    log("flow1 数据 $it")
+                }
+            }
+        }
     }
 
     private fun initView() {
@@ -39,15 +54,15 @@ class KotlinFlowActivity : TitleBarActivity() {
             flowViewModel.insertUserData()
         }
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    flowViewModel.userDataList.collect { dataList ->
-                        log("数据库中的数据总个数为 : ${dataList?.size}")
-                    }
-                }
-            }
-        }
+//        lifecycleScope.launch {
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                launch {
+//                    flowViewModel.userDataList.collect { dataList ->
+//                        log("数据库中的数据总个数为 : ${dataList?.size}")
+//                    }
+//                }
+//            }
+//        }
 
         btn_get_wx_data.setOnClickListener {
 

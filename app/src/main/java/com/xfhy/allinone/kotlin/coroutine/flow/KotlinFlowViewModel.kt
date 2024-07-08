@@ -1,6 +1,7 @@
 package com.xfhy.allinone.kotlin.coroutine.flow
 
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xfhy.allinone.App
@@ -139,6 +140,29 @@ class KotlinFlowViewModel : ViewModel() {
     val userDataList: Flow<List<User>?> = userDao
         .getAllBySuspendFlow()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
+
+    //-------------LiveData 与 Flow 对比 start ---------
+    //-------------1. 基本数据流------------------
+    private val _livedata1 = MutableLiveData<String?>()
+    val livedata1 = _livedata1
+    fun fetchData1() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = api.listRepos()
+            _livedata1.postValue(result?.toString())
+        }
+    }
+
+    val flow1 = flow<String?> {
+        val result = api.listRepos()
+        emit(result.toString())
+    }.flowOn(Dispatchers.IO)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
+
+    //-------------2. switchMap------------------
+    //-------------3. MediatorLiveData------------------
+    //-------------4. Transformations.map------------------
+    //-------------5. Transformations.switchMap------------------
+    //-------------LiveData 与 Flow 对比 end ---------
 
 }
 
