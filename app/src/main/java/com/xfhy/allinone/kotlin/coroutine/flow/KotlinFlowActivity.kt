@@ -36,17 +36,31 @@ class KotlinFlowActivity : TitleBarActivity() {
     }
 
     private fun initData() {
-        flowViewModel.fetchData1()
-        flowViewModel.livedata1.observe(this) {
-            log("livedata1 数据 $it")
+//        flowViewModel.fetchData1()
+//        flowViewModel.livedata1.observe(this) {
+//            log("livedata1 数据 $it")
+//        }
+//        lifecycleScope.launch {
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                flowViewModel.flow1.collect {
+//                    log("flow1 数据 $it")
+//                }
+//            }
+//        }
+
+        flowViewModel.fetchData2()
+        flowViewModel.liveDataB.observe(this) {
+            log("liveDataB 数据 $it")
         }
+        flowViewModel.fetchFlowA()
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                flowViewModel.flow1.collect {
-                    log("flow1 数据 $it")
+                flowViewModel.flowB.collect {
+                    log("flowB 数据 $it")
                 }
             }
         }
+
     }
 
     private fun initView() {

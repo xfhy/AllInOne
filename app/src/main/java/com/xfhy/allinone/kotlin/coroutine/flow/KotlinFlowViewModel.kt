@@ -1,8 +1,11 @@
 package com.xfhy.allinone.kotlin.coroutine.flow
 
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.xfhy.allinone.App
 import com.xfhy.allinone.data.db.AppDatabase
@@ -12,11 +15,14 @@ import com.xfhy.allinone.data.net.WanAndroidService
 import com.xfhy.allinone.data.net.WxList
 import com.xfhy.library.ext.log
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -33,6 +39,7 @@ import kotlin.random.Random
  * Create time : 2024/5/29 07:34
  * Description : Flow ViewModel
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 class KotlinFlowViewModel : ViewModel() {
 
     val retrofit = Retrofit.Builder()
@@ -159,6 +166,27 @@ class KotlinFlowViewModel : ViewModel() {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
 
     //-------------2. switchMap------------------
+    private val _liveDataA = MutableLiveData<String>()
+    val liveDataB: LiveData<String> = _liveDataA.switchMap { value ->
+        MutableLiveData("hh $value")
+    }
+
+    fun fetchData2() {
+        _liveDataA.value = "param1"
+    }
+
+    private val flowA = MutableStateFlow("")
+    val flowB: Flow<String> = flowA.flatMapLatest { value ->
+        flow {
+            emit("hh $value")
+        }
+    }
+
+    fun fetchFlowA() {
+        flowA.value = "param1"
+    }
+
+
     //-------------3. MediatorLiveData------------------
     //-------------4. Transformations.map------------------
     //-------------5. Transformations.switchMap------------------
