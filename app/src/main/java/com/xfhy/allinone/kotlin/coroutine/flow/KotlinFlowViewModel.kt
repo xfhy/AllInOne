@@ -2,6 +2,7 @@ package com.xfhy.allinone.kotlin.coroutine.flow
 
 import android.view.View
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -180,14 +182,41 @@ class KotlinFlowViewModel : ViewModel() {
         flow {
             emit("hh $value")
         }
-    }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), "")
 
     fun fetchFlowA() {
         flowA.value = "param1"
     }
 
-
     //-------------3. MediatorLiveData------------------
+    private val _liveData31 = MutableLiveData<String>()
+    private val _liveData32 = MutableLiveData<Int>()
+    val mediatorLiveData: LiveData<String> = MediatorLiveData<String>().apply {
+        addSource(_liveData31) { value ->
+            value?.let { postValue("liveData31: $it  LiveData32: ${_liveData32.value}") }
+        }
+        addSource(_liveData32) { value ->
+            value?.let { postValue("LiveData32: $it   liveData31: ${_liveData31.value}") }
+        }
+    }
+
+    fun fetchData3() {
+        _liveData31.value = "哈哈"
+        _liveData32.value = 6
+    }
+
+
+    private val flow31 = MutableStateFlow("")
+    private val flow32 = MutableStateFlow(0)
+    val combinedFlow = flow31.combine(flow32) { valueA, valueB ->
+        "flow31: $valueA, flow32: $valueB"
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), "")
+
+    fun fetchData3ByFlow() {
+        flow31.value = "哈哈"
+        flow32.value = 6
+    }
+
     //-------------4. Transformations.map------------------
     //-------------5. Transformations.switchMap------------------
     //-------------LiveData 与 Flow 对比 end ---------

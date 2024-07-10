@@ -47,16 +47,29 @@ class KotlinFlowActivity : TitleBarActivity() {
 //                }
 //            }
 //        }
+//
+//        flowViewModel.fetchData2()
+//        flowViewModel.liveDataB.observe(this) {
+//            log("liveDataB 数据 $it")
+//        }
+//        flowViewModel.fetchFlowA()
+//        lifecycleScope.launch {
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                flowViewModel.flowB.collect {
+//                    log("flowB 数据 $it")
+//                }
+//            }
+//        }
 
-        flowViewModel.fetchData2()
-        flowViewModel.liveDataB.observe(this) {
-            log("liveDataB 数据 $it")
+        flowViewModel.fetchData3()
+        flowViewModel.mediatorLiveData.observe(this) {
+            log("mediatorLiveData 数据 $it")
         }
-        flowViewModel.fetchFlowA()
+        flowViewModel.fetchData3ByFlow()
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                flowViewModel.flowB.collect {
-                    log("flowB 数据 $it")
+                flowViewModel.combinedFlow.collect {
+                    log("combinedFlow 数据 $it")
                 }
             }
         }
