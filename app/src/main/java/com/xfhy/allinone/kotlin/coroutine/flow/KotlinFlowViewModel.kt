@@ -1,13 +1,6 @@
 package com.xfhy.allinone.kotlin.coroutine.flow
 
-import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.xfhy.allinone.App
 import com.xfhy.allinone.data.db.AppDatabase
 import com.xfhy.allinone.data.db.User
@@ -15,23 +8,8 @@ import com.xfhy.allinone.data.net.WANANDROID_BASE_URL
 import com.xfhy.allinone.data.net.WanAndroidService
 import com.xfhy.allinone.data.net.WxList
 import com.xfhy.library.ext.log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.random.Random
@@ -218,8 +196,74 @@ class KotlinFlowViewModel : ViewModel() {
     }
 
     //-------------4. Transformations.map------------------
+    private val liveData4: LiveData<Int> = MutableLiveData()
+    val mappedLiveData: LiveData<String> = Transformations.map(liveData4) { value ->
+        "Mapped livadata value: $value"
+    }
+
+    private val flow4: Flow<Int> = flowOf(1, 2, 3)
+    val mappedFlow: Flow<String> = flow4.map { value ->
+        "Mapped flow value: $value"
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), "")
+
     //-------------5. Transformations.switchMap------------------
+    private val _liveData5 = MutableLiveData<String>()
+    val switchMappedLiveData: LiveData<String> = Transformations.switchMap(_liveData5) { value ->
+        liveData {
+            val result = "livedata data $value"
+            emit(result)
+        }
+    }
+
+    fun fetchData5() {
+        _liveData5.value = "param1"
+    }
+
+    private val flow5 = MutableStateFlow("")
+    val switchMappedFlow: Flow<String> = flow5.flatMapLatest { value ->
+        flow {
+            val result = "flow data $value"
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), "")
+
+    fun fetchFlow5() {
+        flow5.value = "param1"
+    }
+
     //-------------LiveData 与 Flow 对比 end ---------
+
+    val stateInFlow = flow {
+        emit(1)
+        delay(300L)
+        emit(2)
+        delay(300L)
+        emit(3)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), null)
+
+    val shareInFlow = flow {
+        emit(1)
+        delay(300L)
+        emit(2)
+        delay(300L)
+        emit(3)
+    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), 1)
+
+    fun testShareIn() {
+        viewModelScope.launch {
+            launch {
+                shareInFlow.collect {
+                    log("订阅者1 shareInFlow data $it")
+                }
+            }
+            delay(1000L)
+            launch {
+                shareInFlow.collect {
+                    log("订阅者2 shareInFlow data $it")
+                }
+            }
+        }
+    }
 
 }
 

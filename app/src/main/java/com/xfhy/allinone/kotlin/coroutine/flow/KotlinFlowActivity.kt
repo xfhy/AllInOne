@@ -1,22 +1,17 @@
 package com.xfhy.allinone.kotlin.coroutine.flow
 
 import android.os.Bundle
-import androidx.lifecycle.Lifecycle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.xfhy.allinone.R
-import com.xfhy.library.basekit.activity.TitleBarActivity
-import com.xfhy.library.ext.log
 import kotlinx.android.synthetic.main.activity_kotlin_flow.*
-import kotlinx.coroutines.launch
 
 /**
  * @author : xfhy
  * Create time : 2024年05月29日07:32:06
  * Description : Kotlin Flow
  */
-class KotlinFlowActivity : TitleBarActivity() {
+class KotlinFlowActivity : AppCompatActivity() {
 
     private val flowViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(
@@ -24,9 +19,9 @@ class KotlinFlowActivity : TitleBarActivity() {
         )
     }
 
-    override fun getThisTitle(): CharSequence {
-        return "Kotlin Flow"
-    }
+//    override fun getThisTitle(): CharSequence {
+//        return "Kotlin Flow"
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,18 +56,68 @@ class KotlinFlowActivity : TitleBarActivity() {
 //            }
 //        }
 
-        flowViewModel.fetchData3()
-        flowViewModel.mediatorLiveData.observe(this) {
-            log("mediatorLiveData 数据 $it")
-        }
-        flowViewModel.fetchData3ByFlow()
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                flowViewModel.combinedFlow.collect {
-                    log("combinedFlow 数据 $it")
-                }
-            }
-        }
+//        flowViewModel.fetchData3()
+//        flowViewModel.mediatorLiveData.observe(this) {
+//            log("mediatorLiveData 数据 $it")
+//        }
+//        flowViewModel.fetchData3ByFlow()
+//        lifecycleScope.launch {
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                flowViewModel.combinedFlow.collect {
+//                    log("combinedFlow 数据 $it")
+//                }
+//            }
+//        }
+
+//        flowViewModel.mappedLiveData.observe(this) {
+//            log("mappedLiveData data : $it")
+//        }
+//        lifecycleScope.launch {
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                flowViewModel.mappedFlow.collect {
+//                    log("flow4 data $it")
+//                }
+//            }
+//        }
+
+//        flowViewModel.switchMappedLiveData.observe(this) {
+//            log("switchMappedLiveData data : $it")
+//        }
+//        flowViewModel.fetchData5()
+//
+//        lifecycleScope.launch {
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                flowViewModel.switchMappedFlow.collect {
+//                    log("switchMappedFlow data : $it")
+//                }
+//            }
+//        }
+//        flowViewModel.fetchFlow5()
+
+//        lifecycleScope.launch {
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                flowViewModel.stateInFlow.collect {
+//                    log("stateInFlow data $it")
+//                }
+//            }
+//        }
+
+        flowViewModel.testShareIn()
+//        lifecycleScope.launch {
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                launch {
+//                    flowViewModel.shareInFlow.collect {
+//                        log("订阅者1 shareInFlow data $it")
+//                    }
+//                }
+//                delay(400L)
+//                launch {
+//                    flowViewModel.shareInFlow.collect {
+//                        log("订阅者2 shareInFlow data $it")
+//                    }
+//                }
+//            }
+//        }
 
     }
 
