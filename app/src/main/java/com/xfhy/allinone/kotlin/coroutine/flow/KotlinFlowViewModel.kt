@@ -7,11 +7,10 @@ import com.xfhy.allinone.data.db.User
 import com.xfhy.allinone.data.net.WANANDROID_BASE_URL
 import com.xfhy.allinone.data.net.WanAndroidService
 import com.xfhy.allinone.data.net.WxList
+import com.xfhy.allinone.util.ApiClient
 import com.xfhy.library.ext.log
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.random.Random
 
 /**
@@ -22,11 +21,19 @@ import kotlin.random.Random
 @OptIn(ExperimentalCoroutinesApi::class)
 class KotlinFlowViewModel : ViewModel() {
 
-    val retrofit = Retrofit.Builder()
-        .baseUrl(WANANDROID_BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    val api = retrofit.create(WanAndroidService::class.java)
+    private val retrofit = ApiClient.getClient(WANANDROID_BASE_URL)
+    private val api = retrofit.create(WanAndroidService::class.java)
+
+    // 网络请求
+    // SharingStarted.WhileSubscribed(5000L) : 感觉不合适的方式, 这种方式搞出来的Flow,在Activity中repeatOnLifecycle收集,用户点home键离开页面,在onStop中会把flow取消掉,然后用户重新回到页面时,会重新走网络请求
+    // Lazily 是Scope取消的时候才取消,所以这个场景更适合
+    val wxData = flow {
+        val response = api.listRepos()
+        emit(response)
+    }.catch {
+        log("出错了 $it")
+        emit(null)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     fun fetchData(): Flow<Int> = flow {
         emit(1)
@@ -36,7 +43,7 @@ class KotlinFlowViewModel : ViewModel() {
         emit(3)
     }
 
-    // 网络请求,返回将结果返回出去
+    // 不太合适的方式
     fun getWxData(): Flow<WxList?> = flow {
         val response = api.listRepos()
         emit(response)
